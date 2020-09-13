@@ -17,3 +17,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: OpenSans
+      fonts:
+        - asset: fonts/OpenSans-Bold.ttf
+          weight: 700
+        - asset: fonts/OpenSans-SemiBold.ttf
+          weight: 600
+        - asset: fonts/OpenSans-Regular.ttf
+          weight: 400

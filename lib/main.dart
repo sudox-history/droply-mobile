@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  // TODO: Add runApp()
+  runApp(DroplyApp());
+}
+
+class DroplyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(title: "Hello", home: null);
+  }
 }
