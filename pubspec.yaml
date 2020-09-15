@@ -7,17 +7,23 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  url_launcher: ^5.4.2
+  easy_localization: ^2.3.3
+  device_info: ^0.4.1+5
+  # ----------
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.3
 
 dev_dependencies:
-  url_launcher: ^5.4.2
   flutter_test:
     sdk: flutter
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/translations/
+
   fonts:
     - family: OpenSans
       fonts:

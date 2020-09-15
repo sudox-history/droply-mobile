@@ -1,0 +1,12 @@
+{
+  "welcome_title": "We are glad to see you here!",
+  "welcome_hint": "Enter name of your device. Try something memorable",
+
+  "phone_box": "Phone",
+  "device_name_hint": "Device name",
+  "enter_device_name_hint": "enter device name",
+
+  "enter_button": "Start sharing",
+  "agreement1": "By continuing you agree to our\n",
+  "agreement2": "Privacy Policy"
+}

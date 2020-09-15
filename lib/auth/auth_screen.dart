@@ -1,8 +1,15 @@
+import 'dart:io';
 import 'package:droply/constants.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:device_info/device_info.dart';
+
+final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+AndroidDeviceInfo androidDeviceInfo;
+IosDeviceInfo iOSDeviceInfo;
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -16,6 +23,28 @@ class _AuthScreenState extends State<AuthScreen> {
     setState(() {
       _buttonEnabled = enable;
     });
+  }
+
+  String model = "phone_box".tr();
+
+  void getDeviceInfo() async {
+    if (Platform.isAndroid) {
+      androidDeviceInfo = await deviceInfo.androidInfo;
+      setState(() {
+        model = androidDeviceInfo.model;
+      });
+    } else if (Platform.isIOS) {
+      iOSDeviceInfo = await deviceInfo.iosInfo;
+      setState(() {
+        model = iOSDeviceInfo.model;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getDeviceInfo();
+    super.initState();
   }
 
   @override
@@ -32,10 +61,29 @@ class _AuthScreenState extends State<AuthScreen> {
               SizedBox(height: 16),
               _buildWelcomeHint(),
               SizedBox(height: 50),
-              _buildPhoneBox(),
+              Container(
+                  width: 75,
+                  height: 75,
+                  decoration: BoxDecoration(
+                      color: AppColors.lightBlue,
+                      borderRadius: BorderRadius.all(Radius.circular(15))),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.phone_android, color: AppColors.blue),
+                      Padding(
+                        padding: EdgeInsets.only(top: 5),
+                        child: Text(model,
+                            style: TextStyle(
+                                color: AppColors.blue,
+                                fontFamily: AppFonts.openSans,
+                                fontWeight: AppFonts.semibold,
+                                fontSize: 16)),
+                      )
+                    ],
+                  )),
               SizedBox(height: 15),
               _buildDeviceNameHint(),
-              SizedBox(height: 5),
               TextField(
                   style: TextStyle(
                     color: AppColors.labelTextColor,
@@ -50,7 +98,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: "enter device name",
+                    hintText: "enter_device_name_hint".tr(),
                     hintStyle: TextStyle(
                       color: AppColors.hint2TextColor,
                       fontFamily: AppFonts.openSans,
@@ -66,9 +114,13 @@ class _AuthScreenState extends State<AuthScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ),
-                onPressed: _buttonEnabled ? () {} : null,
+                onPressed: _buttonEnabled
+                    ? () {
+                        //TODO: backend auth
+                      }
+                    : null,
                 child: Text(
-                  "Start sharing",
+                  "enter_button".tr(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: AppColors.whiteColor,
@@ -87,7 +139,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
 Widget _buildWelcomeTitle() {
   return Text(
-    "We are glad to see you here!",
+    "welcome_title".tr(),
     style: TextStyle(
         color: AppColors.headerTextColor,
         fontFamily: AppFonts.openSans,
@@ -98,7 +150,7 @@ Widget _buildWelcomeTitle() {
 
 Widget _buildWelcomeHint() {
   return Text(
-    "Enter a name and upload some photo to easily find this device",
+    "welcome_hint".tr(),
     textAlign: TextAlign.center,
     style: TextStyle(
         color: AppColors.hint1TextColor,
@@ -108,32 +160,9 @@ Widget _buildWelcomeHint() {
   );
 }
 
-Widget _buildPhoneBox() {
-  return Container(
-      width: 75,
-      height: 75,
-      decoration: BoxDecoration(
-          color: AppColors.lightBlue, borderRadius: BorderRadius.all(Radius.circular(15))),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.phone_android, color: AppColors.blue),
-          Padding(
-            padding: EdgeInsets.only(top: 5),
-            child: Text("Phone",
-                style: TextStyle(
-                    color: AppColors.blue,
-                    fontFamily: AppFonts.openSans,
-                    fontWeight: AppFonts.semibold,
-                    fontSize: 16)),
-          )
-        ],
-      ));
-}
-
 Widget _buildDeviceNameHint() {
   return Text(
-    "Device name",
+    "device_name_hint".tr(),
     textAlign: TextAlign.center,
     style: TextStyle(
         color: AppColors.hint1TextColor,
@@ -153,22 +182,17 @@ Widget _buildLicenseText() {
               color: AppColors.hint1TextColor,
               fontFamily: AppFonts.openSans,
               fontWeight: AppFonts.regular,
-              fontSize: 16),
+              fontSize: 15),
           children: [
-            TextSpan(text: "By continuing you agree to our "),
+            TextSpan(text: "agreement1".tr()),
             TextSpan(
-                text: "Terms of service ",
+                text: "agreement2".tr(),
                 style: TextStyle(color: AppColors.blue, fontWeight: AppFonts.semibold),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () async {
                     const url = "https://flutter.io";
                     if (await canLaunch(url)) launch(url);
                   }),
-            TextSpan(text: "and "),
-            TextSpan(
-              text: "Privacy Policy",
-              style: TextStyle(color: AppColors.blue, fontWeight: AppFonts.semibold),
-            ),
           ],
         ),
       ));
