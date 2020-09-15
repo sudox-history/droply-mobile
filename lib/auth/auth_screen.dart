@@ -4,7 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends StatefulWidget {
+  @override
+  _AuthScreenState createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen> {
+  bool _buttonEnabled = false;
+
+  void _changeButtonEnabled(bool enable) {
+    setState(() {
+      _buttonEnabled = enable;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,9 +36,47 @@ class AuthScreen extends StatelessWidget {
               SizedBox(height: 15),
               _buildDeviceNameHint(),
               SizedBox(height: 5),
-              _buildDeviceNameTextField(),
+              TextField(
+                  style: TextStyle(
+                    color: AppColors.labelTextColor,
+                    fontFamily: AppFonts.openSans,
+                    fontWeight: AppFonts.regular,
+                    fontSize: 20,
+                  ),
+                  inputFormatters: [LengthLimitingTextInputFormatter(25)],
+                  onChanged: (text) {
+                    _changeButtonEnabled(Regex.deviceNameAllow.hasMatch(text));
+                  },
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: "enter device name",
+                    hintStyle: TextStyle(
+                      color: AppColors.hint2TextColor,
+                      fontFamily: AppFonts.openSans,
+                      fontWeight: AppFonts.regular,
+                      fontSize: 20,
+                    ),
+                  )),
               SizedBox(height: 50),
-              _buildEnterButton(),
+              FlatButton(
+                color: AppColors.blue,
+                disabledColor: AppColors.hint2TextColor,
+                padding: EdgeInsets.only(left: 100, right: 100, top: 14, bottom: 14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                onPressed: _buttonEnabled ? () {} : null,
+                child: Text(
+                  "Start sharing",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: AppColors.whiteColor,
+                      fontFamily: AppFonts.openSans,
+                      fontWeight: AppFonts.semibold,
+                      fontSize: 16),
+                ),
+              ),
               SizedBox(height: 10),
               _buildLicenseText()
             ]),
@@ -92,49 +143,6 @@ Widget _buildDeviceNameHint() {
   );
 }
 
-Widget _buildDeviceNameTextField() {
-  return TextField(
-      style: TextStyle(
-        color: AppColors.labelTextColor,
-        fontFamily: AppFonts.openSans,
-        fontWeight: AppFonts.regular,
-        fontSize: 20,
-      ),
-      inputFormatters: [LengthLimitingTextInputFormatter(25)],
-      textAlign: TextAlign.center,
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        hintText: "enter device name",
-        hintStyle: TextStyle(
-          color: AppColors.hint2TextColor,
-          fontFamily: AppFonts.openSans,
-          fontWeight: AppFonts.regular,
-          fontSize: 20,
-        ),
-      ));
-}
-
-Widget _buildEnterButton() {
-  return FlatButton(
-    color: AppColors.blue,
-    disabledColor: AppColors.hint2TextColor,
-    padding: EdgeInsets.only(left: 100, right: 100, top: 14, bottom: 14),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(25),
-    ),
-    onPressed: () {},
-    child: Text(
-      "Start sharing",
-      textAlign: TextAlign.center,
-      style: TextStyle(
-          color: AppColors.whiteColor,
-          fontFamily: AppFonts.openSans,
-          fontWeight: AppFonts.semibold,
-          fontSize: 16),
-    ),
-  );
-}
-
 Widget _buildLicenseText() {
   return Padding(
       padding: EdgeInsets.only(left: 40, right: 40),
@@ -145,7 +153,7 @@ Widget _buildLicenseText() {
               color: AppColors.hint1TextColor,
               fontFamily: AppFonts.openSans,
               fontWeight: AppFonts.regular,
-              fontSize: 14),
+              fontSize: 16),
           children: [
             TextSpan(text: "By continuing you agree to our "),
             TextSpan(

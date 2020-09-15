@@ -19,6 +19,5 @@ class AppFonts {
 }
 
 class Regex {
-  //TODO: fix
-  static final deviceNameAllow = "^[A-zА-яёЁ0-9!.:\$()-=@*\"]\$";
+  static final deviceNameAllow = RegExp(r"^[a-zA-Zа-яА-Я0-9*-.!]{2,25}$");
 }
