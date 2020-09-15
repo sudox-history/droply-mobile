@@ -1,37 +1,36 @@
 import 'package:droply/constants.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 
 class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomPadding: true,
-        body: Container(
+      resizeToAvoidBottomPadding: true,
+      body: Container(
           height: double.infinity,
           child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
-              padding: EdgeInsets.only(top: 80, left: 16, right: 16, bottom: 20),
-              child: GestureDetector(
-                onTap: () => FocusScope.of(context).unfocus(),
-                child: Column(children: [
-                  _buildWelcomeTitle(),
-                  SizedBox(height: 16),
-                  _buildWelcomeHint(),
-                  SizedBox(height: 70),
-                  _buildPhoneBox(),
-                  SizedBox(height: 15),
-                  _buildDeviceNameHint(),
-                  SizedBox(height: 5),
-                  _buildDeviceNameTextField(),
-                  SizedBox(height: 150),
-                  _buildLicenseText(),
-                  SizedBox(height: 10),
-                  _buildEnterButton()
-                ]),
-              )),
-        ));
+            physics: AlwaysScrollableScrollPhysics(),
+            padding: EdgeInsets.only(top: 80, left: 16, right: 16, bottom: 20),
+            child: Column(children: [
+              _buildWelcomeTitle(),
+              SizedBox(height: 16),
+              _buildWelcomeHint(),
+              SizedBox(height: 50),
+              _buildPhoneBox(),
+              SizedBox(height: 15),
+              _buildDeviceNameHint(),
+              SizedBox(height: 5),
+              _buildDeviceNameTextField(),
+              SizedBox(height: 50),
+              _buildEnterButton(),
+              SizedBox(height: 10),
+              _buildLicenseText()
+            ]),
+          )),
+    );
   }
 }
 
@@ -70,7 +69,7 @@ Widget _buildPhoneBox() {
           Icon(Icons.phone_android, color: AppColors.blue),
           Padding(
             padding: EdgeInsets.only(top: 5),
-            child: Text("MI 8",
+            child: Text("Phone",
                 style: TextStyle(
                     color: AppColors.blue,
                     fontFamily: AppFonts.openSans,
@@ -115,20 +114,6 @@ Widget _buildDeviceNameTextField() {
       ));
 }
 
-Widget _buildLicenseText() {
-  return Padding(
-      padding: EdgeInsets.only(left: 40, right: 40),
-      child: Text(
-        "By continuing you agree to our Terms of service and Privacy Policy",
-        textAlign: TextAlign.center,
-        style: TextStyle(
-            color: AppColors.hint1TextColor,
-            fontFamily: AppFonts.openSans,
-            fontWeight: AppFonts.regular,
-            fontSize: 14),
-      ));
-}
-
 Widget _buildEnterButton() {
   return FlatButton(
     color: AppColors.blue,
@@ -137,6 +122,7 @@ Widget _buildEnterButton() {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(25),
     ),
+    onPressed: () {},
     child: Text(
       "Start sharing",
       textAlign: TextAlign.center,
@@ -147,4 +133,35 @@ Widget _buildEnterButton() {
           fontSize: 16),
     ),
   );
+}
+
+Widget _buildLicenseText() {
+  return Padding(
+      padding: EdgeInsets.only(left: 40, right: 40),
+      child: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          style: TextStyle(
+              color: AppColors.hint1TextColor,
+              fontFamily: AppFonts.openSans,
+              fontWeight: AppFonts.regular,
+              fontSize: 14),
+          children: [
+            TextSpan(text: "By continuing you agree to our "),
+            TextSpan(
+                text: "Terms of service ",
+                style: TextStyle(color: AppColors.blue, fontWeight: AppFonts.semibold),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () async {
+                    const url = "https://flutter.io";
+                    if (await canLaunch(url)) launch(url);
+                  }),
+            TextSpan(text: "and "),
+            TextSpan(
+              text: "Privacy Policy",
+              style: TextStyle(color: AppColors.blue, fontWeight: AppFonts.semibold),
+            ),
+          ],
+        ),
+      ));
 }

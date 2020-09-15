@@ -8,13 +8,19 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
+        value: SystemUiOverlayStyle(
+          systemNavigationBarColor: Color(0xFF000000),
+          systemNavigationBarDividerColor: null,
+          statusBarColor: Colors.transparent,
+          systemNavigationBarIconBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: "Droply",
             theme: ThemeData(
-                visualDensity: VisualDensity.adaptivePlatformDensity,
-                cursorColor: AppColors.blue),
+                visualDensity: VisualDensity.adaptivePlatformDensity, cursorColor: AppColors.blue),
             home: AuthScreen()));
   }
 }
