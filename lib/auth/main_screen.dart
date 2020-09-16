@@ -1,3 +1,4 @@
+import 'package:droply/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -7,7 +8,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: Text("app_name".tr(),
@@ -16,14 +17,11 @@ class MainScreen extends StatelessWidget {
                   fontFamily: AppFonts.openSans,
                   fontWeight: AppFonts.bold,
                   fontSize: 18)),
-          bottom: TabBar(
-            tabs: [
-              Tab(icon: Icon(Icons.directions_car)),
-              Tab(icon: Icon(Icons.directions_transit)),
-            ],
-          ),
-          backgroundColor: Colors.white,
           centerTitle: true,
+          bottom: AppWidgets.buildTabBar([
+            AppWidgets.buildTab("Nearby"),
+            AppWidgets.buildTab("Network")
+          ]),
         ),
       ),
     );
