@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:device_info/device_info.dart';
 
+import 'main_screen.dart';
+
 final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 AndroidDeviceInfo androidDeviceInfo;
 IosDeviceInfo iOSDeviceInfo;
@@ -117,6 +119,8 @@ class _AuthScreenState extends State<AuthScreen> {
                 onPressed: _buttonEnabled
                     ? () {
                         //TODO: backend auth
+                        Route route = MaterialPageRoute(builder: (context) => MainScreen());
+                        Navigator.pushReplacement(context, route);
                       }
                     : null,
                 child: Text(
@@ -174,7 +178,7 @@ Widget _buildDeviceNameHint() {
 
 Widget _buildLicenseText() {
   return Padding(
-      padding: EdgeInsets.only(left: 40, right: 40),
+      padding: EdgeInsets.only(left: 20, right: 20),
       child: RichText(
         textAlign: TextAlign.center,
         text: TextSpan(

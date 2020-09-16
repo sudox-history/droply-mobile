@@ -1,3 +1,4 @@
+import 'package:droply/auth/main_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,6 +33,7 @@ class App extends StatelessWidget {
             locale: context.locale,
             debugShowCheckedModeBanner: false,
             title: "Droply",
+            routes: {"/auth": (context) => AuthScreen(), "/main": (context) => MainScreen()},
             theme: ThemeData(
                 visualDensity: VisualDensity.adaptivePlatformDensity, cursorColor: AppColors.blue),
             home: AuthScreen()));

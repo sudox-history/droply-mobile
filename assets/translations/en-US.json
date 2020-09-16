@@ -1,4 +1,5 @@
 {
+  "app_name": "Droply",
   "welcome_title": "We are glad to see you here!",
   "welcome_hint": "Enter name of your device. Try something memorable",
 
@@ -8,5 +9,9 @@
 
   "enter_button": "Start sharing",
   "agreement1": "By continuing you agree to our\n",
-  "agreement2": "Privacy Policy"
+  "agreement2": "Privacy Policy",
+
+  "tab1": "Nearby",
+  "tab2": "Network"
+
 }
