@@ -50,7 +50,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomPadding: false,
       body: Container(
           height: double.infinity,
           child: SingleChildScrollView(
