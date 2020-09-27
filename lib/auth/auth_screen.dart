@@ -40,44 +40,6 @@ class AuthScreen extends StatelessWidget {
         ],
       ),
     ));
-    // return Scaffold(
-    //   body: SingleChildScrollView(
-    //     child: CustomMultiChildLayout(
-    //       delegate: _AuthScreenLayout(context),
-    //       children: [
-    //         LayoutId(
-    //           id: 1,
-    //           child: Column(
-    //             children: [
-    //               _buildWelcomeTitle(),
-    //               _buildWelcomeHint(),
-    //             ],
-    //           ),
-    //         ),
-    //         LayoutId(
-    //           id: 2,
-    //           child: Column(
-    //             mainAxisSize: MainAxisSize.min,
-    //             children: [
-    //               _buildDeviceBlock(),
-    //               _buildDeviceNameHint(),
-    //               _buildDeviceNameField(),
-    //             ],
-    //           ),
-    //         ),
-    //         LayoutId(
-    //           id: 3,
-    //           child: Column(
-    //             children: [
-    //               _buildLicenseText(),
-    //               _buildStartSharingButton(),
-    //             ],
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 
   Widget _buildWelcomeTitle() {
@@ -259,7 +221,7 @@ class _AuthScreenLayoutRender extends RenderBox
   static const _horizontalMargin = 20;
   static const _bottomMargin = 20.0;
   static const _topMargin = 56.0;
-  static const _middleMargin = 20.0;
+  static const _middleMargin = 72.0;
 
   BuildContext _context;
 
