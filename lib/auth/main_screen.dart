@@ -1,8 +1,5 @@
-import 'package:droply/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-
-import '../constants.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -11,16 +8,13 @@ class MainScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("app_name".tr(),
-              style: TextStyle(
-                  color: AppColors.headerTextColor,
-                  fontFamily: AppFonts.openSans,
-                  fontWeight: AppFonts.bold,
-                  fontSize: 18)),
-          centerTitle: true,
-          bottom: AppWidgets.buildTabBar([
-            AppWidgets.buildTab("Nearby"),
-            AppWidgets.buildTab("Network")
+          title: Text("app_name".tr()),
+          actions: [
+            IconButton(icon: Icon(Icons.settings), onPressed: () {  },)
+          ],
+          bottom: TabBar(isScrollable: true, tabs: [
+            Tab(text: "Nearby"),
+            Tab(text: "Network"),
           ]),
         ),
       ),

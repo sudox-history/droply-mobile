@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
+  static final primaryIconsColor = Colors.black;
   static final headerTextColor = Colors.black;
   static final whiteColor = Colors.white;
   static final labelTextColor = Color(0xFF424242);

@@ -35,7 +35,30 @@ class App extends StatelessWidget {
             title: "Droply",
             routes: {"/auth": (context) => AuthScreen(), "/main": (context) => MainScreen()},
             theme: ThemeData(
-                visualDensity: VisualDensity.adaptivePlatformDensity, cursorColor: AppColors.blue),
+                primaryIconTheme: IconThemeData(color: AppColors.primaryIconsColor),
+                tabBarTheme: TabBarTheme(
+                    labelColor: AppColors.blue,
+                    labelStyle: TextStyle(fontSize: 15, fontWeight: AppFonts.semibold, fontFamily: AppFonts.openSans),
+                    unselectedLabelColor: AppColors.hint1TextColor,
+                    indicator: UnderlineTabIndicator(borderSide: BorderSide(
+                      color: AppColors.blue,
+                      width: 4
+                    )),
+                    unselectedLabelStyle:
+                        TextStyle(fontSize: 15, fontWeight: AppFonts.semibold, fontFamily: AppFonts.openSans)),
+                appBarTheme: AppBarTheme(
+                    brightness: Brightness.light,
+                    color: AppColors.whiteColor,
+                    centerTitle: true,
+                    elevation: 0,
+                    textTheme: TextTheme(
+                        headline6: TextStyle(
+                            color: AppColors.headerTextColor,
+                            fontSize: 18,
+                            fontFamily: AppFonts.openSans,
+                            fontWeight: AppFonts.bold))),
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+                cursorColor: AppColors.blue),
             home: AuthScreen()));
   }
 }
