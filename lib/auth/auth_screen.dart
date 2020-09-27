@@ -1,16 +1,26 @@
+import 'dart:io';
 import 'package:droply/constants.dart';
+import 'package:droply/navigation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:device_info/device_info.dart';
 
-// final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-// AndroidDeviceInfo androidDeviceInfo;
-// IosDeviceInfo iOSDeviceInfo;
+class AuthScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _AuthScreenState();
+  }
+}
 
-class AuthScreen extends StatelessWidget {
+class _AuthScreenState extends State<AuthScreen> {
+  var _canStart = false;
+  var _deviceModel;
+  var _isAndroid;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +51,29 @@ class AuthScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getDeviceInfo();
+  }
+
+  void _getDeviceInfo() async {
+    var info = DeviceInfoPlugin();
+    var model;
+
+    if (Platform.isAndroid) {
+      _isAndroid = true;
+      model = (await info.androidInfo).model;
+    } else if (Platform.isIOS) {
+      _isAndroid = false;
+      model = (await info.iosInfo).model;
+    }
+
+    setState(() {
+      _deviceModel = model;
+    });
   }
 
   Widget _buildWelcomeTitle() {
@@ -116,7 +149,9 @@ class AuthScreen extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25),
         ),
-        onPressed: () {},
+        onPressed: _canStart ? () {
+          Navigator.pushReplacementNamed(context, Navigation.MAIN_ROUTE_NAME);
+        } : null,
         child: Text(
           "enter_button".tr(),
           textAlign: TextAlign.center,
@@ -141,21 +176,36 @@ class AuthScreen extends StatelessWidget {
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.phone_android, color: AppColors.blue),
-          Padding(
-            padding: EdgeInsets.only(top: 5),
-            child: Text(
-              "MI 8",
-              style: TextStyle(
-                color: AppColors.blue,
-                fontFamily: AppFonts.openSans,
-                fontWeight: AppFonts.semibold,
-                fontSize: 16,
-              ),
-            ),
-          )
-        ],
+        children: _deviceModel != null
+            ? [
+                Icon(
+                  _isAndroid ? Icons.phone_android : Icons.phone_iphone,
+                  color: AppColors.blue,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 5, left: 5, right: 5),
+                  child: Text(
+                    _deviceModel,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: AppColors.blue,
+                      fontFamily: AppFonts.openSans,
+                      fontWeight: AppFonts.semibold,
+                      fontSize: 16,
+                    ),
+                  ),
+                )
+              ]
+            : [
+                SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                    )),
+              ],
       ),
     );
   }
@@ -186,7 +236,9 @@ class AuthScreen extends StatelessWidget {
       ),
       inputFormatters: [LengthLimitingTextInputFormatter(25)],
       onChanged: (text) {
-        // _changeButtonEnabled(Regex.deviceNameAllow.hasMatch(text));
+        setState(() {
+          _canStart = Regex.deviceNameAllow.hasMatch(text);
+        });
       },
       textAlign: TextAlign.center,
       decoration: InputDecoration(
