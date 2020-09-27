@@ -14,32 +14,33 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      child: _AuthScreenLayout(
-        children: [
-          Column(
-            children: [
-              _buildWelcomeTitle(),
-              _buildWelcomeHint(),
-            ],
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _buildDeviceBlock(),
-              _buildDeviceNameHint(),
-              _buildDeviceNameField(),
-            ],
-          ),
-          Column(
-            children: [
-              _buildLicenseText(),
-              _buildStartSharingButton(),
-            ],
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: _AuthScreenLayout(
+          children: [
+            Column(
+              children: [
+                _buildWelcomeTitle(),
+                _buildWelcomeHint(),
+              ],
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildDeviceBlock(),
+                _buildDeviceNameHint(),
+                _buildDeviceNameField(),
+              ],
+            ),
+            Column(
+              children: [
+                _buildLicenseText(),
+                _buildStartSharingButton(),
+              ],
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 
   Widget _buildWelcomeTitle() {
@@ -247,7 +248,7 @@ class _AuthScreenLayoutRender extends RenderBox
     header.layout(BoxConstraints.loose(headerSize), parentUsesSize: true);
 
     _AuthScreenLayoutParentData headerParentData = header.parentData;
-    headerParentData.offset = Offset(constraints.maxWidth / 2 - headerSize.width / 2, _topMargin);
+    headerParentData.offset = Offset(constraints.maxWidth / 2 - header.size.width / 2, _topMargin);
 
     var footer = children.last;
     var footerSize = Size(maxWidth, double.infinity);
