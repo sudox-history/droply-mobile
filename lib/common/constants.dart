@@ -19,6 +19,6 @@ class AppFonts {
   static final bold = FontWeight.w700;
 }
 
-class Regex {
+class AppRegex {
   static final deviceNameAllow = RegExp(r"^[a-zA-Zа-яА-Я0-9*-.!]{2,25}$");
 }

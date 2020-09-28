@@ -1,10 +1,10 @@
-import 'package:droply/auth/main_screen.dart';
-import 'package:droply/navigation.dart';
+import 'package:droply/auth/auth_screen.dart';
+import 'package:droply/common/constants.dart';
+import 'package:droply/common/navigation.dart';
+import 'package:droply/main/main_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'auth/auth_screen.dart';
-import 'constants.dart';
 
 void main() {
   runApp(
@@ -36,8 +36,8 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: "Droply",
         routes: {
-          Navigation.AUTH_ROUTE_NAME: (context) => AuthScreen(),
-          Navigation.MAIN_ROUTE_NAME: (context) => MainScreen(),
+          AppNavigation.AUTH_ROUTE_NAME: (context) => AuthScreen(),
+          AppNavigation.MAIN_ROUTE_NAME: (context) => MainScreen(),
         },
         theme: ThemeData(
           primaryIconTheme: IconThemeData(color: AppColors.primaryIconsColor),

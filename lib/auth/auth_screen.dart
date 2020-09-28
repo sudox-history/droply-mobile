@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:droply/constants.dart';
-import 'package:droply/navigation.dart';
+import 'package:droply/common/constants.dart';
+import 'package:droply/common/navigation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -149,9 +149,11 @@ class _AuthScreenState extends State<AuthScreen> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25),
         ),
-        onPressed: _canStart ? () {
-          Navigator.pushReplacementNamed(context, Navigation.MAIN_ROUTE_NAME);
-        } : null,
+        onPressed: _canStart
+            ? () {
+                Navigator.pushReplacementNamed(context, AppNavigation.MAIN_ROUTE_NAME);
+              }
+            : null,
         child: Text(
           "enter_button".tr(),
           textAlign: TextAlign.center,
@@ -237,7 +239,7 @@ class _AuthScreenState extends State<AuthScreen> {
       inputFormatters: [LengthLimitingTextInputFormatter(25)],
       onChanged: (text) {
         setState(() {
-          _canStart = Regex.deviceNameAllow.hasMatch(text);
+          _canStart = AppRegex.deviceNameAllow.hasMatch(text);
         });
       },
       textAlign: TextAlign.center,
