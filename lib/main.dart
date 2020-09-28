@@ -41,6 +41,7 @@ class App extends StatelessWidget {
           AppNavigation.MAIN_ROUTE_NAME: (context) => MainScreen(),
         },
         theme: ThemeData(
+          scaffoldBackgroundColor: AppColors.whiteColor,
           primaryIconTheme: IconThemeData(color: AppColors.primaryIconsColor),
           tabBarTheme: TabBarTheme(
             labelPadding: EdgeInsets.only(
@@ -65,7 +66,8 @@ class App extends StatelessWidget {
             brightness: Brightness.light,
             color: AppColors.whiteColor,
             centerTitle: true,
-            elevation: 0,
+            elevation: 0.5,
+            shadowColor: AppColors.dividerColor,
             textTheme: TextTheme(
               headline6: TextStyle(
                 color: AppColors.headerTextColor,

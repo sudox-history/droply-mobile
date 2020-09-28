@@ -8,6 +8,7 @@ class AppColors {
   static final hint1TextColor = Color(0xFF808080);
   static final hint2TextColor = Color(0xFFBDBDBD);
 
+  static final dividerColor = Color(0xFFE0E0E0);
   static final lightBlue = Color(0xFFE8F4FC);
   static final blue = Color(0xFF2196F3);
 }
