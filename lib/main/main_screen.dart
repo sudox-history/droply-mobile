@@ -1,3 +1,4 @@
+import 'package:droply/common/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -12,7 +13,7 @@ class MainScreen extends StatelessWidget {
           actions: [
             IconButton(icon: Icon(Icons.settings), onPressed: () {  },)
           ],
-          bottom: TabBar(isScrollable: true, tabs: [
+          bottom: TabBar(isScrollable: true, indicator: TabBarIndicator(), tabs: [
             Tab(text: "Nearby"),
             Tab(text: "Network"),
           ]),
