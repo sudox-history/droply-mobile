@@ -1,6 +1,7 @@
 import 'package:droply/auth/auth_screen.dart';
 import 'package:droply/common/constants.dart';
 import 'package:droply/common/navigation.dart';
+import 'package:droply/common/widgets.dart';
 import 'package:droply/main/main_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,11 @@ class App extends StatelessWidget {
         theme: ThemeData(
           primaryIconTheme: IconThemeData(color: AppColors.primaryIconsColor),
           tabBarTheme: TabBarTheme(
+            labelPadding: EdgeInsets.only(
+              left: TabBarStyles.tabHorizontalPadding,
+              right: TabBarStyles.tabHorizontalPadding,
+            ),
+            indicator: TabBarIndicator(),
             labelColor: AppColors.blue,
             labelStyle: TextStyle(
               fontSize: 15,
@@ -49,7 +55,6 @@ class App extends StatelessWidget {
               fontFamily: AppFonts.openSans,
             ),
             unselectedLabelColor: AppColors.hint1TextColor,
-            indicator: UnderlineTabIndicator(borderSide: BorderSide(color: AppColors.blue, width: 4)),
             unselectedLabelStyle: TextStyle(
               fontSize: 15,
               fontWeight: AppFonts.semibold,

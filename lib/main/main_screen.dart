@@ -13,7 +13,7 @@ class MainScreen extends StatelessWidget {
           actions: [
             IconButton(icon: Icon(Icons.settings), onPressed: () {  },)
           ],
-          bottom: TabBar(isScrollable: true, indicator: TabBarIndicator(), tabs: [
+          bottom: TabBar(isScrollable: true, tabs: [
             Tab(text: "Nearby"),
             Tab(text: "Network"),
           ]),
