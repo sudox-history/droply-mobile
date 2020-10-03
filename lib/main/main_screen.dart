@@ -1,5 +1,5 @@
-import 'package:droply/common/widgets.dart';
 import 'package:droply/main/nearby.dart';
+import 'package:droply/main/network.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -25,7 +25,7 @@ class MainScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             NearbyScreen(),
-            NearbyScreen(),
+            NetworkScreen(),
           ],
         ),
       ),
