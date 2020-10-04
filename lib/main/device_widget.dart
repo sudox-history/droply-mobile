@@ -33,7 +33,7 @@ class _DeviceAquariumState extends State<_DeviceAquarium> with TickerProviderSta
 
     _waveScaleAnimationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: Duration(seconds: 5),
     );
 
     _wavePositionAnimationController = AnimationController(
@@ -57,8 +57,8 @@ class _DeviceAquariumState extends State<_DeviceAquarium> with TickerProviderSta
       });
 
     _waveScaleAnimation = Tween<double>(
-      begin: 10.0,
-      end: 18.0,
+      begin: -2.0,
+      end: 2.0,
     ).animate(_waveScaleAnimationController)
       ..addListener(() {
         setState(() {});
@@ -113,13 +113,14 @@ class _DeviceAquariumPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var points = <Offset>[];
-    var path = Path();
+    var points = List<Offset>();
+    var path = Path(); // [2;7]
+    var a = -0.4; // [0; 4Pi]
 
-    for (double x = 0; x < size.width; x++) {
+    for (double x = 0; x <= size.width; x++) {
       points.add(Offset(
         x,
-        sin((x) / (4 + _scale) + _position) + size.height * (1 - _progress),
+        sin((x) / (8 + _scale) + _position) + size.height * (1 - _progress),
       ));
     }
 
