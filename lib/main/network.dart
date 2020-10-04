@@ -15,7 +15,15 @@ class NetworkScreen extends StatelessWidget {
         child: Column(
           children: [
             _buildIdBlock(),
-            DeviceWidget()
+            SizedBox(height: 22.5),
+            DeviceWidget(
+              "Nikita Phone",
+              "Sending",
+              AppColors.blue,
+              AppColors.lightGreenBG,
+              AppColors.lightGreen,
+              Icons.computer,
+            )
           ],
         ),
       ),

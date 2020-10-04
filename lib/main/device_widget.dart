@@ -1,31 +1,94 @@
-import 'dart:ui';
-
 import 'package:droply/common/constants.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'dart:ui';
 
 class DeviceWidget extends StatelessWidget {
+  final String _name;
+  final String _description;
+  final Color _primaryColor;
+  final Color _backgroundColor;
+  final Color _liquidColor;
+  final IconData _icon;
+
+  DeviceWidget(this._name, this._description, this._primaryColor, this._backgroundColor, this._liquidColor, this._icon);
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _DeviceAquarium(),
-      ],
+    return Padding(
+      padding: EdgeInsets.only(top: 7.5, bottom: 7.5),
+      child: Row(
+        children: [
+          Container(
+            child: _DeviceAquarium(_backgroundColor, _liquidColor, _primaryColor, _icon),
+            margin: EdgeInsets.only(left: 20),
+          ),
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.only(left: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _name,
+                    style: TextStyle(
+                      color: AppColors.labelTextColor,
+                      fontFamily: AppFonts.openSans,
+                      fontWeight: AppFonts.semibold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 5),
+                    child: Text(
+                      _description,
+                      style: TextStyle(
+                        color: _primaryColor,
+                        fontFamily: AppFonts.openSans,
+                        fontWeight: AppFonts.semibold,
+                        fontSize: 14,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          IconButton(
+            padding: EdgeInsets.all(20),
+            color: AppColors.labelTextColor,
+            icon: Icon(Icons.more_vert),
+            onPressed: () {},
+          )
+        ],
+      ),
     );
   }
 }
 
 class _DeviceAquarium extends StatefulWidget {
+  final Color _backgroundColor;
+  final Color _liquidColor;
+  final Color _iconColor;
+  final IconData _icon;
+
+  _DeviceAquarium(this._backgroundColor, this._liquidColor, this._iconColor, this._icon);
+
   @override
-  State<StatefulWidget> createState() => _DeviceAquariumState();
+  State<StatefulWidget> createState() => _DeviceAquariumState(_backgroundColor, _liquidColor, _iconColor, _icon);
 }
 
 class _DeviceAquariumState extends State<_DeviceAquarium> with TickerProviderStateMixin {
-  AnimationController _waveScaleAnimationController;
-  Animation<double> _waveScaleAnimation;
-
   AnimationController _wavePositionAnimationController;
+  AnimationController _waveScaleAnimationController;
   Animation<double> _wavePositionAnimation;
+  Animation<double> _waveScaleAnimation;
+  final Color _backgroundColor;
+  final Color _liquidColor;
+  final Color _iconColor;
+  final IconData _icon;
+
+  _DeviceAquariumState(this._backgroundColor, this._liquidColor, this._iconColor, this._icon);
 
   @override
   void initState() {
@@ -77,20 +140,29 @@ class _DeviceAquariumState extends State<_DeviceAquarium> with TickerProviderSta
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _wavePositionAnimation,
-      builder: (context, snapshot) {
-        return CustomPaint(
-          size: Size.square(60),
-          painter: _DeviceAquariumPainter(
-            AppColors.lightGreen,
-            AppColors.lightGreenBG,
-            0.5,
-            _waveScaleAnimation.value,
-            _wavePositionAnimation.value,
-          ),
-        );
-      },
+    return Stack(
+      alignment: AlignmentDirectional.center,
+      children: [
+        AnimatedBuilder(
+          animation: _wavePositionAnimation,
+          builder: (context, snapshot) {
+            return CustomPaint(
+              size: Size.square(60),
+              painter: _DeviceAquariumPainter(
+                _liquidColor,
+                _backgroundColor,
+                0.5,
+                _waveScaleAnimation.value,
+                _wavePositionAnimation.value,
+              ),
+            );
+          },
+        ),
+        Icon(
+          _icon,
+          color: _iconColor,
+        ),
+      ],
     );
   }
 
