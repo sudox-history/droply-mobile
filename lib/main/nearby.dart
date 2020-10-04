@@ -42,10 +42,8 @@ class _NearbyScreenState extends State<NearbyScreen> {
               ),
             ),
             Switch(
-
               value: true,
               onChanged: (bool state) {},
-
             )
           ],
         ),

@@ -24,18 +24,37 @@ class _DeviceAquariumState extends State<_DeviceAquarium> with TickerProviderSta
   AnimationController _waveScaleAnimationController;
   Animation<double> _waveScaleAnimation;
 
+  AnimationController _wavePositionAnimationController;
+  Animation<double> _wavePositionAnimation;
+
   @override
   void initState() {
     super.initState();
 
     _waveScaleAnimationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: Duration(seconds: 1),
     );
 
+    _wavePositionAnimationController =
+        AnimationController(vsync: this, duration: Duration(seconds: 2));
+
+    _wavePositionAnimation =
+        Tween(begin: 4 * pi, end: 0.0).animate(_wavePositionAnimationController)
+          ..addListener(() {
+            setState(() {});
+          })
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              _wavePositionAnimationController.repeat();
+            } else if (status == AnimationStatus.dismissed) {
+              _wavePositionAnimationController.forward();
+            }
+          });
+
     _waveScaleAnimation = Tween<double>(
-      begin: 2.0,
-      end: 7.0,
+      begin: 10.0,
+      end: 18.0,
     ).animate(_waveScaleAnimationController)
       ..addListener(() {
         setState(() {});
@@ -49,15 +68,18 @@ class _DeviceAquariumState extends State<_DeviceAquarium> with TickerProviderSta
       });
 
     _waveScaleAnimationController.forward();
+    _wavePositionAnimationController.forward();
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: _waveScaleAnimation,
+      animation: _wavePositionAnimation,
       builder: (context, snapshot) {
         return CustomPaint(
-            size: Size.square(60), painter: _DeviceAquariumPainter(AppColors.blue, 0.5, _waveScaleAnimation.value));
+            size: Size.square(60),
+            painter: _DeviceAquariumPainter(
+                AppColors.blue, 0.5, _waveScaleAnimation.value, _wavePositionAnimation.value));
       },
     );
   }
@@ -65,6 +87,7 @@ class _DeviceAquariumState extends State<_DeviceAquarium> with TickerProviderSta
   @override
   void dispose() {
     _waveScaleAnimationController.dispose();
+    _wavePositionAnimationController.dispose();
     super.dispose();
   }
 }
@@ -73,8 +96,9 @@ class _DeviceAquariumPainter extends CustomPainter {
   Paint _paint = Paint();
   double _progress;
   double _scale;
+  double _position;
 
-  _DeviceAquariumPainter(Color color, this._progress, this._scale) {
+  _DeviceAquariumPainter(Color color, this._progress, this._scale, this._position) {
     _paint.color = color;
   }
 
@@ -85,7 +109,7 @@ class _DeviceAquariumPainter extends CustomPainter {
     var a = -0.4; // [0; 4Pi]
 
     for (int i = 0; i < size.width; i++) {
-      var y = sin((i + a) / (8 + _scale)) + size.height * (1 - _progress);
+      var y = sin((i) / (4 + _scale) + _position) + size.height * (1 - _progress);
       var offset = Offset(i.toDouble(), y);
 
       points.add(offset);
