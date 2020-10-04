@@ -36,21 +36,25 @@ class _DeviceAquariumState extends State<_DeviceAquarium> with TickerProviderSta
       duration: Duration(seconds: 1),
     );
 
-    _wavePositionAnimationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 2));
+    _wavePositionAnimationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
 
-    _wavePositionAnimation =
-        Tween(begin: 4 * pi, end: 0.0).animate(_wavePositionAnimationController)
-          ..addListener(() {
-            setState(() {});
-          })
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              _wavePositionAnimationController.repeat();
-            } else if (status == AnimationStatus.dismissed) {
-              _wavePositionAnimationController.forward();
-            }
-          });
+    _wavePositionAnimation = Tween(
+      begin: 4 * pi,
+      end: 0.0,
+    ).animate(_wavePositionAnimationController)
+      ..addListener(() {
+        setState(() {});
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          _wavePositionAnimationController.repeat();
+        } else if (status == AnimationStatus.dismissed) {
+          _wavePositionAnimationController.forward();
+        }
+      });
 
     _waveScaleAnimation = Tween<double>(
       begin: 10.0,
@@ -77,9 +81,14 @@ class _DeviceAquariumState extends State<_DeviceAquarium> with TickerProviderSta
       animation: _wavePositionAnimation,
       builder: (context, snapshot) {
         return CustomPaint(
-            size: Size.square(60),
-            painter: _DeviceAquariumPainter(
-                AppColors.blue, 0.5, _waveScaleAnimation.value, _wavePositionAnimation.value));
+          size: Size.square(60),
+          painter: _DeviceAquariumPainter(
+            AppColors.blue,
+            0.5,
+            _waveScaleAnimation.value,
+            _wavePositionAnimation.value,
+          ),
+        );
       },
     );
   }
@@ -104,15 +113,14 @@ class _DeviceAquariumPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var points = List<Offset>();
-    var path = Path(); // [2;7]
-    var a = -0.4; // [0; 4Pi]
+    var points = <Offset>[];
+    var path = Path();
 
-    for (int i = 0; i < size.width; i++) {
-      var y = sin((i) / (4 + _scale) + _position) + size.height * (1 - _progress);
-      var offset = Offset(i.toDouble(), y);
-
-      points.add(offset);
+    for (double x = 0; x < size.width; x++) {
+      points.add(Offset(
+        x,
+        sin((x) / (4 + _scale) + _position) + size.height * (1 - _progress),
+      ));
     }
 
     points.add(Offset(size.width, size.height));
@@ -123,6 +131,8 @@ class _DeviceAquariumPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
+    _DeviceAquariumPainter old = oldDelegate;
+
+    return old._progress != _progress || old._position != _position || old._scale != _scale;
   }
 }
