@@ -1,4 +1,5 @@
 import 'package:droply/common/constants.dart';
+import 'package:droply/main/device_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,9 @@ class _NearbyScreenState extends State<NearbyScreen> {
             right: 20,
           ),
           child: Column(
-            children: [_buildScanSection()],
+            children: [
+              _buildScanSection(),
+            ],
           )),
     );
   }

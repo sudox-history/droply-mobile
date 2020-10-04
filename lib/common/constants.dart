@@ -11,7 +11,8 @@ class AppColors {
   static final dividerColor = Color(0xFFE0E0E0);
   static final lightBlue = Color(0xFFE8F4FC);
   static final blue = Color(0xFF2196F3);
-  static final lightGreen = Color(0xFFE4F7F6);
+  static final green = Color(0xFF18BFA5);
+  static final lightGreen = Color(0xFFD2F4EF);
   static final lightGreenBG = Color(0xFFF2FCFB);
 }
 

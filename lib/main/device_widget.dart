@@ -10,8 +10,10 @@ class DeviceWidget extends StatelessWidget {
   final Color _backgroundColor;
   final Color _liquidColor;
   final IconData _icon;
+  final double _progress;
 
-  DeviceWidget(this._name, this._description, this._primaryColor, this._backgroundColor, this._liquidColor, this._icon);
+  DeviceWidget(this._name, this._description, this._primaryColor, this._backgroundColor,
+      this._liquidColor, this._icon, this._progress);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class DeviceWidget extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            child: _DeviceAquarium(_backgroundColor, _liquidColor, _primaryColor, _icon),
+            child: _DeviceAquarium(_backgroundColor, _liquidColor, _primaryColor, _icon, _progress),
             margin: EdgeInsets.only(left: 20),
           ),
           Expanded(
@@ -46,7 +48,7 @@ class DeviceWidget extends StatelessWidget {
                         color: _primaryColor,
                         fontFamily: AppFonts.openSans,
                         fontWeight: AppFonts.semibold,
-                        fontSize: 14,
+                        fontSize: 15,
                       ),
                     ),
                   )
@@ -71,11 +73,14 @@ class _DeviceAquarium extends StatefulWidget {
   final Color _liquidColor;
   final Color _iconColor;
   final IconData _icon;
+  final double _progress;
 
-  _DeviceAquarium(this._backgroundColor, this._liquidColor, this._iconColor, this._icon);
+  _DeviceAquarium(
+      this._backgroundColor, this._liquidColor, this._iconColor, this._icon, this._progress);
 
   @override
-  State<StatefulWidget> createState() => _DeviceAquariumState(_backgroundColor, _liquidColor, _iconColor, _icon);
+  State<StatefulWidget> createState() =>
+      _DeviceAquariumState(_backgroundColor, _liquidColor, _iconColor, _icon, _progress);
 }
 
 class _DeviceAquariumState extends State<_DeviceAquarium> with TickerProviderStateMixin {
@@ -87,8 +92,10 @@ class _DeviceAquariumState extends State<_DeviceAquarium> with TickerProviderSta
   final Color _liquidColor;
   final Color _iconColor;
   final IconData _icon;
+  final double _progress;
 
-  _DeviceAquariumState(this._backgroundColor, this._liquidColor, this._iconColor, this._icon);
+  _DeviceAquariumState(
+      this._backgroundColor, this._liquidColor, this._iconColor, this._icon, this._progress);
 
   @override
   void initState() {
@@ -148,13 +155,8 @@ class _DeviceAquariumState extends State<_DeviceAquarium> with TickerProviderSta
           builder: (context, snapshot) {
             return CustomPaint(
               size: Size.square(60),
-              painter: _DeviceAquariumPainter(
-                _liquidColor,
-                _backgroundColor,
-                0.5,
-                _waveScaleAnimation.value,
-                _wavePositionAnimation.value,
-              ),
+              painter: _DeviceAquariumPainter(_liquidColor, _backgroundColor,
+                  _waveScaleAnimation.value, _wavePositionAnimation.value, _progress),
             );
           },
         ),
@@ -183,7 +185,8 @@ class _DeviceAquariumPainter extends CustomPainter {
   double _scale;
   double _position;
 
-  _DeviceAquariumPainter(Color color, this._backgroundColor, this._progress, this._scale, this._position) {
+  _DeviceAquariumPainter(
+      Color color, this._backgroundColor, this._scale, this._position, this._progress) {
     _paint.color = color;
   }
 

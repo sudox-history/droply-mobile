@@ -19,11 +19,21 @@ class NetworkScreen extends StatelessWidget {
             DeviceWidget(
               "Nikita Phone",
               "Sending",
-              AppColors.blue,
+              AppColors.green,
               AppColors.lightGreenBG,
               AppColors.lightGreen,
               Icons.computer,
-            )
+              0.7
+            ),
+            DeviceWidget(
+              "Max Desktop",
+              "Sending",
+              AppColors.green,
+              AppColors.lightGreenBG,
+              AppColors.lightGreen,
+              Icons.computer,
+              0.3
+            ),
           ],
         ),
       ),
