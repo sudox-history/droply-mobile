@@ -1,4 +1,5 @@
 import 'package:droply/common/constants.dart';
+import 'package:droply/main/device_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,7 @@ class NetworkScreen extends StatelessWidget {
         child: Column(
           children: [
             _buildIdBlock(),
+            DeviceWidget()
           ],
         ),
       ),
