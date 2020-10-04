@@ -83,7 +83,8 @@ class _DeviceAquariumState extends State<_DeviceAquarium> with TickerProviderSta
         return CustomPaint(
           size: Size.square(60),
           painter: _DeviceAquariumPainter(
-            AppColors.blue,
+            AppColors.lightGreen,
+            AppColors.lightGreenBG,
             0.5,
             _waveScaleAnimation.value,
             _wavePositionAnimation.value,
@@ -102,20 +103,21 @@ class _DeviceAquariumState extends State<_DeviceAquarium> with TickerProviderSta
 }
 
 class _DeviceAquariumPainter extends CustomPainter {
+  static const _borderRadius = Radius.circular(15);
+
   Paint _paint = Paint();
+  Color _backgroundColor;
   double _progress;
   double _scale;
   double _position;
 
-  _DeviceAquariumPainter(Color color, this._progress, this._scale, this._position) {
+  _DeviceAquariumPainter(Color color, this._backgroundColor, this._progress, this._scale, this._position) {
     _paint.color = color;
   }
 
   @override
   void paint(Canvas canvas, Size size) {
     var points = List<Offset>();
-    var path = Path(); // [2;7]
-    var a = -0.4; // [0; 4Pi]
 
     for (double x = 0; x <= size.width; x++) {
       points.add(Offset(
@@ -126,7 +128,20 @@ class _DeviceAquariumPainter extends CustomPainter {
 
     points.add(Offset(size.width, size.height));
     points.add(Offset(0, size.height));
+
+    var path = Path();
+    var rect = Rect.fromPoints(Offset(0, 0), Offset(size.width, size.height));
+    var clipRect = RRect.fromRectAndCorners(
+      rect,
+      topRight: _borderRadius,
+      topLeft: _borderRadius,
+      bottomLeft: _borderRadius,
+      bottomRight: _borderRadius,
+    );
+
     path.addPolygon(points, true);
+    canvas.clipRRect(clipRect);
+    canvas.drawColor(_backgroundColor, BlendMode.src);
     canvas.drawPath(path, _paint);
   }
 
