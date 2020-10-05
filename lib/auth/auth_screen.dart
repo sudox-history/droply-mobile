@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'package:droply/common/constants.dart';
+import 'package:droply/common/widgets.dart';
 import 'package:droply/common/navigation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -7,19 +7,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:device_info/device_info.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return _AuthScreenState();
-  }
+  State<StatefulWidget> createState() => _AuthScreenState();
 }
 
 class _AuthScreenState extends State<AuthScreen> {
   var _canStart = false;
-  var _deviceModel;
-  var _isAndroid;
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +31,16 @@ class _AuthScreenState extends State<AuthScreen> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _buildDeviceBlock(),
-                _buildDeviceNameHint(),
-                _buildDeviceNameField(),
+                MyDevice(),
+                Padding(
+                  padding: EdgeInsets.only(top: 16),
+                  child: MyDeviceWidgets.buildNameHint(),
+                ),
+                MyDeviceWidgets.buildNameField((allow) {
+                  setState(() {
+                    _canStart = allow;
+                  });
+                }),
               ],
             ),
             Column(
@@ -51,29 +53,6 @@ class _AuthScreenState extends State<AuthScreen> {
         ),
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _getDeviceInfo();
-  }
-
-  void _getDeviceInfo() async {
-    var info = DeviceInfoPlugin();
-    var model;
-
-    if (Platform.isAndroid) {
-      _isAndroid = true;
-      model = (await info.androidInfo).model;
-    } else if (Platform.isIOS) {
-      _isAndroid = false;
-      model = (await info.iosInfo).model;
-    }
-
-    setState(() {
-      _deviceModel = model;
-    });
   }
 
   Widget _buildWelcomeTitle() {
@@ -163,94 +142,6 @@ class _AuthScreenState extends State<AuthScreen> {
             fontWeight: AppFonts.semibold,
             fontSize: 16,
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDeviceBlock() {
-    return Container(
-      width: 75,
-      height: 75,
-      decoration: BoxDecoration(
-        color: AppColors.lightBlue,
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: _deviceModel != null
-            ? [
-                Icon(
-                  _isAndroid ? Icons.phone_android : Icons.phone_iphone,
-                  color: AppColors.blue,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 5, left: 5, right: 5),
-                  child: Text(
-                    _deviceModel,
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: AppColors.blue,
-                      fontFamily: AppFonts.openSans,
-                      fontWeight: AppFonts.semibold,
-                      fontSize: 16,
-                    ),
-                  ),
-                )
-              ]
-            : [
-                SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                    )),
-              ],
-      ),
-    );
-  }
-
-  Widget _buildDeviceNameHint() {
-    return Padding(
-      padding: EdgeInsets.only(top: 16),
-      child: Text(
-        "device_name_hint".tr(),
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: AppColors.hint1TextColor,
-          fontFamily: AppFonts.openSans,
-          fontWeight: AppFonts.semibold,
-          fontSize: 16,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDeviceNameField() {
-    return TextField(
-      style: TextStyle(
-        color: AppColors.labelTextColor,
-        fontFamily: AppFonts.openSans,
-        fontWeight: AppFonts.regular,
-        fontSize: 20,
-      ),
-      inputFormatters: [LengthLimitingTextInputFormatter(25)],
-      onChanged: (text) {
-        setState(() {
-          _canStart = AppRegex.deviceNameAllow.hasMatch(text);
-        });
-      },
-      textAlign: TextAlign.center,
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        hintText: "enter_device_name_hint".tr(),
-        hintStyle: TextStyle(
-          color: AppColors.hint2TextColor,
-          fontFamily: AppFonts.openSans,
-          fontWeight: AppFonts.regular,
-          fontSize: 20,
         ),
       ),
     );
