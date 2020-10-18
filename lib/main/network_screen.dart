@@ -19,18 +19,18 @@ class NetworkScreen extends StatelessWidget {
             DeviceWidget(
               "Nikita Phone",
               "Sending",
-              AppColors.green,
-              AppColors.lightGreenBG,
-              AppColors.lightGreen,
+              AppColors.processColor,
+              AppColors.lightenProcessColor,
+              AppColors.lightProcessColor,
               Icons.computer,
               0.7
             ),
             DeviceWidget(
               "Max Desktop",
               "Sending",
-              AppColors.green,
-              AppColors.lightGreenBG,
-              AppColors.lightGreen,
+              AppColors.processColor,
+              AppColors.lightenProcessColor,
+              AppColors.lightProcessColor,
               Icons.computer,
               0.3
             ),
@@ -54,7 +54,7 @@ class NetworkScreen extends StatelessWidget {
             style: TextStyle(
               fontFamily: AppFonts.openSans,
               fontWeight: AppFonts.semibold,
-              color: AppColors.hint1TextColor,
+              color: AppColors.secondaryTextColor,
               fontSize: 16,
             ),
           ),
@@ -68,7 +68,7 @@ class NetworkScreen extends StatelessWidget {
             children: [
               Icon(
                 Icons.content_copy,
-                color: AppColors.blue,
+                color: AppColors.accentColor,
               ),
               Expanded(
                 child: Container(
@@ -79,7 +79,7 @@ class NetworkScreen extends StatelessWidget {
                       Text(
                         "034-213-533",
                         style: TextStyle(
-                          color: AppColors.blue,
+                          color: AppColors.accentColor,
                           fontFamily: AppFonts.openSans,
                           fontWeight: AppFonts.regular,
                           fontSize: 24,
@@ -88,7 +88,7 @@ class NetworkScreen extends StatelessWidget {
                       Text(
                         "(Click to copy)",
                         style: TextStyle(
-                          color: AppColors.hint2TextColor,
+                          color: AppColors.hintTextColor,
                           fontFamily: AppFonts.openSans,
                           fontWeight: AppFonts.regular,
                           fontSize: 16,
@@ -101,7 +101,7 @@ class NetworkScreen extends StatelessWidget {
               IconButton(
                 icon: Icon(
                   Icons.refresh,
-                  color: AppColors.blue,
+                  color: AppColors.accentColor,
                 ),
                 padding: EdgeInsets.all(20),
                 onPressed: () {},

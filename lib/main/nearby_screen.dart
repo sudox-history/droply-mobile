@@ -14,16 +14,17 @@ class _NearbyScreenState extends State<NearbyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-          padding: EdgeInsets.only(
-            top: 20,
-            left: 20,
-            right: 20,
-          ),
-          child: Column(
-            children: [
-              _buildScanSection(),
-            ],
-          )),
+        padding: EdgeInsets.only(
+          top: 20,
+          left: 20,
+          right: 20,
+        ),
+        child: Column(
+          children: [
+            _buildScanSection(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -37,7 +38,7 @@ class _NearbyScreenState extends State<NearbyScreen> {
             Text(
               "Scan devices nearby",
               style: TextStyle(
-                color: AppColors.labelTextColor,
+                color: AppColors.onSurfaceColor,
                 fontFamily: AppFonts.openSans,
                 fontWeight: AppFonts.semibold,
                 fontSize: 16,
@@ -52,7 +53,7 @@ class _NearbyScreenState extends State<NearbyScreen> {
         Text(
           "We'll show you devices that also use EasyShare",
           style: TextStyle(
-            color: AppColors.hint2TextColor,
+            color: AppColors.hintTextColor,
             fontFamily: AppFonts.openSans,
             fontWeight: AppFonts.regular,
             fontSize: 15,

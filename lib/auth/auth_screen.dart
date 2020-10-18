@@ -1,11 +1,10 @@
+import 'package:droply/auth/auth_screen_layout.dart';
 import 'package:droply/common/constants.dart';
 import 'package:droply/common/widgets.dart';
 import 'package:droply/common/navigation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -20,7 +19,7 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: _AuthScreenLayout(
+        child: AuthScreenLayout(
           children: [
             Column(
               children: [
@@ -59,7 +58,7 @@ class _AuthScreenState extends State<AuthScreen> {
     return Text(
       "welcome_title".tr(),
       style: TextStyle(
-        color: AppColors.headerTextColor,
+        color: AppColors.primaryTextColor,
         fontFamily: AppFonts.openSans,
         fontWeight: AppFonts.bold,
         fontSize: 20,
@@ -74,7 +73,7 @@ class _AuthScreenState extends State<AuthScreen> {
         "welcome_hint".tr(),
         textAlign: TextAlign.center,
         style: TextStyle(
-          color: AppColors.hint1TextColor,
+          color: AppColors.secondaryTextColor,
           fontFamily: AppFonts.openSans,
           fontWeight: AppFonts.regular,
           fontSize: 18,
@@ -90,7 +89,7 @@ class _AuthScreenState extends State<AuthScreen> {
         textAlign: TextAlign.center,
         text: TextSpan(
           style: TextStyle(
-            color: AppColors.hint1TextColor,
+            color: AppColors.secondaryTextColor,
             fontFamily: AppFonts.openSans,
             fontWeight: AppFonts.regular,
             fontSize: 15,
@@ -100,7 +99,7 @@ class _AuthScreenState extends State<AuthScreen> {
             TextSpan(
               text: "agreement2".tr(),
               style: TextStyle(
-                color: AppColors.blue,
+                color: AppColors.accentColor,
                 fontWeight: AppFonts.semibold,
               ),
               recognizer: TapGestureRecognizer()
@@ -121,151 +120,14 @@ class _AuthScreenState extends State<AuthScreen> {
     return Container(
       margin: EdgeInsets.only(top: 16.0),
       width: double.infinity,
-      child: FlatButton(
-        color: AppColors.blue,
-        disabledColor: AppColors.hint2TextColor,
-        padding: EdgeInsets.only(left: 14, right: 14, top: 14, bottom: 14),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
-        ),
-        onPressed: _canStart
-            ? () {
-                Navigator.pushReplacementNamed(context, AppNavigation.MAIN_ROUTE_NAME);
-              }
-            : null,
-        child: Text(
-          "enter_button".tr(),
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: AppColors.whiteColor,
-            fontFamily: AppFonts.openSans,
-            fontWeight: AppFonts.semibold,
-            fontSize: 16,
-          ),
-        ),
+      child: TextButton(
+        onPressed: _canStart ? _onStartSharingButtonClicked : null,
+        child: Text("enter_button".tr()),
       ),
     );
   }
-}
 
-class _AuthScreenLayout extends MultiChildRenderObjectWidget {
-  _AuthScreenLayout({
-    Key key,
-    List<Widget> children,
-  }) : super(key: key, children: children);
-
-  @override
-  RenderObject createRenderObject(BuildContext context) {
-    return _AuthScreenLayoutRender(context);
+  void _onStartSharingButtonClicked() {
+    Navigator.pushReplacementNamed(context, AppNavigation.MAIN_ROUTE_NAME);
   }
 }
-
-class _AuthScreenLayoutRender extends RenderBox
-    with
-        ContainerRenderObjectMixin<RenderBox, _AuthScreenLayoutParentData>,
-        RenderBoxContainerDefaultsMixin<RenderBox, _AuthScreenLayoutParentData> {
-  static const _horizontalMargin = 20;
-  static const _bottomMargin = 20.0;
-  static const _topMargin = 56.0;
-  static const _middleMargin = 72.0;
-
-  BuildContext _context;
-
-  _AuthScreenLayoutRender(this._context, {List<RenderBox> children}) {
-    addAll(children);
-  }
-
-  @override
-  void setupParentData(RenderObject child) {
-    if (child.parentData is! _AuthScreenLayoutParentData) {
-      child.parentData = _AuthScreenLayoutParentData();
-    }
-  }
-
-  @override
-  void performLayout() {
-    var maxHeight = MediaQuery.of(_context).size.height;
-    var maxWidth = constraints.maxWidth - 2 * _horizontalMargin;
-    var children = getChildrenAsList();
-
-    var header = children.first;
-    var headerSize = Size(maxWidth, double.infinity);
-    header.layout(BoxConstraints.loose(headerSize), parentUsesSize: true);
-
-    _AuthScreenLayoutParentData headerParentData = header.parentData;
-    headerParentData.offset = Offset(constraints.maxWidth / 2 - header.size.width / 2, _topMargin);
-
-    var footer = children.last;
-    var footerSize = Size(maxWidth, double.infinity);
-    footer.layout(BoxConstraints.loose(footerSize), parentUsesSize: true);
-
-    _AuthScreenLayoutParentData footerParentData = footer.parentData;
-    footerParentData.offset = Offset(
-      constraints.maxWidth / 2 - footerSize.width / 2,
-      maxHeight - _bottomMargin - footer.size.height,
-    );
-
-    var middle = children[1];
-    var middleSize = Size(maxWidth, double.infinity);
-    middle.layout(BoxConstraints.loose(middleSize), parentUsesSize: true);
-
-    _AuthScreenLayoutParentData middleParentData = middle.parentData;
-    var middleX = constraints.maxWidth / 2 - middle.size.width / 2;
-    var freeHeight =
-        maxHeight - _topMargin - header.size.height - middle.size.height - footer.size.height - _bottomMargin;
-
-    if (freeHeight >= _middleMargin * 2) {
-      middleParentData.offset = Offset(
-        middleX,
-        (footerParentData.offset.dy + headerParentData.offset.dy + header.size.height) / 2 - middle.size.height / 2,
-      );
-
-      size = Size(constraints.maxWidth, maxHeight);
-    } else {
-      middleParentData.offset = Offset(
-        middleX,
-        headerParentData.offset.dy + header.size.height + _middleMargin,
-      );
-
-      footerParentData.offset =
-          Offset(footerParentData.offset.dx, middleParentData.offset.dy + middle.size.height + _middleMargin);
-
-      size = Size(
-        constraints.maxWidth,
-        _topMargin + header.size.height + _middleMargin * 2 + middle.size.height + footer.size.height + _bottomMargin,
-      );
-    }
-  }
-
-  @override
-  void paint(PaintingContext context, Offset offset) {
-    defaultPaint(context, offset);
-  }
-
-  @override
-  bool hitTestChildren(HitTestResult result, {Offset position}) {
-    return defaultHitTestChildren(result, position: position);
-  }
-
-  @override
-  double computeMaxIntrinsicHeight(double width) {
-    return 0;
-  }
-
-  @override
-  double computeMaxIntrinsicWidth(double height) {
-    return 0;
-  }
-
-  @override
-  double computeMinIntrinsicHeight(double width) {
-    return 0;
-  }
-
-  @override
-  double computeMinIntrinsicWidth(double height) {
-    return 0;
-  }
-}
-
-class _AuthScreenLayoutParentData extends ContainerBoxParentData<RenderBox> {}

@@ -1,5 +1,5 @@
-import 'package:droply/main/nearby.dart';
-import 'package:droply/main/network.dart';
+import 'package:droply/main/nearby_screen.dart';
+import 'package:droply/main/network_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 

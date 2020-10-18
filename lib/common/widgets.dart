@@ -26,7 +26,7 @@ class _TabBarIndicatorPainter extends BoxPainter {
   Paint _paint = Paint();
 
   _TabBarIndicatorPainter() {
-    _paint.color = AppColors.blue;
+    _paint.color = AppColors.accentColor;
   }
 
   @override
@@ -83,7 +83,7 @@ class DeviceWidget extends StatelessWidget {
                   Text(
                     _name,
                     style: TextStyle(
-                      color: AppColors.labelTextColor,
+                      color: AppColors.onSurfaceColor,
                       fontFamily: AppFonts.openSans,
                       fontWeight: AppFonts.semibold,
                       fontSize: 18,
@@ -103,7 +103,7 @@ class DeviceWidget extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 5),
-                      LoadingDots(AppColors.green)
+                      LoadingDots(AppColors.processColor)
                     ],
                   )
                 ],
@@ -112,7 +112,7 @@ class DeviceWidget extends StatelessWidget {
           ),
           IconButton(
             padding: EdgeInsets.all(20),
-            color: AppColors.labelTextColor,
+            color: AppColors.onSurfaceColor,
             icon: Icon(Icons.more_vert),
             onPressed: () {},
           )
@@ -421,7 +421,7 @@ class _MyDeviceState extends State<MyDevice> {
       width: 75,
       height: 75,
       decoration: BoxDecoration(
-        color: AppColors.lightBlue,
+        color: AppColors.lightAccentColor,
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       child: Column(
@@ -430,7 +430,7 @@ class _MyDeviceState extends State<MyDevice> {
             ? [
           Icon(
             _isAndroid ? Icons.phone_android : Icons.phone_iphone,
-            color: AppColors.blue,
+            color: AppColors.accentColor,
           ),
           Padding(
             padding: EdgeInsets.only(top: 5, left: 5, right: 5),
@@ -440,7 +440,7 @@ class _MyDeviceState extends State<MyDevice> {
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                color: AppColors.blue,
+                color: AppColors.accentColor,
                 fontFamily: AppFonts.openSans,
                 fontWeight: AppFonts.semibold,
                 fontSize: 16,
@@ -467,7 +467,7 @@ class MyDeviceWidgets {
       "device_name_hint".tr(),
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: AppColors.hint1TextColor,
+        color: AppColors.secondaryTextColor,
         fontFamily: AppFonts.openSans,
         fontWeight: AppFonts.semibold,
         fontSize: 16,
@@ -478,7 +478,7 @@ class MyDeviceWidgets {
   static Widget buildNameField([Function onChanged, bool hintAtStart = false, bool initialText]) {
     return TextField(
       style: TextStyle(
-        color: AppColors.labelTextColor,
+        color: AppColors.onSurfaceColor,
         fontFamily: AppFonts.openSans,
         fontWeight: AppFonts.bold,
         fontSize: 20,
@@ -493,7 +493,7 @@ class MyDeviceWidgets {
         contentPadding: EdgeInsets.symmetric(vertical: 5),
         hintText: "enter_device_name_hint".tr(),
         hintStyle: TextStyle(
-          color: AppColors.hint2TextColor,
+          color: AppColors.hintTextColor,
           fontFamily: AppFonts.openSans,
           fontWeight: AppFonts.regular,
           fontSize: 20,
