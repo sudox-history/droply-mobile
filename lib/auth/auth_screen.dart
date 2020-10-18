@@ -1,7 +1,7 @@
 import 'package:droply/auth/auth_screen_layout.dart';
 import 'package:droply/common/constants.dart';
-import 'package:droply/common/widgets.dart';
 import 'package:droply/common/navigation.dart';
+import 'package:droply/common/ui/my_device.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -33,9 +33,9 @@ class _AuthScreenState extends State<AuthScreen> {
                 MyDevice(),
                 Padding(
                   padding: EdgeInsets.only(top: 16),
-                  child: MyDeviceWidgets.buildNameHint(),
+                  child: MyDeviceAdditions.buildNameHint(),
                 ),
-                MyDeviceWidgets.buildNameField((allow) {
+                MyDeviceAdditions.buildNameField((allow) {
                   setState(() {
                     _canStart = allow;
                   });
@@ -128,6 +128,6 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   void _onStartSharingButtonClicked() {
-    Navigator.pushReplacementNamed(context, AppNavigation.MAIN_ROUTE_NAME);
+    Navigator.pushReplacementNamed(context, AppNavigation.mainRouteName);
   }
 }

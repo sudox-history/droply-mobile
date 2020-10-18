@@ -1,4 +1,4 @@
-import 'package:droply/common/widgets.dart';
+import 'package:droply/common/ui/my_device.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -19,8 +19,8 @@ class SettingsScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(height: 5),
-                    MyDeviceWidgets.buildNameHint(),
-                    MyDeviceWidgets.buildNameField(null, true),
+                    MyDeviceAdditions.buildNameHint(),
+                    MyDeviceAdditions.buildNameField(null, true),
                   ],
                 ))
               ],

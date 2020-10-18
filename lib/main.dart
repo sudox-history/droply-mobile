@@ -1,7 +1,7 @@
 import 'package:droply/auth/auth_screen.dart';
 import 'package:droply/common/constants.dart';
 import 'package:droply/common/navigation.dart';
-import 'package:droply/common/widgets.dart';
+import 'package:droply/common/ui/tab_bar.dart';
 import 'package:droply/main/main_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -37,17 +37,14 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: "Droply",
         routes: {
-          AppNavigation.AUTH_ROUTE_NAME: (context) => AuthScreen(),
-          AppNavigation.MAIN_ROUTE_NAME: (context) => MainScreen(),
+          AppNavigation.authRouteName: (context) => AuthScreen(),
+          AppNavigation.mainRouteName: (context) => MainScreen(),
         },
         theme: ThemeData(
           scaffoldBackgroundColor: AppColors.backgroundColor,
           primaryIconTheme: IconThemeData(color: AppColors.primaryIconsColor),
           tabBarTheme: TabBarTheme(
-            labelPadding: EdgeInsets.only(
-              left: TabBarStyles.tabHorizontalPadding,
-              right: TabBarStyles.tabHorizontalPadding,
-            ),
+            labelPadding: EdgeInsets.symmetric(horizontal: TabBarStyles.tabHorizontalPadding),
             indicator: TabBarIndicator(),
             labelColor: AppColors.accentColor,
             labelStyle: TextStyle(
