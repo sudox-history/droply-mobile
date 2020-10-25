@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:custom_switch/custom_switch.dart';
-
 import '../constants.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 Widget buildSwitchSetting(String header, String hint) {
   return Row(

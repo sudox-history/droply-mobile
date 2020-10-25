@@ -11,6 +11,7 @@ class AppColors {
 
   static final onAccentColor = Colors.white;
   static final onSurfaceColor = Color(0xFF424242);
+  static final onBackgroundColor = Color(0xFFF7F7F7);
 
   static final dividerColor = Color(0xFFE0E0E0);
   static final processColor = Color(0xFF18BFA5);
