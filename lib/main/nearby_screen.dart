@@ -1,4 +1,5 @@
 import 'package:droply/common/constants.dart';
+import 'package:droply/common/ui/other_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,45 +22,11 @@ class _NearbyScreenState extends State<NearbyScreen> {
         ),
         child: Column(
           children: [
-            _buildScanSection(),
+            buildSwitchSetting("Scan devices nearby", "We'll show you devices that also use "
+                "EasyShare")
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildScanSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Scan devices nearby",
-              style: TextStyle(
-                color: AppColors.onSurfaceColor,
-                fontFamily: AppFonts.openSans,
-                fontWeight: AppFonts.semibold,
-                fontSize: 16,
-              ),
-            ),
-            Switch(
-              value: true,
-              onChanged: (bool state) {},
-            )
-          ],
-        ),
-        Text(
-          "We'll show you devices that also use EasyShare",
-          style: TextStyle(
-            color: AppColors.hintTextColor,
-            fontFamily: AppFonts.openSans,
-            fontWeight: AppFonts.regular,
-            fontSize: 15,
-          ),
-        )
-      ],
     );
   }
 }

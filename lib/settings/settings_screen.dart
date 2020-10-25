@@ -1,4 +1,5 @@
 import 'package:droply/common/ui/my_device.dart';
+import 'package:droply/common/ui/other_widgets.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -14,7 +15,8 @@ class SettingsScreen extends StatelessWidget {
               children: [
                 MyDevice(),
                 SizedBox(width: 20),
-                Expanded(child: Column(
+                Expanded(
+                    child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -24,7 +26,10 @@ class SettingsScreen extends StatelessWidget {
                   ],
                 ))
               ],
-            )
+            ),
+            buildSwitchSetting("Calm mode", "Other users can see your profile via Internet or LAN"),
+            SizedBox(height: 20),
+            buildSwitchSetting("Ping me", "Other users can notify me to open the EasyShare")
           ],
         ),
       ),

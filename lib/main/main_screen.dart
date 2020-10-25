@@ -1,3 +1,4 @@
+import 'package:droply/common/navigation.dart';
 import 'package:droply/main/nearby_screen.dart';
 import 'package:droply/main/network_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,9 @@ class MainScreen extends StatelessWidget {
           actions: [
             IconButton(
               icon: Icon(Icons.settings),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, AppNavigation.settingsRouteName);
+              },
             )
           ],
           bottom: TabBar(isScrollable: true, tabs: [
