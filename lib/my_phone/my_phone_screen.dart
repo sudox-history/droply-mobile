@@ -1,5 +1,6 @@
 import 'package:droply/common/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class MyPhoneScreen extends StatelessWidget {
   @override
@@ -7,6 +8,20 @@ class MyPhoneScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("My phone"),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        icon: Icon(Icons.publish),
+        label: Text(
+          "Send",
+          style: TextStyle(
+            color: AppColors.onAccentColor,
+            fontWeight: AppFonts.semibold,
+            fontFamily: AppFonts.openSans,
+            letterSpacing: 0,
+            fontSize: 18,
+          ),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,19 +66,13 @@ class MyPhoneScreen extends StatelessWidget {
     return Stack(
       alignment: AlignmentDirectional.center,
       children: [
-        SizedBox(
-          width: 140,
-          height: 140,
-          child: CircularProgressIndicator(
-            value: 0.9,
-            strokeWidth: 15,
-            backgroundColor: AppColors.onBackgroundColor,
-          ),
-        ),
-        SizedBox(
-          width: 90,
-          height: 90,
-          child: Column(
+        CircularPercentIndicator(
+          radius: 140,
+          lineWidth: 15,
+          backgroundColor: AppColors.onBackgroundColor,
+          progressColor: AppColors.accentColor,
+          circularStrokeCap: CircularStrokeCap.round,
+          center: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -93,7 +102,8 @@ class MyPhoneScreen extends StatelessWidget {
               )
             ],
           ),
-        )
+          percent: 0.4,
+        ),
       ],
     );
   }
