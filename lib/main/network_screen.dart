@@ -1,7 +1,11 @@
 import 'package:droply/common/constants.dart';
 import 'package:droply/common/ui/device_widget.dart';
+import 'package:droply/state/progress.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+Progress progress1 = Progress();
+Progress progress2 = Progress();
 
 class NetworkScreen extends StatelessWidget {
   @override
@@ -10,12 +14,29 @@ class NetworkScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: EdgeInsets.only(
           top: 20,
+          left: 20,
           bottom: 20,
         ),
         child: Column(
           children: [
             _buildIdBlock(),
             SizedBox(height: 22.5),
+
+            FlatButton.icon(
+              onPressed: () {
+                progress1.upProgress();
+              },
+              icon: Icon(Icons.add),
+              label: Text("ggg1"),
+            ),
+            FlatButton.icon(
+              onPressed: () {
+                progress2.upProgress();
+              },
+              icon: Icon(Icons.delete),
+              label: Text("ggg2"),
+            ),
+
             DeviceWidget(
               "Nikita Phone",
               "Sending",
@@ -23,7 +44,7 @@ class NetworkScreen extends StatelessWidget {
               AppColors.lightenProcessColor,
               AppColors.lightProcessColor,
               Icons.computer,
-              0.7
+              progress1
             ),
             DeviceWidget(
               "Max Desktop",
@@ -31,8 +52,8 @@ class NetworkScreen extends StatelessWidget {
               AppColors.processColor,
               AppColors.lightenProcessColor,
               AppColors.lightProcessColor,
-              Icons.computer,
-              0.3
+              Icons.phone_android,
+              progress2
             ),
           ],
         ),

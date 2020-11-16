@@ -1,17 +1,21 @@
 import 'dart:math';
+import 'package:droply/main/nearby_screen.dart';
+import 'package:droply/state/progress.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class Aquarium extends StatefulWidget {
   final Color _backgroundColor;
   final Color _liquidColor;
   final Color _iconColor;
   final IconData _icon;
-  final double _progress;
+  final Progress _progress;
 
   Aquarium(this._backgroundColor, this._liquidColor, this._iconColor, this._icon, this._progress);
 
   @override
-  State<StatefulWidget> createState() => _AquariumState(_backgroundColor, _liquidColor, _iconColor, _icon, _progress);
+  State<StatefulWidget> createState() =>
+      _AquariumState(_backgroundColor, _liquidColor, _iconColor, _icon, _progress);
 }
 
 class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
@@ -23,9 +27,10 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   final Color _liquidColor;
   final Color _iconColor;
   final IconData _icon;
-  final double _progress;
+  final Progress _progress;
 
-  _AquariumState(this._backgroundColor, this._liquidColor, this._iconColor, this._icon, this._progress);
+  _AquariumState(
+      this._backgroundColor, this._liquidColor, this._iconColor, this._icon, this._progress);
 
   @override
   void initState() {
@@ -83,14 +88,16 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
         AnimatedBuilder(
           animation: _wavePositionAnimation,
           builder: (context, snapshot) {
-            return CustomPaint(
-              size: Size.square(60),
-              painter: _Aquarium(
-                _liquidColor,
-                _backgroundColor,
-                _waveScaleAnimation.value,
-                _wavePositionAnimation.value,
-                _progress,
+            return Observer(
+              builder: (_) => CustomPaint(
+                size: Size.square(60),
+                painter: _Aquarium(
+                  _liquidColor,
+                  _backgroundColor,
+                  _waveScaleAnimation.value,
+                  _wavePositionAnimation.value,
+                  _progress.progress,
+                ),
               ),
             );
           },

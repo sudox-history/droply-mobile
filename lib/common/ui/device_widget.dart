@@ -1,7 +1,10 @@
 import 'package:droply/common/constants.dart';
 import 'package:droply/common/ui/aquarium.dart';
 import 'package:droply/common/ui/loading_dots.dart';
+import 'package:droply/main/nearby_screen.dart';
+import 'package:droply/state/progress.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class DeviceWidget extends StatelessWidget {
   final String _name;
@@ -10,7 +13,7 @@ class DeviceWidget extends StatelessWidget {
   final Color _backgroundColor;
   final Color _liquidColor;
   final IconData _icon;
-  final double _progress;
+  final Progress _progress;
 
   DeviceWidget(
     this._name,
@@ -29,8 +32,8 @@ class DeviceWidget extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            child: Aquarium(_backgroundColor, _liquidColor, _primaryColor, _icon, _progress),
-            margin: EdgeInsets.only(left: 20),
+            child:
+                Aquarium(_backgroundColor, _liquidColor, _primaryColor, _icon, _progress),
           ),
           Expanded(
             child: Container(

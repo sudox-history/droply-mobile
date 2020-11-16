@@ -4,7 +4,7 @@ import '../constants.dart';
 
 Widget buildSwitchSetting(String header, String hint) {
   return Row(
-    crossAxisAlignment: CrossAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisAlignment: MainAxisAlignment.end,
     children: [
       Expanded(
@@ -16,8 +16,8 @@ Widget buildSwitchSetting(String header, String hint) {
               style: TextStyle(
                 color: AppColors.onSurfaceColor,
                 fontFamily: AppFonts.openSans,
-                fontWeight: AppFonts.semibold,
-                fontSize: 16,
+                fontWeight: AppFonts.regular,
+                fontSize: 17,
               ),
             ),
             Text(
@@ -34,6 +34,7 @@ Widget buildSwitchSetting(String header, String hint) {
       ),
       Transform.scale(
         scale: 0.7,
+        alignment: Alignment.topRight,
         child: CupertinoSwitch(
           activeColor: AppColors.accentColor,
           value: true,
