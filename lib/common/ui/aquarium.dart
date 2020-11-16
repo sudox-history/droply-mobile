@@ -1,4 +1,6 @@
 import 'dart:math';
+
+import 'package:droply/common/constants.dart';
 import 'package:flutter/material.dart';
 
 class Aquarium extends StatefulWidget {
@@ -6,12 +8,27 @@ class Aquarium extends StatefulWidget {
   final Color _liquidColor;
   final Color _iconColor;
   final IconData _icon;
+  final String _iconTitle;
   final double _progress;
 
-  Aquarium(this._backgroundColor, this._liquidColor, this._iconColor, this._icon, this._progress);
+  Aquarium(
+    this._backgroundColor,
+    this._liquidColor,
+    this._iconColor,
+    this._icon,
+    this._iconTitle,
+    this._progress,
+  );
 
   @override
-  State<StatefulWidget> createState() => _AquariumState(_backgroundColor, _liquidColor, _iconColor, _icon, _progress);
+  State<StatefulWidget> createState() => _AquariumState(
+        _backgroundColor,
+        _liquidColor,
+        _iconColor,
+        _icon,
+        _iconTitle,
+        _progress,
+      );
 }
 
 class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
@@ -23,9 +40,17 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   final Color _liquidColor;
   final Color _iconColor;
   final IconData _icon;
+  final String _iconTitle;
   final double _progress;
 
-  _AquariumState(this._backgroundColor, this._liquidColor, this._iconColor, this._icon, this._progress);
+  _AquariumState(
+    this._backgroundColor,
+    this._liquidColor,
+    this._iconColor,
+    this._icon,
+    this._iconTitle,
+    this._progress,
+  );
 
   @override
   void initState() {
@@ -77,6 +102,22 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    var content = <Widget>[
+      Icon(_icon, color: _iconColor),
+    ];
+
+    if (_iconTitle != null) {
+      content.add(Text(
+        _iconTitle.toUpperCase(),
+        style: TextStyle(
+          color: _iconColor,
+          fontFamily: AppFonts.openSans,
+          fontWeight: AppFonts.bold,
+          fontSize: 12
+        ),
+      ));
+    }
+
     return Stack(
       alignment: AlignmentDirectional.center,
       children: [
@@ -95,10 +136,7 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
             );
           },
         ),
-        Icon(
-          _icon,
-          color: _iconColor,
-        ),
+        Column(children: content)
       ],
     );
   }
@@ -120,7 +158,13 @@ class _Aquarium extends CustomPainter {
   final double _scale;
   final double _position;
 
-  _Aquarium(Color color, this._backgroundColor, this._scale, this._position, this._progress) {
+  _Aquarium(
+    Color color,
+    this._backgroundColor,
+    this._scale,
+    this._position,
+    this._progress,
+  ) {
     _paint.color = color;
   }
 
@@ -131,7 +175,8 @@ class _Aquarium extends CustomPainter {
     for (double x = 0; x <= size.width; x++) {
       points.add(Offset(
         x,
-        1.5 * sin((x) / (8 + _scale) + _position) + size.height * (1 - _progress),
+        1.5 * sin((x) / (8 + _scale) + _position) +
+            size.height * (1 - _progress),
       ));
     }
 
@@ -157,6 +202,8 @@ class _Aquarium extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     _Aquarium old = oldDelegate;
-    return old._progress != _progress || old._position != _position || old._scale != _scale;
+    return old._progress != _progress ||
+        old._position != _position ||
+        old._scale != _scale;
   }
 }

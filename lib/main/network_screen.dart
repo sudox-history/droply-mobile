@@ -23,7 +23,10 @@ class NetworkScreen extends StatelessWidget {
               AppColors.lightenProcessColor,
               AppColors.lightProcessColor,
               Icons.computer,
-              0.7
+              null,
+              0.7,
+              true,
+              () {},
             ),
             DeviceWidget(
               "Max Desktop",
@@ -32,7 +35,10 @@ class NetworkScreen extends StatelessWidget {
               AppColors.lightenProcessColor,
               AppColors.lightProcessColor,
               Icons.computer,
-              0.3
+              null,
+              0.3,
+              true,
+              () {},
             ),
           ],
         ),
