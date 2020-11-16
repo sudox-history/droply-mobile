@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:droply/common/constants.dart';
+import 'package:droply/state/progress.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class Aquarium extends StatefulWidget {
   final Color _backgroundColor;
@@ -9,7 +11,7 @@ class Aquarium extends StatefulWidget {
   final Color _iconColor;
   final IconData _icon;
   final String _iconTitle;
-  final double _progress;
+  final Progress _progress;
 
   Aquarium(
     this._backgroundColor,
@@ -41,7 +43,7 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   final Color _iconColor;
   final IconData _icon;
   final String _iconTitle;
-  final double _progress;
+  final Progress _progress;
 
   _AquariumState(
     this._backgroundColor,
@@ -124,14 +126,16 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
         AnimatedBuilder(
           animation: _wavePositionAnimation,
           builder: (context, snapshot) {
-            return CustomPaint(
-              size: Size.square(60),
-              painter: _Aquarium(
-                _liquidColor,
-                _backgroundColor,
-                _waveScaleAnimation.value,
-                _wavePositionAnimation.value,
-                _progress,
+            return Observer(
+              builder: (_) => CustomPaint(
+                size: Size.square(60),
+                painter: _Aquarium(
+                  _liquidColor,
+                  _backgroundColor,
+                  _waveScaleAnimation.value,
+                  _wavePositionAnimation.value,
+                  _progress.progress,
+                ),
               ),
             );
           },

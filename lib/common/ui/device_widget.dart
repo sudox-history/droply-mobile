@@ -1,7 +1,9 @@
 import 'package:droply/common/constants.dart';
 import 'package:droply/common/ui/aquarium.dart';
 import 'package:droply/common/ui/loading_dots.dart';
+import 'package:droply/state/progress.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class DeviceWidget extends StatelessWidget {
   final String _name;
@@ -11,7 +13,7 @@ class DeviceWidget extends StatelessWidget {
   final Color _liquidColor;
   final IconData _icon;
   final String _iconTitle;
-  final double _progress;
+  final Progress _progress;
   final bool _showDots;
   final Function _buttonCallback;
 

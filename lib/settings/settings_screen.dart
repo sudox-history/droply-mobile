@@ -1,3 +1,4 @@
+import 'package:droply/common/constants.dart';
 import 'package:droply/common/ui/my_device.dart';
 import 'package:droply/common/ui/other_widgets.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +28,35 @@ class SettingsScreen extends StatelessWidget {
                 ))
               ],
             ),
+            SizedBox(height: 20),
             buildSwitchSetting("Calm mode", "Other users can see your profile via Internet or LAN"),
             SizedBox(height: 20),
-            buildSwitchSetting("Ping me", "Other users can notify me to open the EasyShare")
+            buildSwitchSetting("Ping me", "Other users can notify me to open the EasyShare"),
+            SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    "Black list",
+                    style: TextStyle(
+                      color: AppColors.onSurfaceColor,
+                      fontFamily: AppFonts.openSans,
+                      fontWeight: AppFonts.regular,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+                Text(
+                  "8 users",
+                  style: TextStyle(
+                    color: AppColors.accentColor,
+                    fontFamily: AppFonts.openSans,
+                    fontWeight: AppFonts.regular,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

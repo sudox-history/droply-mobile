@@ -96,7 +96,7 @@ class App extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           cursorColor: AppColors.accentColor,
         ),
-        home: MyPhoneScreen(),
+        home: MainScreen(),
       ),
     );
   }
