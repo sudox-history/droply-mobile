@@ -3,7 +3,6 @@ import 'package:droply/common/ui/aquarium.dart';
 import 'package:droply/common/ui/loading_dots.dart';
 import 'package:droply/state/progress.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class DeviceWidget extends StatelessWidget {
   final String _name;
@@ -16,6 +15,7 @@ class DeviceWidget extends StatelessWidget {
   final Progress _progress;
   final bool _showDots;
   final Function _buttonCallback;
+  final String _counter;
 
   DeviceWidget(
     this._name,
@@ -28,6 +28,7 @@ class DeviceWidget extends StatelessWidget {
     this._progress,
     this._showDots,
     this._buttonCallback,
+    this._counter,
   );
 
   @override
@@ -94,6 +95,22 @@ class DeviceWidget extends StatelessWidget {
       )
     ];
 
+    if (_counter != null) {
+      children.add(
+        Text(
+          _counter,
+          style: TextStyle(
+            fontSize: 16,
+            fontFamily: AppFonts.openSans,
+            fontWeight: AppFonts.regular,
+            color: AppColors.hintTextColor,
+          ),
+        ),
+      );
+    }
+
+    var rightPadding = 16.0;
+
     if (_buttonCallback != null) {
       children.add(IconButton(
         padding: EdgeInsets.all(20),
@@ -101,10 +118,17 @@ class DeviceWidget extends StatelessWidget {
         icon: Icon(Icons.more_vert),
         onPressed: _buttonCallback,
       ));
+
+      rightPadding = 0;
     }
 
     return Padding(
-      padding: EdgeInsets.only(top: 7.5, bottom: 7.5),
+      padding: EdgeInsets.only(
+        top: 7.5,
+        bottom: 7.5,
+        right: rightPadding,
+        left: 16,
+      ),
       child: Row(children: children),
     );
   }

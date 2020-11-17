@@ -40,7 +40,6 @@ class _NearbyScreenState extends State<NearbyScreen> {
               icon: Icon(Icons.add),
               label: Text("ggg"),
             ),
-
             FlatButton.icon(
               onPressed: () {
                 progress2.upProgress();
@@ -48,25 +47,32 @@ class _NearbyScreenState extends State<NearbyScreen> {
               icon: Icon(Icons.delete),
               label: Text("ggg"),
             ),
-
-            Observer(
-              builder: (_) => DeviceWidget(
-                  "Nikita Phone",
-                  "Sending",
-                  AppColors.processColor,
-                  AppColors.lightenProcessColor,
-                  AppColors.lightProcessColor,
-                  Icons.computer,
-                  progress1),
+            DeviceWidget(
+              "Nikita Phone",
+              "Sending",
+              AppColors.processColor,
+              AppColors.lightenProcessColor,
+              AppColors.lightProcessColor,
+              Icons.computer,
+              null,
+              progress1,
+              true,
+              null,
+              null
             ),
             DeviceWidget(
-                "Max Desktop",
-                "Sending",
-                AppColors.processColor,
-                AppColors.lightenProcessColor,
-                AppColors.lightProcessColor,
-                Icons.phone_android,
-                progress2),
+              "Max Desktop",
+              "Sending",
+              AppColors.processColor,
+              AppColors.lightenProcessColor,
+              AppColors.lightProcessColor,
+              Icons.phone_android,
+              null,
+              progress2,
+              true,
+              null,
+              null
+            ),
           ],
         ),
       ),

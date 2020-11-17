@@ -46,6 +46,7 @@ class NetworkScreen extends StatelessWidget {
               progress1,
               true,
               () {},
+              null,
             ),
             DeviceWidget(
               "Max Desktop",
@@ -58,6 +59,7 @@ class NetworkScreen extends StatelessWidget {
               progress2,
               true,
               () {},
+              null,
             ),
           ],
         ),
