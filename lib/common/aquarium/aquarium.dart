@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:droply/common/aquarium/aquarium_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 
 import '../constants.dart';
 
@@ -97,8 +99,16 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
         }
       });
 
-    _waveScaleAnimationController.forward();
-    _wavePositionAnimationController.forward();
+    reaction((_) => _state.isAnimationEnabled, (enabled) {
+      if (enabled) {
+        _waveScaleAnimationController.forward();
+        _wavePositionAnimationController.forward();
+      } else {
+        _waveScaleAnimationController.stop();
+        _wavePositionAnimationController.stop();
+        setState(() {});
+      }
+    });
   }
 
   @override
@@ -171,20 +181,27 @@ class _Aquarium extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var points = List<Offset>();
+    bool needCalculatePolygons = _progress > 0 && _progress < 1;
+    Path path;
 
-    for (double x = 0; x <= size.width; x++) {
-      points.add(Offset(
-        x,
-        1.5 * sin((x) / (8 + _scale) + _position) +
-            size.height * (1 - _progress),
-      ));
+    if (needCalculatePolygons) {
+      var points = List<Offset>();
+
+      for (double x = 0; x <= size.width; x++) {
+        points.add(Offset(
+          x,
+          1.5 * sin((x) / (8 + _scale) + _position) +
+              size.height * (1 - _progress),
+        ));
+      }
+
+      points.add(Offset(size.width, size.height));
+      points.add(Offset(0, size.height));
+
+      path = Path();
+      path.addPolygon(points, true);
     }
 
-    points.add(Offset(size.width, size.height));
-    points.add(Offset(0, size.height));
-
-    var path = Path();
     var rect = Rect.fromPoints(Offset(0, 0), Offset(size.width, size.height));
     var clipRect = RRect.fromRectAndCorners(
       rect,
@@ -194,10 +211,12 @@ class _Aquarium extends CustomPainter {
       bottomRight: _borderRadius,
     );
 
-    path.addPolygon(points, true);
     canvas.clipRRect(clipRect);
     canvas.drawColor(_backgroundColor, BlendMode.src);
-    canvas.drawPath(path, _paint);
+
+    if (needCalculatePolygons) {
+      canvas.drawPath(path, _paint);
+    }
   }
 
   @override

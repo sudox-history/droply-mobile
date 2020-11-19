@@ -8,9 +8,12 @@ abstract class _AquariumState with Store {
   @observable
   double progress = 0;
 
+  @computed
+  bool get isAnimationEnabled => progress > 0 && progress < 1;
+
   @action
   void upProgress() {
-    progress += 0.0005;
+    progress += 0.01;
   }
 
   @action
