@@ -1,4 +1,6 @@
 import 'package:droply/common/constants.dart';
+import 'package:droply/common/ui/device_widget.dart';
+import 'package:droply/state/progress.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -28,9 +30,43 @@ class MyPhoneScreen extends StatelessWidget {
         children: [
           _buildListHeader("Statistics"),
           _buildProgressBlock(),
-          _buildListHeader("History"),
+          _buildListHeader("Active loadings"),
+          _buildLoadingFileItem(),
+          _buildLoadingFolderItem(),
         ],
       ),
+    );
+  }
+
+  Widget _buildLoadingFileItem() {
+    return DeviceWidget(
+      "Contract.txt",
+      "201.4Mb / 2.04 Gb",
+      AppColors.accentColor,
+      AppColors.lightenAccentColor,
+      AppColors.lightAccentColor,
+      Icons.insert_drive_file,
+      "txt",
+      Progress(),
+      false,
+      null,
+      null,
+    );
+  }
+
+  Widget _buildLoadingFolderItem() {
+    return DeviceWidget(
+      "Photos",
+      "37 Mb / 45.4 Mb",
+      AppColors.accentColor,
+      AppColors.lightenAccentColor,
+      AppColors.lightAccentColor,
+      Icons.folder,
+      null,
+      Progress(),
+      false,
+      null,
+      "17 / 20",
     );
   }
 
@@ -69,7 +105,7 @@ class MyPhoneScreen extends StatelessWidget {
         CircularPercentIndicator(
           radius: 140,
           lineWidth: 15,
-          backgroundColor: AppColors.onBackgroundColor,
+          backgroundColor: AppColors.lightenAccentColor,
           progressColor: AppColors.accentColor,
           circularStrokeCap: CircularStrokeCap.round,
           center: Column(
@@ -78,13 +114,13 @@ class MyPhoneScreen extends StatelessWidget {
             children: [
               Icon(
                 Icons.file_download,
-                color: AppColors.secondaryTextColor,
+                color: AppColors.accentColor,
               ),
               SizedBox(height: 1),
               Text(
                 "0 Mb",
                 style: TextStyle(
-                  color: AppColors.secondaryTextColor,
+                  color: AppColors.accentColor,
                   fontFamily: AppFonts.openSans,
                   fontWeight: AppFonts.bold,
                   fontSize: 16,
@@ -94,7 +130,7 @@ class MyPhoneScreen extends StatelessWidget {
               Text(
                 "0 Gb",
                 style: TextStyle(
-                  color: AppColors.secondaryTextColor,
+                  color: AppColors.accentColor,
                   fontFamily: AppFonts.openSans,
                   fontWeight: AppFonts.regular,
                   fontSize: 14,
@@ -125,7 +161,7 @@ class MyPhoneScreen extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.only(left: 20, top: 14, bottom: 14, right: 30),
       decoration: BoxDecoration(
-        color: AppColors.onBackgroundColor,
+        color: AppColors.lightenAccentColor,
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       child: Column(
@@ -135,7 +171,7 @@ class MyPhoneScreen extends StatelessWidget {
             info,
             maxLines: 1,
             style: TextStyle(
-              color: AppColors.secondaryTextColor,
+              color: AppColors.accentColor,
               fontWeight: AppFonts.bold,
               fontFamily: AppFonts.openSans,
               fontSize: 16,
@@ -146,7 +182,7 @@ class MyPhoneScreen extends StatelessWidget {
             name,
             maxLines: 1,
             style: TextStyle(
-              color: AppColors.secondaryTextColor,
+              color: AppColors.accentColor,
               fontWeight: AppFonts.regular,
               fontFamily: AppFonts.openSans,
               fontSize: 14,

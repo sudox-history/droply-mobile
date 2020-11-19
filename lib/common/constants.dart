@@ -6,6 +6,7 @@ class AppColors {
   static final secondaryTextColor = Color(0xFF808080);
   static final backgroundColor = Colors.white;
   static final hintTextColor = Color(0xFFBDBDBD);
+  static final lightenAccentColor = Color(0xFFF3FAFF);
   static final lightAccentColor = Color(0xFFE8F4FC);
   static final accentColor = Color(0xFF2196F3);
 
