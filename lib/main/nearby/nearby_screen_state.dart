@@ -57,7 +57,7 @@ abstract class _NearbyScreenState with Store {
 
           deviceStates = [first, second, third, fourth, fifth, sixth];
 
-          _timer = Timer.periodic(Duration(milliseconds: 50), (timer) {
+          _timer = Timer.periodic(Duration(milliseconds: 20), (timer) {
             first.progress.upProgress();
           });
         }

@@ -54,10 +54,10 @@ class DeviceWidget extends StatelessWidget {
                     color: AppColors.onSurfaceColor,
                     fontFamily: AppFonts.openSans,
                     fontWeight: AppFonts.semibold,
-                    fontSize: 18,
+                    fontSize: 17,
                   ),
                 ),
-                SizedBox(height: 2),
+                SizedBox(height: 5),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: descriptionBlock,

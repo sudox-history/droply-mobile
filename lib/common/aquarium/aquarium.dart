@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:droply/common/aquarium/aquarium_state.dart';
+import 'package:droply/common/ui/animate_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
@@ -37,6 +38,7 @@ class Aquarium extends StatefulWidget {
 class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   AnimationController _wavePositionAnimationController;
   AnimationController _waveScaleAnimationController;
+  AnimateIconController _doneIconAnimator;
   Animation<double> _wavePositionAnimation;
   Animation<double> _waveScaleAnimation;
   final Color _backgroundColor;
@@ -68,6 +70,8 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
       vsync: this,
       duration: Duration(seconds: 3),
     );
+
+    _doneIconAnimator = AnimateIconController();
 
     _wavePositionAnimation = Tween(
       begin: 4 * pi,
@@ -106,16 +110,44 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
       } else {
         _waveScaleAnimationController.stop();
         _wavePositionAnimationController.stop();
+
+        //TODO: Добавить интерполяцию на анимации кривых линий
+        _doneIconAnimator.animateToEnd();
         setState(() {});
       }
     });
   }
 
+  void t() {}
+
   @override
   Widget build(BuildContext context) {
-    var content = <Widget>[
-      Icon(_icon, color: _iconColor),
-    ];
+    var animateIcon = AnimateIcons(
+      startIcon: Icons.publish_rounded,
+      endIcon: Icons.done_rounded,
+      size: 26,
+      controller: _doneIconAnimator,
+      duration: Duration(milliseconds: 200),
+      // ignore: missing_return
+      onEndIconPress: () {
+        _doneIconAnimator.animateToStart();
+      },
+
+      // ignore: missing_return
+      onStartIconPress: () {},
+      color: _state.iconColor,
+      clockwise: false,
+    );
+
+    // ignore: missing_return
+    animateIcon.onFinished = () {
+      Future.delayed(Duration(seconds: 1)).then((value) => {
+            animateIcon.startIcon = _icon,
+            _doneIconAnimator.animateToStart(),
+          });
+    };
+
+    var content = <Widget>[animateIcon];
 
     if (_iconTitle != null) {
       content.add(Text(
@@ -139,7 +171,7 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
               size: Size.square(60),
               painter: _Aquarium(
                 _liquidColor,
-                _backgroundColor,
+                _state.bgColor,
                 _waveScaleAnimation.value,
                 _wavePositionAnimation.value,
                 _state.progress,
@@ -181,10 +213,10 @@ class _Aquarium extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    bool needCalculatePolygons = _progress > 0 && _progress < 1;
+    bool isProcess = _progress > 0 && _progress < 1;
     Path path;
 
-    if (needCalculatePolygons) {
+    if (isProcess) {
       var points = List<Offset>();
 
       for (double x = 0; x <= size.width; x++) {
@@ -214,7 +246,7 @@ class _Aquarium extends CustomPainter {
     canvas.clipRRect(clipRect);
     canvas.drawColor(_backgroundColor, BlendMode.src);
 
-    if (needCalculatePolygons) {
+    if (isProcess) {
       canvas.drawPath(path, _paint);
     }
   }

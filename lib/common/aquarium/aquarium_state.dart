@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:droply/common/constants.dart';
 import 'package:mobx/mobx.dart';
 
 part 'aquarium_state.g.dart';
@@ -10,6 +13,13 @@ abstract class _AquariumState with Store {
 
   @computed
   bool get isAnimationEnabled => progress > 0 && progress < 1;
+
+  @computed
+  Color get bgColor => isAnimationEnabled ? AppColors.lightenProcessColor : AppColors.lightenAccentColor;
+
+  @computed
+  Color get iconColor => isAnimationEnabled ? AppColors.processColor : AppColors.accentColor;
+
 
   @action
   void upProgress() {

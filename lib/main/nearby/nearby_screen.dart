@@ -59,7 +59,7 @@ class NearbyScreen extends StatelessWidget {
           color: AppColors.hintTextColor,
           fontFamily: AppFonts.openSans,
           fontWeight: AppFonts.regular,
-          fontSize: 16,
+          fontSize: 17,
         ),
       ),
     );
