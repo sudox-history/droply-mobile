@@ -1,6 +1,4 @@
 import 'package:droply/common/constants.dart';
-import 'package:droply/common/ui/device_widget.dart';
-import 'package:droply/state/progress/progress.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -39,35 +37,11 @@ class MyPhoneScreen extends StatelessWidget {
   }
 
   Widget _buildLoadingFileItem() {
-    return DeviceWidget(
-      "Contract.txt",
-      "201.4Mb / 2.04 Gb",
-      AppColors.accentColor,
-      AppColors.lightenAccentColor,
-      AppColors.lightAccentColor,
-      Icons.insert_drive_file,
-      "txt",
-      Progress(),
-      false,
-      null,
-      null,
-    );
+    return Text("TEST");
   }
 
   Widget _buildLoadingFolderItem() {
-    return DeviceWidget(
-      "Photos",
-      "37 Mb / 45.4 Mb",
-      AppColors.accentColor,
-      AppColors.lightenAccentColor,
-      AppColors.lightAccentColor,
-      Icons.folder,
-      null,
-      Progress(),
-      false,
-      null,
-      "17 / 20",
-    );
+    return Text("Test");
   }
 
   Widget _buildListHeader(String text) {

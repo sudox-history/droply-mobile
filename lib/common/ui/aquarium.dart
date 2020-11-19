@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:droply/state/progress/progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -11,7 +10,7 @@ class Aquarium extends StatefulWidget {
   final Color _iconColor;
   final IconData _icon;
   final String _iconTitle;
-  final Progress _progress;
+  final double _progress;
 
   Aquarium(
     this._backgroundColor,
@@ -43,7 +42,7 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   final Color _iconColor;
   final IconData _icon;
   final String _iconTitle;
-  final Progress _progress;
+  final double _progress;
 
   _AquariumState(
     this._backgroundColor,
@@ -112,11 +111,10 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
       content.add(Text(
         _iconTitle.toUpperCase(),
         style: TextStyle(
-          color: _iconColor,
-          fontFamily: AppFonts.openSans,
-          fontWeight: AppFonts.bold,
-          fontSize: 12
-        ),
+            color: _iconColor,
+            fontFamily: AppFonts.openSans,
+            fontWeight: AppFonts.bold,
+            fontSize: 12),
       ));
     }
 
@@ -134,7 +132,7 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
                   _backgroundColor,
                   _waveScaleAnimation.value,
                   _wavePositionAnimation.value,
-                  _progress.progress,
+                  _progress,
                 ),
               ),
             );
@@ -206,6 +204,7 @@ class _Aquarium extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     _Aquarium old = oldDelegate;
+
     return old._progress != _progress ||
         old._position != _position ||
         old._scale != _scale;

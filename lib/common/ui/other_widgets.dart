@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
-Widget buildSwitchSetting(String header, String hint) {
+Widget buildSwitchSetting(String header, String hint, [bool isChecked = false, callback]) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisAlignment: MainAxisAlignment.end,
@@ -37,8 +37,8 @@ Widget buildSwitchSetting(String header, String hint) {
         alignment: Alignment.topRight,
         child: CupertinoSwitch(
           activeColor: AppColors.accentColor,
-          value: true,
-          onChanged: (bool state) {},
+          value: isChecked,
+          onChanged: callback,
         ),
       )
     ],
