@@ -13,24 +13,37 @@ abstract class _NearbyScreenState with Store {
   @observable
   List<DeviceState> deviceStates;
 
+  bool _isCancelled = false;
+  Timer _timer;
+
   @action
   void toggleScanning() {
     isScanningEnabled = !isScanningEnabled;
 
     if (isScanningEnabled) {
-      Future.delayed(Duration(seconds: 3)).then((value) {
-        var first = DeviceState();
-        first.name = "Nikita Phone";
-        first.type = DeviceType.PHONE;
-        first.status = DeviceStatus.RECEIVING;
-        deviceStates = [first];
+      _isCancelled = false;
 
-        Timer.periodic(Duration(milliseconds: 50), (timer) {
-          first.progress.upProgress();
-        });
+      Future.delayed(Duration(seconds: 3)).then((value) {
+        if (!_isCancelled) {
+          var first = DeviceState();
+          first.name = "Nikita Phone";
+          first.type = DeviceType.PHONE;
+          first.status = DeviceStatus.RECEIVING;
+          deviceStates = [first];
+
+          _timer = Timer.periodic(Duration(milliseconds: 50), (timer) {
+            first.progress.upProgress();
+          });
+        }
       });
     } else {
       deviceStates = null;
+      _isCancelled = true;
+
+      if (_timer != null) {
+        _timer.cancel();
+        _timer = null;
+      }
     }
   }
 }

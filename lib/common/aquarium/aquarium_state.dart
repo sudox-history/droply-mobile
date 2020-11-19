@@ -10,11 +10,11 @@ abstract class _AquariumState with Store {
 
   @action
   void upProgress() {
-    progress += 0.005;
+    progress += 0.0005;
   }
 
   @action
   void downProgress() {
-    progress -= 0.005;
+    progress -= 0.0005;
   }
 }
