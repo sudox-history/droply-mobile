@@ -23,6 +23,17 @@ abstract class _DeviceState with Store {
   bool get needShowDots => status != DeviceStatus.IDLE;
 
   @computed
+  AquariumState get aquariumState {
+    if (status == DeviceStatus.IDLE) {
+      var state = AquariumState();
+      state.progress = 1;
+      return state;
+    } else {
+      return progress;
+    }
+  }
+
+  @computed
   IconData get icon {
     if (status == DeviceStatus.IDLE) {
       switch (type) {
@@ -69,7 +80,7 @@ abstract class _DeviceState with Store {
     if (status != DeviceStatus.IDLE) {
       return AppColors.processColor;
     } else {
-      return AppColors.secondaryTextColor;
+      return AppColors.hintTextColor;
     }
   }
 

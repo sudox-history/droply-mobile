@@ -25,7 +25,7 @@ class NearbyScreen extends StatelessWidget {
 
           if (_state.deviceStates != null) {
             children.addAll(_state.deviceStates.map((state) {
-              return DeviceWidget(null, state);
+              return DeviceWidget((){}, state);
             }));
           }
 

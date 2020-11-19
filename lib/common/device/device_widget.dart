@@ -39,7 +39,7 @@ class DeviceWidget extends StatelessWidget {
             _state.iconColor,
             _state.icon,
             null,
-            _state.progress,
+            _state.aquariumState,
           ),
         ),
         Expanded(
