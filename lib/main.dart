@@ -3,7 +3,7 @@ import 'package:droply/common/constants.dart';
 import 'package:droply/common/navigation.dart';
 import 'package:droply/common/ui/tab_bar.dart';
 import 'package:droply/main/main_screen.dart';
-import 'package:droply/my_phone/my_phone_screen.dart';
+import 'package:droply/statistics/statistics_screen.dart';
 import 'package:droply/settings/settings_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

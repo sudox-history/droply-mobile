@@ -1,11 +1,8 @@
 import 'package:droply/common/constants.dart';
 import 'package:droply/common/ui/device_widget.dart';
-import 'package:droply/state/progress.dart';
+import 'package:droply/state/progress/progress.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-Progress progress1 = Progress();
-Progress progress2 = Progress();
 
 class NetworkScreen extends StatelessWidget {
   @override
@@ -21,22 +18,6 @@ class NetworkScreen extends StatelessWidget {
           children: [
             _buildIdBlock(),
             SizedBox(height: 22.5),
-
-            FlatButton.icon(
-              onPressed: () {
-                progress1.upProgress();
-              },
-              icon: Icon(Icons.add),
-              label: Text("ggg1"),
-            ),
-            FlatButton.icon(
-              onPressed: () {
-                progress2.upProgress();
-              },
-              icon: Icon(Icons.delete),
-              label: Text("ggg2"),
-            ),
-
             DeviceWidget(
               "Nikita Phone",
               "Sending",
@@ -44,7 +25,6 @@ class NetworkScreen extends StatelessWidget {
               AppColors.lightenProcessColor,
               AppColors.lightProcessColor,
               Icons.computer,
-              progress1
             ),
             DeviceWidget(
               "Max Desktop",
@@ -53,7 +33,6 @@ class NetworkScreen extends StatelessWidget {
               AppColors.lightenProcessColor,
               AppColors.lightProcessColor,
               Icons.phone_android,
-              progress2
             ),
           ],
         ),

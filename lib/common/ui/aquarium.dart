@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:droply/main/nearby_screen.dart';
-import 'package:droply/state/progress.dart';
+import 'package:droply/state/progress/progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
