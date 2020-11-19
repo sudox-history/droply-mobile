@@ -23,11 +23,10 @@ abstract class _NearbyScreenState with Store {
         first.name = "Nikita Phone";
         first.type = DeviceType.PHONE;
         first.status = DeviceStatus.RECEIVING;
-        first.progress = 0;
         deviceStates = [first];
 
-        Timer.periodic(Duration(milliseconds: 100), (timer) {
-          first.upProgress();
+        Timer.periodic(Duration(milliseconds: 50), (timer) {
+          first.progress.upProgress();
         });
       });
     } else {

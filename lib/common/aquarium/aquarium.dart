@@ -1,6 +1,6 @@
 import 'dart:math';
+import 'package:droply/common/aquarium/aquarium_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../constants.dart';
 
@@ -8,9 +8,9 @@ class Aquarium extends StatefulWidget {
   final Color _backgroundColor;
   final Color _liquidColor;
   final Color _iconColor;
-  final IconData _icon;
   final String _iconTitle;
-  final double _progress;
+  final AquariumState _state;
+  final IconData _icon;
 
   Aquarium(
     this._backgroundColor,
@@ -18,7 +18,7 @@ class Aquarium extends StatefulWidget {
     this._iconColor,
     this._icon,
     this._iconTitle,
-    this._progress,
+    this._state,
   );
 
   @override
@@ -28,7 +28,7 @@ class Aquarium extends StatefulWidget {
         _iconColor,
         _icon,
         _iconTitle,
-        _progress,
+        _state,
       );
 }
 
@@ -42,7 +42,7 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   final Color _iconColor;
   final IconData _icon;
   final String _iconTitle;
-  final double _progress;
+  final AquariumState _state;
 
   _AquariumState(
     this._backgroundColor,
@@ -50,7 +50,7 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
     this._iconColor,
     this._icon,
     this._iconTitle,
-    this._progress,
+    this._state,
   );
 
   @override
@@ -111,10 +111,11 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
       content.add(Text(
         _iconTitle.toUpperCase(),
         style: TextStyle(
-            color: _iconColor,
-            fontFamily: AppFonts.openSans,
-            fontWeight: AppFonts.bold,
-            fontSize: 12),
+          color: _iconColor,
+          fontFamily: AppFonts.openSans,
+          fontWeight: AppFonts.bold,
+          fontSize: 12,
+        ),
       ));
     }
 
@@ -124,16 +125,14 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
         AnimatedBuilder(
           animation: _wavePositionAnimation,
           builder: (context, snapshot) {
-            return Observer(
-              builder: (_) => CustomPaint(
-                size: Size.square(60),
-                painter: _Aquarium(
-                  _liquidColor,
-                  _backgroundColor,
-                  _waveScaleAnimation.value,
-                  _wavePositionAnimation.value,
-                  _progress,
-                ),
+            return CustomPaint(
+              size: Size.square(60),
+              painter: _Aquarium(
+                _liquidColor,
+                _backgroundColor,
+                _waveScaleAnimation.value,
+                _wavePositionAnimation.value,
+                _state.progress,
               ),
             );
           },

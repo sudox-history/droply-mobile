@@ -1,3 +1,4 @@
+import 'package:droply/common/aquarium/aquarium_state.dart';
 import 'package:droply/common/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
@@ -8,7 +9,7 @@ class DeviceState = _DeviceState with _$DeviceState;
 
 abstract class _DeviceState with Store {
   @observable
-  double progress = 0;
+  AquariumState progress = AquariumState();
   @observable
   String name;
   @observable
@@ -93,16 +94,6 @@ abstract class _DeviceState with Store {
     }
 
     return null;
-  }
-
-  @action
-  void upProgress() {
-    progress += 0.01;
-  }
-
-  @action
-  void downProgress() {
-    progress -= 0.1;
   }
 }
 

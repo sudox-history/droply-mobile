@@ -1,6 +1,6 @@
+import 'package:droply/common/aquarium/aquarium.dart';
 import 'package:droply/common/constants.dart';
 import 'package:droply/common/device/device_state.dart';
-import 'package:droply/common/ui/aquarium.dart';
 import 'package:droply/common/ui/loading_dots.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
