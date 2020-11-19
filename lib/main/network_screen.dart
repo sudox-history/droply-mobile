@@ -1,6 +1,6 @@
 import 'package:droply/common/constants.dart';
 import 'package:droply/common/ui/device_widget.dart';
-import 'package:droply/state/progress.dart';
+import 'package:droply/state/progress/progress.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -1,7 +1,7 @@
 import 'package:droply/common/constants.dart';
 import 'package:droply/common/ui/aquarium.dart';
 import 'package:droply/common/ui/loading_dots.dart';
-import 'package:droply/state/progress.dart';
+import 'package:droply/state/progress/progress.dart';
 import 'package:flutter/material.dart';
 
 class DeviceWidget extends StatelessWidget {
