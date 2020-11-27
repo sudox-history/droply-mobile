@@ -26,7 +26,7 @@ class DeviceWidget extends StatelessWidget {
         ),
       ];
 
-      if (_state.needShowDots) {
+      if (_state.showDots) {
         descriptionBlock.add(SizedBox(width: 5));
         descriptionBlock.add(LoadingDots(AppColors.processColor));
       }
@@ -34,11 +34,6 @@ class DeviceWidget extends StatelessWidget {
       var children = [
         Container(
           child: Aquarium(
-            _state.backgroundColor,
-            _state.liquidColor,
-            _state.iconColor,
-            _state.icon,
-            null,
             _state.aquariumState,
           ),
         ),

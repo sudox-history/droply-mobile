@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:droply/common/aquarium/aquarium_state.dart';
 import 'package:droply/common/device/device_state.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 part 'nearby_screen_state.g.dart';
@@ -15,6 +18,7 @@ abstract class _NearbyScreenState with Store {
 
   bool _isCancelled = false;
   Timer _timer;
+  Timer _timer2;
 
   @action
   void toggleScanning() {
@@ -23,43 +27,72 @@ abstract class _NearbyScreenState with Store {
     if (isScanningEnabled) {
       _isCancelled = false;
 
-      Future.delayed(Duration(seconds: 3)).then((value) {
+      Future.delayed(Duration(seconds: 1)).then((value) {
         if (!_isCancelled) {
+          var progress = 0.0;
+          var progress2 = 0.0;
+
           var first = DeviceState();
           first.name = "Nikita Phone";
-          first.type = DeviceType.PHONE;
-          first.status = DeviceStatus.RECEIVING;
+          first.aquariumState = AquariumState();
+          first.dateTime = DateFormat("hh:mm on EEEE").format(DateTime.now());
+
+          first.aquariumState.deviceIcon = Icons.phone_android_rounded;
+          first.aquariumState.loadingIcon = Icons.download_rounded;
+
           var second = DeviceState();
-          second.name = "Alexander PC";
-          second.type = DeviceType.DESKTOP;
-          second.status = DeviceStatus.IDLE;
-          second.sentTime = 0;
+          second.name = "Yaroslav Dekstop";
+          second.aquariumState = AquariumState();
+          second.dateTime = DateFormat("hh:mm on EEEE").format(DateTime.now());
+
+          second.aquariumState.deviceIcon = Icons.desktop_mac_rounded;
+          second.aquariumState.loadingIcon = Icons.publish_rounded;
+
           var third = DeviceState();
-          third.name = "Yaroslav Phone";
-          third.type = DeviceType.PHONE;
-          third.status = DeviceStatus.IDLE;
-          third.sentTime = 0;
-          var fourth = DeviceState();
-          fourth.name = "Maxim Tablet";
-          fourth.type = DeviceType.TABLET;
-          fourth.status = DeviceStatus.IDLE;
-          fourth.sentTime = 0;
-          var fifth = DeviceState();
-          fifth.name = "Anton iPhone";
-          fifth.type = DeviceType.IOS;
-          fifth.status = DeviceStatus.IDLE;
-          fifth.sentTime = 0;
-          var sixth = DeviceState();
-          sixth.name = "Unknown device";
-          sixth.type = DeviceType.UNKNOWN;
-          sixth.status = DeviceStatus.IDLE;
-          sixth.sentTime = 0;
+          third.name = "Test";
+          third.aquariumState = AquariumState();
+          third.dateTime = DateFormat("hh:mm on EEEE").format(DateTime.now());
+          third.aquariumState.deviceIcon = Icons.desktop_mac_rounded;
+          third.aquariumState.loadingIcon = Icons.publish_rounded;
 
-          deviceStates = [first, second, third, fourth, fifth, sixth];
+          deviceStates = [first, second, third];
 
-          _timer = Timer.periodic(Duration(milliseconds: 20), (timer) {
-            first.progress.upProgress();
-          });
+          Future.delayed(Duration(seconds: 1)).then((value) => {
+                first.deviceStatus = DeviceStatus.RECEIVING,
+                _timer = Timer.periodic(Duration(milliseconds: 30), (timer) {
+                  progress += 0.01;
+                  first.aquariumState.setProgress(progress);
+                  if (progress >= 1.0) {
+                    first.deviceStatus = DeviceStatus.IDLE;
+                    _timer.cancel();
+                  }
+                }),
+              });
+
+          Future.delayed(Duration(seconds: 10)).then((value) => {
+                progress = 0,
+                first.deviceStatus = DeviceStatus.SENDING,
+                first.aquariumState.loadingIcon = Icons.publish_rounded,
+                _timer = Timer.periodic(Duration(milliseconds: 60), (timer) {
+                  progress += 0.01;
+                  first.aquariumState.setProgress(progress);
+                  if (progress >= 1.0) {
+                    first.deviceStatus = DeviceStatus.IDLE;
+                    _timer.cancel();
+                  }
+                }),
+              });
+
+          Future.delayed(Duration(seconds: 2)).then((value) => {
+                second.deviceStatus = DeviceStatus.SENDING,
+                _timer2 = Timer.periodic(Duration(milliseconds: 60), (timer) {
+                  progress2 += 0.005;
+                  second.aquariumState.setProgress(progress2);
+                  if (progress2 >= 1.0) {
+                    second.deviceStatus = DeviceStatus.IDLE;
+                  }
+                }),
+              });
         }
       });
     } else {
@@ -68,7 +101,9 @@ abstract class _NearbyScreenState with Store {
 
       if (_timer != null) {
         _timer.cancel();
+        _timer2.cancel();
         _timer = null;
+        _timer2 = null;
       }
     }
   }

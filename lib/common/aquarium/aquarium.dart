@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:droply/common/aquarium/aquarium_state.dart';
-import 'package:droply/common/ui/animate_icons.dart';
+import 'package:droply/common/ui/icon/transition_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
@@ -8,29 +8,12 @@ import 'package:mobx/mobx.dart';
 import '../constants.dart';
 
 class Aquarium extends StatefulWidget {
-  final Color _backgroundColor;
-  final Color _liquidColor;
-  final Color _iconColor;
-  final String _iconTitle;
   final AquariumState _state;
-  final IconData _icon;
 
-  Aquarium(
-    this._backgroundColor,
-    this._liquidColor,
-    this._iconColor,
-    this._icon,
-    this._iconTitle,
-    this._state,
-  );
+  Aquarium(this._state);
 
   @override
   State<StatefulWidget> createState() => _AquariumState(
-        _backgroundColor,
-        _liquidColor,
-        _iconColor,
-        _icon,
-        _iconTitle,
         _state,
       );
 }
@@ -38,22 +21,12 @@ class Aquarium extends StatefulWidget {
 class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   AnimationController _wavePositionAnimationController;
   AnimationController _waveScaleAnimationController;
-  AnimateIconController _doneIconAnimator;
+  TransitionIconController _doneIconAnimator;
   Animation<double> _wavePositionAnimation;
   Animation<double> _waveScaleAnimation;
-  final Color _backgroundColor;
-  final Color _liquidColor;
-  final Color _iconColor;
-  final IconData _icon;
-  final String _iconTitle;
   final AquariumState _state;
 
   _AquariumState(
-    this._backgroundColor,
-    this._liquidColor,
-    this._iconColor,
-    this._icon,
-    this._iconTitle,
     this._state,
   );
 
@@ -71,7 +44,7 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
       duration: Duration(seconds: 3),
     );
 
-    _doneIconAnimator = AnimateIconController();
+    _doneIconAnimator = TransitionIconController();
 
     _wavePositionAnimation = Tween(
       begin: 4 * pi,
@@ -103,57 +76,51 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
         }
       });
 
-    reaction((_) => _state.isAnimationEnabled, (enabled) {
+    reaction((_) => _state.showLiquidAnimation, (enabled) {
       if (enabled) {
         _waveScaleAnimationController.forward();
         _wavePositionAnimationController.forward();
+        _state.setBackgroundColor(AppColors.lightenProcessColor);
+        _doneIconAnimator.animateProcess();
       } else {
         _waveScaleAnimationController.stop();
         _wavePositionAnimationController.stop();
 
         //TODO: Добавить интерполяцию на анимации кривых линий
-        _doneIconAnimator.animateToEnd();
+        _doneIconAnimator.animateDone();
         setState(() {});
       }
     });
   }
 
-  void t() {}
-
   @override
   Widget build(BuildContext context) {
-    var animateIcon = AnimateIcons(
-      startIcon: Icons.publish_rounded,
-      endIcon: Icons.done_rounded,
-      size: 26,
-      controller: _doneIconAnimator,
-      duration: Duration(milliseconds: 200),
-      // ignore: missing_return
-      onEndIconPress: () {
-        _doneIconAnimator.animateToStart();
-      },
+    var icon = TransitionIcon(
+        doneIcon: Icons.done_rounded,
+        loadingIcon: _state.loadingIcon,
+        deviceIcon: _state.deviceIcon,
+        doneIconColor: AppColors.processColor,
+        loadingIconColor: AppColors.processColor,
+        deviceIconColor: AppColors.accentColor,
+        onDone: () {
+          _state.setBackgroundColor(AppColors.lightenAccentColor);
+        },
+        onFinished: () {},
+        size: 24,
+        controller: _doneIconAnimator,
+        animationDuration: 200,
+        doneDuration: 200,
+        clockwise: true);
 
-      // ignore: missing_return
-      onStartIconPress: () {},
-      color: _state.iconColor,
-      clockwise: false,
-    );
+    var content = <Widget>[
+      icon,
+    ];
 
-    // ignore: missing_return
-    animateIcon.onFinished = () {
-      Future.delayed(Duration(seconds: 1)).then((value) => {
-            animateIcon.startIcon = _icon,
-            _doneIconAnimator.animateToStart(),
-          });
-    };
-
-    var content = <Widget>[animateIcon];
-
-    if (_iconTitle != null) {
+    if (_state.iconTitle != null) {
       content.add(Text(
-        _iconTitle.toUpperCase(),
+        _state.iconTitle.toUpperCase(),
         style: TextStyle(
-          color: _iconColor,
+          color: AppColors.accentColor,
           fontFamily: AppFonts.openSans,
           fontWeight: AppFonts.bold,
           fontSize: 12,
@@ -167,16 +134,17 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
         AnimatedBuilder(
           animation: _wavePositionAnimation,
           builder: (context, snapshot) {
-            return CustomPaint(
-              size: Size.square(60),
-              painter: _Aquarium(
-                _liquidColor,
-                _state.bgColor,
-                _waveScaleAnimation.value,
-                _wavePositionAnimation.value,
-                _state.progress,
-              ),
-            );
+            return Observer(
+                builder: (_) => CustomPaint(
+                      size: Size.square(60),
+                      painter: _Aquarium(
+                        AppColors.lightProcessColor,
+                        _state.backgroundColor,
+                        _waveScaleAnimation.value,
+                        _wavePositionAnimation.value,
+                        _state.progress,
+                      ),
+                    ));
           },
         ),
         Column(children: content)
@@ -213,7 +181,7 @@ class _Aquarium extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    bool isProcess = _progress > 0 && _progress < 1;
+    bool isProcess = _progress > 0 && _progress < 1.0;
     Path path;
 
     if (isProcess) {

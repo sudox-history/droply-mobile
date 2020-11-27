@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:droply/common/constants.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
 
 part 'aquarium_state.g.dart';
@@ -12,22 +13,27 @@ abstract class _AquariumState with Store {
   double progress = 0;
 
   @computed
-  bool get isAnimationEnabled => progress > 0 && progress < 1;
+  bool get showLiquidAnimation => progress > 0 && progress < 1.0;
 
-  @computed
-  Color get bgColor => isAnimationEnabled ? AppColors.lightenProcessColor : AppColors.lightenAccentColor;
+  IconData loadingIcon;
 
-  @computed
-  Color get iconColor => isAnimationEnabled ? AppColors.processColor : AppColors.accentColor;
+  IconData deviceIcon;
 
+  @observable
+  String iconTitle;
+
+  Color liquidColor = AppColors.lightProcessColor;
+
+  @observable
+  Color backgroundColor = AppColors.lightenAccentColor;
 
   @action
-  void upProgress() {
-    progress += 0.01;
+  void setBackgroundColor(Color color) {
+    backgroundColor = color;
   }
 
   @action
-  void downProgress() {
-    progress -= 0.0005;
+  void setProgress(double progress) {
+    this.progress = progress;
   }
 }
