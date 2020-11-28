@@ -82,6 +82,7 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
         _wavePositionAnimationController.forward();
         _state.setBackgroundColor(AppColors.lightenProcessColor);
         _doneIconAnimator.animateProcess();
+        _state.iconTitleColor = AppColors.processColor;
       } else {
         _waveScaleAnimationController.stop();
         _wavePositionAnimationController.stop();
@@ -104,6 +105,7 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
         deviceIconColor: AppColors.accentColor,
         onDone: () {
           _state.setBackgroundColor(AppColors.lightenAccentColor);
+          _state.iconTitleColor = AppColors.accentColor;
         },
         onFinished: () {},
         size: 24,
@@ -117,15 +119,18 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
     ];
 
     if (_state.iconTitle != null) {
-      content.add(Text(
-        _state.iconTitle.toUpperCase(),
-        style: TextStyle(
-          color: AppColors.accentColor,
-          fontFamily: AppFonts.openSans,
-          fontWeight: AppFonts.bold,
-          fontSize: 12,
-        ),
-      ));
+      content.add(
+        Observer(
+            builder: (_) => Text(
+                  _state.iconTitle.toUpperCase(),
+                  style: TextStyle(
+                    color: _state.iconTitleColor,
+                    fontFamily: AppFonts.openSans,
+                    fontWeight: AppFonts.bold,
+                    fontSize: 12,
+                  ),
+                )),
+      );
     }
 
     return Stack(

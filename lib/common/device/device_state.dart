@@ -9,7 +9,6 @@ part 'device_state.g.dart';
 class DeviceState = _DeviceState with _$DeviceState;
 
 abstract class _DeviceState with Store {
-
   @observable
   AquariumState aquariumState;
 

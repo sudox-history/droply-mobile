@@ -9,7 +9,6 @@ class NetworkScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: EdgeInsets.only(
           top: 20,
-          left: 20,
           bottom: 20,
         ),
         child: Column(

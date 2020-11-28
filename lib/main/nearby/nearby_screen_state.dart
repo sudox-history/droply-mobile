@@ -36,7 +36,6 @@ abstract class _NearbyScreenState with Store {
           first.name = "Nikita Phone";
           first.aquariumState = AquariumState();
           first.dateTime = DateFormat("hh:mm on EEEE").format(DateTime.now());
-
           first.aquariumState.deviceIcon = Icons.phone_android_rounded;
           first.aquariumState.loadingIcon = Icons.download_rounded;
 
@@ -44,7 +43,6 @@ abstract class _NearbyScreenState with Store {
           second.name = "Yaroslav Dekstop";
           second.aquariumState = AquariumState();
           second.dateTime = DateFormat("hh:mm on EEEE").format(DateTime.now());
-
           second.aquariumState.deviceIcon = Icons.desktop_mac_rounded;
           second.aquariumState.loadingIcon = Icons.publish_rounded;
 
