@@ -1,157 +1,98 @@
-import 'package:droply/common/ui/icon/transition_icon_state.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'package:flutter_mobx/flutter_mobx.dart';
-
 class TransitionIcon extends StatefulWidget {
-  final IconData doneIcon, loadingIcon, deviceIcon;
-  final Color doneIconColor, loadingIconColor, deviceIconColor;
-  final void Function() onDone, onFinished;
-  final int animationDuration, doneDuration;
-  final bool clockwise;
+  final int animationDuration;
   final double size;
-  final TransitionIconController controller;
 
-  const TransitionIcon({
-    @required this.doneIcon,
-    @required this.loadingIcon,
-    @required this.deviceIcon,
-    @required this.doneIconColor,
-    @required this.loadingIconColor,
-    @required this.deviceIconColor,
-    @required this.onDone,
-    @required this.onFinished,
-    @required this.size,
-    @required this.controller,
+  TransitionIcon({
+    Key key,
     @required this.animationDuration,
-    @required this.doneDuration,
-    @required this.clockwise,
-  });
+    @required this.size,
+  }) : super(key: key);
 
   @override
-  _TransitionIconState createState() => _TransitionIconState();
+  TransitionIconState createState() => TransitionIconState();
 }
 
-class _TransitionIconState extends State<TransitionIcon>
+class TransitionIconState extends State<TransitionIcon>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
-
-  TransitionIconState state = TransitionIconState();
+  IconData _oldIcon;
+  IconData _icon;
+  Color _color;
 
   @override
   void initState() {
-    this._controller = new AnimationController(
+    super.initState();
+
+    _controller = new AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: widget.animationDuration ?? 1),
+      duration: Duration(milliseconds: widget.animationDuration),
       lowerBound: 0.0,
       upperBound: 1.0,
-    );
-    this._controller.addListener(() {
-      setState(() {});
-    });
-
-    initControllerFunctions();
-    super.initState();
+    )
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          setState(() {
+            _oldIcon = null;
+          });
+        }
+      })
+      ..addListener(() {
+        setState(() {});
+      });
   }
 
-  var isProcess = true;
-  var isDone = true;
+  @override
+  Widget build(BuildContext context) {
+    Icon icon = Icon(
+      _icon,
+      size: widget.size,
+      color: _color,
+    );
 
-  initControllerFunctions() {
-    if (widget.controller != null) {
-      state.setAnimatedIconColor(widget.deviceIconColor);
-      state.setStartAnimatedIconData(widget.deviceIcon);
-      state.setEndAnimatedIconData(widget.deviceIcon);
+    if (!_controller.isAnimating) {
+      return icon;
+    }
 
-      widget.controller.animateDone = () {
-        _controller.reset();
-        state.setStartAnimatedIconData(widget.loadingIcon);
-        state.setEndAnimatedIconData(widget.doneIcon);
-        _controller.forward();
-      };
+    double progress = _controller.value;
 
-      widget.controller.animateProcess = () {
-        isProcess = true;
-        _controller.reset();
-        state.setAnimatedIconColor(widget.loadingIconColor);
-        state.setStartAnimatedIconData(widget.deviceIcon);
-        state.setEndAnimatedIconData(widget.loadingIcon);
-        _controller.forward();
-      };
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Transform.rotate(
+          angle: -progress * math.pi,
+          child: Icon(
+            _oldIcon,
+            size: widget.size,
+            color: _color,
+          ),
+        ),
+        Transform.rotate(
+          angle: math.pi - math.pi * progress,
+          child: icon,
+        )
+      ],
+    );
+  }
 
-      _controller.addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          if (isProcess) {
-            isProcess = false;
+  set icon(IconData icon) {
+    _oldIcon = _icon;
 
-          } else {
-            if (isDone) {
-              state.setAnimatedIconColor(widget.doneIconColor);
-              Future.delayed(Duration(milliseconds: 2000)).then((value) => {
-                    state.setAnimatedIconColor(widget.deviceIconColor),
-                    widget.onDone(),
-                    _controller.reset(),
-                    state.setStartAnimatedIconData(widget.doneIcon),
-                    state.setEndAnimatedIconData(widget.deviceIcon),
-                    _controller.forward()
-                  });
-            } else {
-              widget.onFinished();
-            }
-            isDone = !isDone;
-          }
-        }
+    if (_icon != null) {
+      _icon = icon;
+      _controller.forward();
+    } else {
+      setState(() {
+        _icon = icon;
       });
     }
   }
 
   @override
-  Widget build(BuildContext context) {
-    double x = _controller.value ?? 0.0;
-    double y = 1.0 - _controller.value ?? 0.0;
-    double angleX = math.pi / 180 * (180 * x);
-    double angleY = math.pi / 180 * (180 * y);
-
-    Widget first() {
-      return Transform.rotate(
-        angle: widget.clockwise ?? false ? angleX : -angleX,
-        child: Opacity(
-            opacity: y,
-            child: Observer(
-              builder: (_) => Icon(
-                state.startAnimatedIconData,
-                size: widget.size,
-                color: state.animatedIconColor,
-              ),
-            )),
-      );
-    }
-
-    Widget second() {
-      return Transform.rotate(
-          angle: widget.clockwise ?? false ? -angleY : angleY,
-          child: Opacity(
-            opacity: x ?? 0.0,
-            child: Observer(
-                builder: (_) => Icon(
-                      state.endAnimatedIconData,
-                      size: widget.size,
-                      color: state.animatedIconColor,
-                    )),
-          ));
-    }
-
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        x == 1 && y == 0 ? second() : first(),
-        x == 0 && y == 1 ? first() : second(),
-      ],
-    );
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
-}
-
-class TransitionIconController {
-  void Function() animateDone, animateProcess;
 }

@@ -1,34 +1,36 @@
 import 'dart:math';
-import 'package:droply/common/aquarium/aquarium_state.dart';
+import 'package:droply/common/constants.dart';
 import 'package:droply/common/ui/icon/transition_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx/mobx.dart';
-
-import '../constants.dart';
 
 class Aquarium extends StatefulWidget {
-  final AquariumState _state;
+  final IconData idleIcon;
+  final IconData doneIcon;
+  final IconData processIcon;
 
-  Aquarium(this._state);
+  Aquarium({
+    Key key,
+    @required this.idleIcon,
+    @required this.doneIcon,
+    @required this.processIcon,
+  }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _AquariumState(
-        _state,
-      );
+  State<StatefulWidget> createState() => AquariumState();
 }
 
-class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
+class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   AnimationController _wavePositionAnimationController;
   AnimationController _waveScaleAnimationController;
-  TransitionIconController _doneIconAnimator;
   Animation<double> _wavePositionAnimation;
   Animation<double> _waveScaleAnimation;
-  final AquariumState _state;
 
-  _AquariumState(
-    this._state,
-  );
+  GlobalKey<TransitionIconState> _iconKey = GlobalKey();
+  Color _backgroundColor = AppColors.lightenAccentColor;
+  Color _iconColor = AppColors.accentColor;
+  bool _isWaveEnabled = false;
+  double _progress = 0;
+  String _iconTitle;
 
   @override
   void initState() {
@@ -43,8 +45,6 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
       vsync: this,
       duration: Duration(seconds: 3),
     );
-
-    _doneIconAnimator = TransitionIconController();
 
     _wavePositionAnimation = Tween(
       begin: 4 * pi,
@@ -75,62 +75,28 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
           _waveScaleAnimationController.forward();
         }
       });
-
-    reaction((_) => _state.showLiquidAnimation, (enabled) {
-      if (enabled) {
-        _waveScaleAnimationController.forward();
-        _wavePositionAnimationController.forward();
-        _state.setBackgroundColor(AppColors.lightenProcessColor);
-        _doneIconAnimator.animateProcess();
-        _state.iconTitleColor = AppColors.processColor;
-      } else {
-        _waveScaleAnimationController.stop();
-        _wavePositionAnimationController.stop();
-
-        //TODO: Добавить интерполяцию на анимации кривых линий
-        _doneIconAnimator.animateDone();
-        setState(() {});
-      }
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    var icon = TransitionIcon(
-        doneIcon: Icons.done_rounded,
-        loadingIcon: _state.loadingIcon,
-        deviceIcon: _state.deviceIcon,
-        doneIconColor: AppColors.processColor,
-        loadingIconColor: AppColors.processColor,
-        deviceIconColor: AppColors.accentColor,
-        onDone: () {
-          _state.setBackgroundColor(AppColors.lightenAccentColor);
-          _state.iconTitleColor = AppColors.accentColor;
-        },
-        onFinished: () {},
-        size: 24,
-        controller: _doneIconAnimator,
-        animationDuration: 200,
-        doneDuration: 200,
-        clockwise: true);
-
     var content = <Widget>[
-      icon,
+      TransitionIcon(
+        key: _iconKey,
+        animationDuration: 200,
+        size: 24,
+      )
     ];
 
-    if (_state.iconTitle != null) {
-      content.add(
-        Observer(
-            builder: (_) => Text(
-                  _state.iconTitle.toUpperCase(),
-                  style: TextStyle(
-                    color: _state.iconTitleColor,
-                    fontFamily: AppFonts.openSans,
-                    fontWeight: AppFonts.bold,
-                    fontSize: 12,
-                  ),
-                )),
-      );
+    if (_iconTitle != null) {
+      content.add(Text(
+        _iconTitle.toUpperCase(),
+        style: TextStyle(
+          color: _iconColor,
+          fontFamily: AppFonts.openSans,
+          fontWeight: AppFonts.bold,
+          fontSize: 12,
+        ),
+      ));
     }
 
     return Stack(
@@ -138,23 +104,48 @@ class _AquariumState extends State<Aquarium> with TickerProviderStateMixin {
       children: [
         AnimatedBuilder(
           animation: _wavePositionAnimation,
-          builder: (context, snapshot) {
-            return Observer(
-                builder: (_) => CustomPaint(
-                      size: Size.square(60),
-                      painter: _Aquarium(
-                        AppColors.lightProcessColor,
-                        _state.backgroundColor,
-                        _waveScaleAnimation.value,
-                        _wavePositionAnimation.value,
-                        _state.progress,
-                      ),
-                    ));
-          },
+          builder: (context, snapshot) => CustomPaint(
+            size: Size.square(60),
+            painter: _Aquarium(
+              AppColors.lightProcessColor,
+              _backgroundColor,
+              _waveScaleAnimation.value,
+              _wavePositionAnimation.value,
+              _progress,
+            ),
+          ),
         ),
         Column(children: content)
       ],
     );
+  }
+
+  set progress(double progress) {
+    if (_progress == progress) {
+      return;
+    }
+
+    _progress = progress;
+
+    if (progress > 0 && progress < 1) {
+      if (!_isWaveEnabled) {
+        _isWaveEnabled = true;
+        _iconColor = AppColors.processColor;
+        _backgroundColor = AppColors.lightenProcessColor;
+        _waveScaleAnimationController.forward();
+        _wavePositionAnimationController.forward();
+        _iconKey.currentState.icon = widget.processIcon;
+      }
+    } else {
+      _waveScaleAnimationController.stop();
+      _wavePositionAnimationController.stop();
+
+      if (progress >= 1) {
+        _iconKey.currentState.icon = widget.doneIcon;
+      }
+
+      setState(() {});
+    }
   }
 
   @override
