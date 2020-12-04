@@ -1,4 +1,4 @@
-import 'package:droply/common/constants.dart';
+import 'package:droply/constants.dart';
 import 'package:flutter/material.dart';
 
 class DeviceWidget extends StatelessWidget {
@@ -10,21 +10,21 @@ class DeviceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: Move to bloc
 
-    String description;
+    // String description;
 
-    switch ()
+    // switch ()
 
-    var descriptionBlock = <Widget>[
-      Text(
-        _state.description,
-        style: TextStyle(
-          color: _state.descriptionColor,
-          fontFamily: AppFonts.openSans,
-          fontWeight: AppFonts.semibold,
-          fontSize: 15,
-        ),
-      ),
-    ];
+    // var descriptionBlock = <Widget>[
+    //   Text(
+    //     _state.description,
+    //     style: TextStyle(
+    //       color: _state.descriptionColor,
+    //       fontFamily: AppFonts.openSans,
+    //       fontWeight: AppFonts.semibold,
+    //       fontSize: 15,
+    //     ),
+    //   ),
+    // ];
   }
 }
 

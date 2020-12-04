@@ -1,17 +1,14 @@
 import 'dart:async';
-
-import 'package:droply/common/aquarium/aquarium.dart';
+import 'package:droply/presentation/common/aquarium/aquarium.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NearbyScreen extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() => NearbyScreenState();
 }
 
 class NearbyScreenState extends State<NearbyScreen> {
-
   final GlobalKey<AquariumState> key = GlobalKey();
 
   NearbyScreenState() {

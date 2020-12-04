@@ -16,7 +16,8 @@ class AuthScreenLayout extends MultiChildRenderObjectWidget {
 class _AuthScreenLayoutRender extends RenderBox
     with
         ContainerRenderObjectMixin<RenderBox, _AuthScreenLayoutParentData>,
-        RenderBoxContainerDefaultsMixin<RenderBox, _AuthScreenLayoutParentData> {
+        RenderBoxContainerDefaultsMixin<RenderBox,
+            _AuthScreenLayoutParentData> {
   static const _horizontalMargin = 20;
   static const _bottomMargin = 20.0;
   static const _topMargin = 56.0;
@@ -46,7 +47,8 @@ class _AuthScreenLayoutRender extends RenderBox
     header.layout(BoxConstraints.loose(headerSize), parentUsesSize: true);
 
     _AuthScreenLayoutParentData headerParentData = header.parentData;
-    headerParentData.offset = Offset(constraints.maxWidth / 2 - header.size.width / 2, _topMargin);
+    headerParentData.offset =
+        Offset(constraints.maxWidth / 2 - header.size.width / 2, _topMargin);
 
     var footer = children.last;
     var footerSize = Size(maxWidth, double.infinity);
@@ -65,13 +67,21 @@ class _AuthScreenLayoutRender extends RenderBox
     _AuthScreenLayoutParentData middleParentData = middle.parentData;
 
     var middleX = constraints.maxWidth / 2 - middle.size.width / 2;
-    var freeHeight =
-        maxHeight - _topMargin - header.size.height - middle.size.height - footer.size.height - _bottomMargin;
+    var freeHeight = maxHeight -
+        _topMargin -
+        header.size.height -
+        middle.size.height -
+        footer.size.height -
+        _bottomMargin;
 
     if (freeHeight >= _middleMargin * 2) {
       middleParentData.offset = Offset(
         middleX,
-        (footerParentData.offset.dy + headerParentData.offset.dy + header.size.height) / 2 - middle.size.height / 2,
+        (footerParentData.offset.dy +
+                    headerParentData.offset.dy +
+                    header.size.height) /
+                2 -
+            middle.size.height / 2,
       );
 
       size = Size(constraints.maxWidth, maxHeight);
@@ -88,7 +98,12 @@ class _AuthScreenLayoutRender extends RenderBox
 
       size = Size(
         constraints.maxWidth,
-        _topMargin + header.size.height + _middleMargin * 2 + middle.size.height + footer.size.height + _bottomMargin,
+        _topMargin +
+            header.size.height +
+            _middleMargin * 2 +
+            middle.size.height +
+            footer.size.height +
+            _bottomMargin,
       );
     }
   }

@@ -1,4 +1,4 @@
-import 'package:droply/common/constants.dart';
+import 'package:droply/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 

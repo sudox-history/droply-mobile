@@ -1,4 +1,4 @@
-import 'package:droply/common/constants.dart';
+import 'package:droply/constants.dart';
 import 'package:flutter/material.dart';
 
 class TabBarStyles {
@@ -25,8 +25,14 @@ class _TabBarIndicatorPainter extends BoxPainter {
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
     var y = offset.dy + configuration.size.height;
     var rect = Rect.fromPoints(
-      Offset(offset.dx + TabBarStyles.tabHorizontalPadding - _horizontalPadding, y - _height),
-      Offset(offset.dx + configuration.size.width - TabBarStyles.tabHorizontalPadding + _horizontalPadding, y),
+      Offset(offset.dx + TabBarStyles.tabHorizontalPadding - _horizontalPadding,
+          y - _height),
+      Offset(
+          offset.dx +
+              configuration.size.width -
+              TabBarStyles.tabHorizontalPadding +
+              _horizontalPadding,
+          y),
     );
 
     var rrect = RRect.fromRectAndCorners(

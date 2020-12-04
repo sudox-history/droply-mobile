@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:device_info/device_info.dart';
-import 'package:droply/common/constants.dart';
+import 'package:droply/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -100,7 +100,8 @@ class MyDeviceAdditions {
     );
   }
 
-  static Widget buildNameField([Function onChanged, bool hintAtStart = false, bool initialText]) {
+  static Widget buildNameField(
+      [Function onChanged, bool hintAtStart = false, bool initialText]) {
     return TextField(
       style: TextStyle(
         color: AppColors.onSurfaceColor,

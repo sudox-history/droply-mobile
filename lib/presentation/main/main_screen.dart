@@ -1,6 +1,6 @@
-import 'package:droply/common/navigation.dart';
-import 'package:droply/main/nearby/nearby_screen.dart';
-import 'package:droply/main/network_screen.dart';
+import 'package:droply/constants.dart';
+import 'package:droply/presentation/main/nearby/nearby_screen.dart';
+import 'package:droply/presentation/main/network_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 

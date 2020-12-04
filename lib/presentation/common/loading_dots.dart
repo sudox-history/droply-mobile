@@ -9,7 +9,8 @@ class LoadingDots extends StatefulWidget {
   State<StatefulWidget> createState() => _LoadingDotsState(_dotColor);
 }
 
-class _LoadingDotsState extends State<LoadingDots> with TickerProviderStateMixin {
+class _LoadingDotsState extends State<LoadingDots>
+    with TickerProviderStateMixin {
   final Color _dotColor;
 
   Animation _dotSizeAnimation;
@@ -26,17 +27,18 @@ class _LoadingDotsState extends State<LoadingDots> with TickerProviderStateMixin
       duration: Duration(milliseconds: 500),
     );
 
-    _dotSizeAnimation = Tween(begin: 2.5, end: 1.5).animate(_dotSizeAnimationController)
-      ..addListener(() {
-        setState(() {});
-      })
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          _dotSizeAnimationController.reverse();
-        } else if (status == AnimationStatus.dismissed) {
-          _dotSizeAnimationController.forward();
-        }
-      });
+    _dotSizeAnimation =
+        Tween(begin: 2.5, end: 1.5).animate(_dotSizeAnimationController)
+          ..addListener(() {
+            setState(() {});
+          })
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              _dotSizeAnimationController.reverse();
+            } else if (status == AnimationStatus.dismissed) {
+              _dotSizeAnimationController.forward();
+            }
+          });
 
     _dotSizeAnimationController.forward();
   }

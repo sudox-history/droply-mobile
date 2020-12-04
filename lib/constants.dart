@@ -30,3 +30,9 @@ class AppFonts {
 class AppRegex {
   static final deviceNameAllow = RegExp(r"^[a-zA-Zа-яА-Я0-9*-.!]{2,25}$");
 }
+
+class AppNavigation {
+  static const authRouteName = "/auth";
+  static const mainRouteName = "/main";
+  static const settingsRouteName = "/main/settings";
+}

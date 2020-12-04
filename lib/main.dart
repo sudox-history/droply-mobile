@@ -1,10 +1,8 @@
-import 'package:droply/auth/auth_screen.dart';
-import 'package:droply/common/constants.dart';
-import 'package:droply/common/navigation.dart';
-import 'package:droply/common/ui/tab_bar.dart';
-import 'package:droply/main/main_screen.dart';
-import 'package:droply/statistics/statistics_screen.dart';
-import 'package:droply/settings/settings_screen.dart';
+import 'package:droply/presentation/auth/auth_screen.dart';
+import 'package:droply/constants.dart';
+import 'package:droply/presentation/common/tab_bar.dart';
+import 'package:droply/presentation/main/main_screen.dart';
+import 'package:droply/presentation/settings/settings_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -47,7 +45,9 @@ class App extends StatelessWidget {
           scaffoldBackgroundColor: AppColors.backgroundColor,
           primaryIconTheme: IconThemeData(color: AppColors.primaryIconsColor),
           tabBarTheme: TabBarTheme(
-            labelPadding: EdgeInsets.symmetric(horizontal: TabBarStyles.tabHorizontalPadding),
+            labelPadding: EdgeInsets.symmetric(
+              horizontal: TabBarStyles.tabHorizontalPadding,
+            ),
             indicator: TabBarIndicator(),
             labelColor: AppColors.accentColor,
             labelStyle: TextStyle(
@@ -79,7 +79,12 @@ class App extends StatelessWidget {
           ),
           textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(
-              padding: EdgeInsets.only(left: 14, right: 14, top: 14, bottom: 14),
+              padding: EdgeInsets.only(
+                left: 14,
+                right: 14,
+                top: 14,
+                bottom: 14,
+              ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25),
               ),
@@ -90,7 +95,7 @@ class App extends StatelessWidget {
                 fontFamily: AppFonts.openSans,
                 fontWeight: AppFonts.semibold,
                 fontSize: 16,
-              )
+              ),
             ),
           ),
           visualDensity: VisualDensity.adaptivePlatformDensity,

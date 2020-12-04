@@ -1,7 +1,6 @@
-import 'package:droply/auth/auth_screen_layout.dart';
-import 'package:droply/common/constants.dart';
-import 'package:droply/common/navigation.dart';
-import 'package:droply/common/ui/my_device.dart';
+import 'package:droply/presentation/auth/auth_screen_layout.dart';
+import 'package:droply/constants.dart';
+import 'package:droply/common/my_device.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
