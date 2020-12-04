@@ -90,6 +90,8 @@ class TransitionIconState extends State<TransitionIcon>
     }
   }
 
+  get icon => _icon;
+
   @override
   void dispose() {
     _controller.dispose();

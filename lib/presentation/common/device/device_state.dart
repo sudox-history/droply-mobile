@@ -1,21 +1,31 @@
+import 'package:droply/data/devices/models/device.dart';
+import 'package:flutter/foundation.dart';
+
 abstract class DeviceState {
   final String name;
+  final DeviceType type;
 
-  DeviceState(this.name);
+  DeviceState(this.name, this.type);
 }
 
 class WorkingDeviceState extends DeviceState {
   final double progress;
+  final DeviceStatus status;
 
-  WorkingDeviceState({String name, this.progress}) : super(name);
+  WorkingDeviceState({
+    @required String name,
+    @required DeviceType type,
+    @required this.progress,
+    @required this.status,
+  }) : super(name, type);
 }
 
 class IdleDeviceState extends DeviceState {
-  final DeviceType type;
   final int sentTime;
 
-  IdleDeviceState({String name, this.type, this.sentTime}) : super(name);
+  IdleDeviceState({
+    @required String name,
+    @required DeviceType type,
+    @required this.sentTime,
+  }) : super(name, type);
 }
-
-// TODO: Move to data
-enum DeviceType { IPHONE, TABLET, DESKTOP, UNKNOWN, PHONE }

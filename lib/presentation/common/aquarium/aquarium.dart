@@ -6,13 +6,11 @@ import 'package:flutter/material.dart';
 class Aquarium extends StatefulWidget {
   final IconData idleIcon;
   final IconData doneIcon;
-  final IconData processIcon;
 
   Aquarium({
     Key key,
     @required this.idleIcon,
     @required this.doneIcon,
-    @required this.processIcon,
   }) : super(key: key);
 
   @override
@@ -29,6 +27,7 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   Color _backgroundColor = AppColors.lightenAccentColor;
   Color _iconColor = AppColors.accentColor;
   bool _isWaveEnabled = false;
+  IconData _progressIcon;
   double _progress = 0;
   String _iconTitle;
 
@@ -134,18 +133,28 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
         _backgroundColor = AppColors.lightenProcessColor;
         _waveScaleAnimationController.forward();
         _wavePositionAnimationController.forward();
-        _iconKey.currentState.icon = widget.processIcon;
+        _iconKey.currentState.icon = _progressIcon;
       }
     } else {
       _waveScaleAnimationController.stop();
       _wavePositionAnimationController.stop();
-
-      if (progress >= 1) {
-        _iconKey.currentState.icon = widget.doneIcon;
-      }
-
       setState(() {});
     }
+  }
+
+  void onLoadingDone() {
+    progress = 1.0;
+
+    if (_iconKey.currentState.icon != null &&
+        _iconKey.currentState.icon != widget.idleIcon) {
+      _iconKey.currentState.icon = widget.doneIcon;
+    } else {
+      _iconKey.currentState.icon = widget.idleIcon;
+    }
+  }
+
+  set progressIcon(IconData data) {
+    _progressIcon = data;
   }
 
   @override

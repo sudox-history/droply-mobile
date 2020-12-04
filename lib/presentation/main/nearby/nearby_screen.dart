@@ -1,5 +1,6 @@
-import 'dart:async';
-import 'package:droply/presentation/common/aquarium/aquarium.dart';
+import 'package:droply/data/devices/models/device.dart';
+import 'package:droply/presentation/common/device/device_state.dart';
+import 'package:droply/presentation/common/device/device_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,24 +10,19 @@ class NearbyScreen extends StatefulWidget {
 }
 
 class NearbyScreenState extends State<NearbyScreen> {
-  final GlobalKey<AquariumState> key = GlobalKey();
-
-  NearbyScreenState() {
-    double progress = 0;
-
-    Timer.periodic(Duration(seconds: 1), (_) {
-      key.currentState.progress = progress;
-      progress += 0.2;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Aquarium(
-      key: key,
-      doneIcon: Icons.done,
-      processIcon: Icons.download_sharp,
-      idleIcon: Icons.phone_android,
+    return ListView(
+      children: [
+        DeviceWidget(
+          id: "1",
+          initialState: IdleDeviceState(
+            name: "Anton's iPhone",
+            type: DeviceType.IPHONE,
+            sentTime: 1607107337000,
+          ),
+        )
+      ],
     );
   }
 }
