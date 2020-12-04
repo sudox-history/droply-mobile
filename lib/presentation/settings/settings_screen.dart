@@ -1,6 +1,6 @@
 import 'package:droply/constants.dart';
-import 'package:droply/common/my_device.dart';
-import 'package:droply/common/other_widgets.dart';
+import 'package:droply/presentation/common/my_device.dart';
+import 'package:droply/presentation/common/other_widgets.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
