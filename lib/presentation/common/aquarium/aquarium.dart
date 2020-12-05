@@ -136,17 +136,25 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
         _iconKey.currentState.icon = _progressIcon;
       }
     } else {
+      _isWaveEnabled = false;
       _waveScaleAnimationController.stop();
+      _waveScaleAnimationController.reset();
       _wavePositionAnimationController.stop();
+      _wavePositionAnimationController.reset();
       setState(() {});
     }
   }
 
-  void onLoadingDone() {
+  void setIdle() {
     progress = 1.0;
 
     if (_iconKey.currentState.icon != null &&
-        _iconKey.currentState.icon != widget.idleIcon) {
+        _iconKey.currentState.icon == _progressIcon) {
+      _iconKey.currentState.onAnimationDone = () {
+        _iconKey.currentState.icon = widget.idleIcon;
+        _iconKey.currentState.onAnimationDone = null;
+      };
+
       _iconKey.currentState.icon = widget.doneIcon;
     } else {
       _iconKey.currentState.icon = widget.idleIcon;

@@ -18,6 +18,7 @@ class TransitionIcon extends StatefulWidget {
 class TransitionIconState extends State<TransitionIcon>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
+  Function onAnimationDone;
   IconData _oldIcon;
   IconData _icon;
   Color _color;
@@ -34,6 +35,8 @@ class TransitionIconState extends State<TransitionIcon>
     )
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
+          onAnimationDone();
+
           setState(() {
             _oldIcon = null;
           });
@@ -80,10 +83,12 @@ class TransitionIconState extends State<TransitionIcon>
   set icon(IconData icon) {
     _oldIcon = _icon;
 
-    if (_icon != null) {
+    if (_icon != null && _icon != icon) {
       _icon = icon;
+
+      _controller.reset();
       _controller.forward();
-    } else {
+    } else if (_icon == null) {
       setState(() {
         _icon = icon;
       });

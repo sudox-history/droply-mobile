@@ -16,10 +16,12 @@ class NearbyScreenState extends State<NearbyScreen> {
       children: [
         DeviceWidget(
           id: "1",
-          initialState: IdleDeviceState(
+          initialState: Device(
             name: "Anton's iPhone",
+            progress: 0.0,
             type: DeviceType.IPHONE,
-            sentTime: 1607107337000,
+            status: DeviceStatus.IDLE,
+            sentTime: 100,
           ),
         )
       ],

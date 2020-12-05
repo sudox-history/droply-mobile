@@ -13,16 +13,24 @@ class DeviceBloc extends Bloc<Device, DeviceState> {
 
   DeviceBloc({
     @required this.id,
-    @required DeviceState initialState,
+    @required Device initialState,
     @required this.repository,
-  }) : super(initialState) {
+  }) : super(_mapDeviceToState(initialState)) {
     _subscription = repository.getDevice(id).listen((device) {
       add(device);
     });
+
+    // Хуй под названием listener не получает начальное состояние
+    // Этот костыль заставляет его делать
+    add(initialState);
   }
 
   @override
   Stream<DeviceState> mapEventToState(device) async* {
+    yield _mapDeviceToState(device);
+  }
+
+  static DeviceState _mapDeviceToState(Device device) {
     DeviceState state;
 
     if (device.status.index == DeviceStatus.IDLE.index) {
@@ -41,7 +49,7 @@ class DeviceBloc extends Bloc<Device, DeviceState> {
       );
     }
 
-    yield state;
+    return state;
   }
 
   @override

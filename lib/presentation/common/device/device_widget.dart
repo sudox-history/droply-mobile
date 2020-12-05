@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DeviceWidget extends StatefulWidget {
   final String id;
-  final DeviceState initialState;
+  final Device initialState;
 
   DeviceWidget({this.id, this.initialState});
 
@@ -37,6 +37,7 @@ class DeviceWidgetState extends State<DeviceWidget> {
           children: [
             Container(
               child: BlocConsumer<DeviceBloc, DeviceState>(
+                buildWhen: (state, context) => false,
                 builder: (context, state) {
                   IconData idleIcon;
 
@@ -77,7 +78,7 @@ class DeviceWidgetState extends State<DeviceWidget> {
 
                     _aquariumKey.currentState.progress = state.progress;
                   } else if (state is IdleDeviceState) {
-                    _aquariumKey.currentState.onLoadingDone();
+                    _aquariumKey.currentState.setIdle();
                   }
                 },
               ),
@@ -253,4 +254,5 @@ class DeviceWidgetState extends State<DeviceWidget> {
 //   );
 // });
 //   }
+// }
 // }
