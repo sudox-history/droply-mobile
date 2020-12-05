@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:async/async.dart';
 import 'package:droply/constants.dart';
 import 'package:droply/presentation/common/icon/transition_icon.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class Aquarium extends StatefulWidget {
 
 class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   AnimationController _wavePositionAnimationController;
+  CancelableOperation _idleIconSettingOperation;
   AnimationController _waveScaleAnimationController;
   Animation<double> _wavePositionAnimation;
   Animation<double> _waveScaleAnimation;
@@ -81,7 +83,7 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
     var content = <Widget>[
       TransitionIcon(
         key: _iconKey,
-        animationDuration: 200,
+        animationDuration: 250,
         size: 24,
       )
     ];
@@ -133,7 +135,8 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
         _backgroundColor = AppColors.lightenProcessColor;
         _waveScaleAnimationController.forward();
         _wavePositionAnimationController.forward();
-        _iconKey.currentState.icon = _progressIcon;
+        _cancelIdleIconSettingOperation();
+        _iconKey.currentState.changeIcon(_progressIcon, AppColors.processColor);
       }
     } else {
       _isWaveEnabled = false;
@@ -151,14 +154,41 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
     if (_iconKey.currentState.icon != null &&
         _iconKey.currentState.icon == _progressIcon) {
       _iconKey.currentState.onAnimationDone = () {
-        _iconKey.currentState.icon = widget.idleIcon;
-        _iconKey.currentState.onAnimationDone = null;
+        _idleIconSettingOperation = CancelableOperation.fromFuture(
+          Future.delayed(Duration(seconds: 2), () {
+            _idleIconSettingOperation = null;
+            _iconKey.currentState.onAnimationDone = null;
+            _iconKey.currentState.changeIcon(
+              widget.idleIcon,
+              AppColors.accentColor,
+            );
+          }),
+        );
       };
 
-      _iconKey.currentState.icon = widget.doneIcon;
+      _setIdleBackground();
+      _cancelIdleIconSettingOperation();
+      _iconKey.currentState.changeIcon(widget.doneIcon, AppColors.accentColor);
     } else {
-      _iconKey.currentState.icon = widget.idleIcon;
+      _setIdleBackground();
+      _cancelIdleIconSettingOperation();
+      _iconKey.currentState.changeIcon(widget.idleIcon, AppColors.accentColor);
     }
+  }
+
+  void _setIdleBackground() {
+    Color color = AppColors.lightenAccentColor;
+
+    if (_backgroundColor != color) {
+      setState(() {
+        _backgroundColor = color;
+      });
+    }
+  }
+
+  void _cancelIdleIconSettingOperation() {
+    _idleIconSettingOperation?.cancel();
+    _idleIconSettingOperation = null;
   }
 
   set progressIcon(IconData data) {
@@ -169,6 +199,7 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   void dispose() {
     _waveScaleAnimationController.dispose();
     _wavePositionAnimationController.dispose();
+    _cancelIdleIconSettingOperation();
     super.dispose();
   }
 }

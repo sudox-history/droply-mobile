@@ -21,6 +21,7 @@ class TransitionIconState extends State<TransitionIcon>
   Function onAnimationDone;
   IconData _oldIcon;
   IconData _icon;
+  Color _oldColor;
   Color _color;
 
   @override
@@ -39,6 +40,7 @@ class TransitionIconState extends State<TransitionIcon>
 
           setState(() {
             _oldIcon = null;
+            _oldColor = null;
           });
         }
       })
@@ -49,14 +51,12 @@ class TransitionIconState extends State<TransitionIcon>
 
   @override
   Widget build(BuildContext context) {
-    Icon icon = Icon(
-      _icon,
-      size: widget.size,
-      color: _color,
-    );
-
-    if (!_controller.isAnimating) {
-      return icon;
+    if (!_controller.isAnimating || _oldColor == null) {
+      return Icon(
+        _icon,
+        size: widget.size,
+        color: _color,
+      );
     }
 
     double progress = _controller.value;
@@ -69,28 +69,35 @@ class TransitionIconState extends State<TransitionIcon>
           child: Icon(
             _oldIcon,
             size: widget.size,
-            color: _color,
+            color: _oldColor.withOpacity(1 - progress),
           ),
         ),
         Transform.rotate(
           angle: math.pi - math.pi * progress,
-          child: icon,
+          child: Icon(
+            _icon,
+            size: widget.size,
+            color: _color.withOpacity(progress),
+          ),
         )
       ],
     );
   }
 
-  set icon(IconData icon) {
+  void changeIcon(IconData icon, Color color) {
     _oldIcon = _icon;
+    _oldColor = _color;
 
     if (_icon != null && _icon != icon) {
       _icon = icon;
+      _color = color;
 
       _controller.reset();
       _controller.forward();
     } else if (_icon == null) {
       setState(() {
         _icon = icon;
+        _color = color;
       });
     }
   }
