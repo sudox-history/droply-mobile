@@ -26,9 +26,8 @@ class DeviceBloc extends Bloc<Device, DeviceState> {
   }
 
   @override
-  Stream<DeviceState> mapEventToState(device) async* {
-    yield _mapDeviceToState(device);
-  }
+  Stream<DeviceState> mapEventToState(device) =>
+      Stream.value(_mapDeviceToState(device));
 
   static DeviceState _mapDeviceToState(Device device) {
     DeviceState state;

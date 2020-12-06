@@ -1,5 +1,4 @@
 import 'package:droply/data/devices/models/device.dart';
-import 'package:droply/presentation/common/device/device_state.dart';
 import 'package:droply/presentation/common/device/device_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
