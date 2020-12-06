@@ -52,8 +52,8 @@ class DeviceBloc extends Bloc<Device, DeviceState> {
   }
 
   @override
-  Future<void> close() async {
+  Future<void> close() {
     _subscription.cancel();
-    super.close();
+    return super.close();
   }
 }
