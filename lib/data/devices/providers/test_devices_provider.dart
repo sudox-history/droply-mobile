@@ -37,7 +37,7 @@ class TestDevicesProvider implements DevicesProvider {
       case "1":
         return Stream.periodic(Duration(milliseconds: 250), (count) {
           DeviceStatus status;
-          double progress = (count + 1) / 100;
+          double progress = (count + 1) / 20;
 
           if (progress >= 1.0) {
             status = DeviceStatus.IDLE;

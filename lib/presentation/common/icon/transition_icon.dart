@@ -36,7 +36,7 @@ class TransitionIconState extends State<TransitionIcon>
     )
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          onAnimationDone();
+          onAnimationDone?.call();
 
           setState(() {
             _oldIcon = null;
