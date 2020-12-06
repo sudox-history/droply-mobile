@@ -45,3 +45,13 @@ Widget buildSwitchSetting(String header, String hint,
     ],
   );
 }
+
+Widget buildScreenLoader() {
+  return Center(
+    child: SizedBox(
+      width: 40,
+      height: 40,
+      child: CircularProgressIndicator(),
+    ),
+  );
+}

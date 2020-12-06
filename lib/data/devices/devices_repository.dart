@@ -10,4 +10,8 @@ class DevicesRepository {
   Stream<Device> getDevice(String id) {
     return provider.getDevice(id);
   }
+
+  Stream<List<Device>> getDevices() {
+    return provider.getDevices();
+  }
 }

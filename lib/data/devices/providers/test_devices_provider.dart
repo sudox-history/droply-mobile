@@ -65,4 +65,19 @@ class TestDevicesProvider implements DevicesProvider {
 
     return null;
   }
+
+  @override
+  Stream<List<Device>> getDevices() {
+    return Stream.fromFuture(Future(() {
+      return [
+        Device(
+          name: "Anton's iPhone",
+          progress: 0,
+          type: DeviceType.IPHONE,
+          status: DeviceStatus.IDLE,
+          sentTime: 100,
+        )
+      ];
+    }));
+  }
 }

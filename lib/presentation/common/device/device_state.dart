@@ -6,6 +6,28 @@ abstract class DeviceState {
   final DeviceType type;
 
   DeviceState(this.name, this.type);
+
+  factory DeviceState.fromDevice(Device device) {
+    DeviceState state;
+
+    if (device.status.index == DeviceStatus.IDLE.index) {
+      state = IdleDeviceState(
+        name: device.name,
+        type: device.type,
+        sentTime: device.sentTime,
+      );
+    } else if (device.status.index == DeviceStatus.RECEIVING.index ||
+        device.status.index == DeviceStatus.SENDING.index) {
+      state = WorkingDeviceState(
+        name: device.name,
+        progress: device.progress,
+        status: device.status,
+        type: device.type,
+      );
+    }
+
+    return state;
+  }
 }
 
 class WorkingDeviceState extends DeviceState {

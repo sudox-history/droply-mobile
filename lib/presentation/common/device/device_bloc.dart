@@ -15,7 +15,7 @@ class DeviceBloc extends Bloc<Device, DeviceState> {
     @required this.id,
     @required Device initialState,
     @required this.repository,
-  }) : super(_mapDeviceToState(initialState)) {
+  }) : super(DeviceState.fromDevice(initialState)) {
     _subscription = repository.getDevice(id).listen((device) {
       add(device);
     });
@@ -27,29 +27,7 @@ class DeviceBloc extends Bloc<Device, DeviceState> {
 
   @override
   Stream<DeviceState> mapEventToState(device) =>
-      Stream.value(_mapDeviceToState(device));
-
-  static DeviceState _mapDeviceToState(Device device) {
-    DeviceState state;
-
-    if (device.status.index == DeviceStatus.IDLE.index) {
-      state = IdleDeviceState(
-        name: device.name,
-        type: device.type,
-        sentTime: device.sentTime,
-      );
-    } else if (device.status.index == DeviceStatus.RECEIVING.index ||
-        device.status.index == DeviceStatus.SENDING.index) {
-      state = WorkingDeviceState(
-        name: device.name,
-        progress: device.progress,
-        status: device.status,
-        type: device.type,
-      );
-    }
-
-    return state;
-  }
+      Stream.value(DeviceState.fromDevice(device));
 
   @override
   Future<void> close() {
