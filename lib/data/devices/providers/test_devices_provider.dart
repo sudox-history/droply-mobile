@@ -1,9 +1,9 @@
 import 'package:droply/data/devices/models/device.dart';
 import 'package:droply/data/devices/providers/devices_provider.dart';
-import 'package:droply/presentation/common/device/device_state.dart';
 
 class TestDevicesProvider implements DevicesProvider {
   Stream<Device> _secondDevice = Stream.value(Device(
+    id: "2",
     name: "Max's tablet",
     type: DeviceType.TABLET,
     status: DeviceStatus.IDLE,
@@ -11,6 +11,7 @@ class TestDevicesProvider implements DevicesProvider {
   ));
 
   Stream<Device> _thirdDevice = Stream.value(Device(
+    id: "3",
     name: "Yaroslav's desktop",
     type: DeviceType.DESKTOP,
     status: DeviceStatus.IDLE,
@@ -18,6 +19,7 @@ class TestDevicesProvider implements DevicesProvider {
   ));
 
   Stream<Device> _fourthDevice = Stream.value(Device(
+    id: "4",
     name: "Uno",
     type: DeviceType.UNKNOWN,
     status: DeviceStatus.IDLE,
@@ -25,6 +27,7 @@ class TestDevicesProvider implements DevicesProvider {
   ));
 
   Stream<Device> _fifthDevice = Stream.value(Device(
+    id: "5",
     name: "Alexey's phone",
     type: DeviceType.PHONE,
     status: DeviceStatus.IDLE,
@@ -68,9 +71,10 @@ class TestDevicesProvider implements DevicesProvider {
 
   @override
   Stream<List<Device>> getDevices() {
-    return Stream.fromFuture(Future(() {
+    return Stream.fromFuture(Future.delayed(Duration(seconds: 2), () {
       return [
         Device(
+          id: "1",
           name: "Anton's iPhone",
           progress: 0,
           type: DeviceType.IPHONE,

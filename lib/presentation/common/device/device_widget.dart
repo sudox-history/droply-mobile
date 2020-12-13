@@ -9,10 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DeviceWidget extends StatefulWidget {
-  final String id;
   final Device initialState;
 
-  DeviceWidget({this.id, this.initialState});
+  DeviceWidget({
+    this.initialState,
+  });
 
   @override
   State<StatefulWidget> createState() => DeviceWidgetState();
@@ -29,7 +30,6 @@ class DeviceWidgetState extends State<DeviceWidget> {
     return Padding(
       child: BlocProvider(
         create: (context) => DeviceBloc(
-          id: widget.id,
           initialState: widget.initialState,
           repository: repository,
         ),

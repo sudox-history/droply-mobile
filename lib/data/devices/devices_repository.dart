@@ -5,7 +5,9 @@ import 'package:flutter/foundation.dart';
 class DevicesRepository {
   DevicesProvider provider;
 
-  DevicesRepository({@required this.provider});
+  DevicesRepository({
+    @required this.provider,
+  });
 
   Stream<Device> getDevice(String id) {
     return provider.getDevice(id);

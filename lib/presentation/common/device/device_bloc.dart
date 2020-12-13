@@ -9,14 +9,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class DeviceBloc extends Bloc<Device, DeviceState> {
   StreamSubscription _subscription;
   final DevicesRepository repository;
-  final String id;
 
   DeviceBloc({
-    @required this.id,
     @required Device initialState,
     @required this.repository,
   }) : super(DeviceState.fromDevice(initialState)) {
-    _subscription = repository.getDevice(id).listen((device) {
+    _subscription = repository.getDevice(initialState.id).listen((device) {
       add(device);
     });
 

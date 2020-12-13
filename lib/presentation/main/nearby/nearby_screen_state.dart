@@ -1,13 +1,13 @@
-import 'package:droply/presentation/common/device/device_state.dart';
+import 'package:droply/data/devices/models/device.dart';
 import 'package:flutter/foundation.dart';
 
 abstract class NearbyScreenBlocState {}
 
 class NearbyScreenScanningState implements NearbyScreenBlocState {
-  Iterable<DeviceState> devicesStates;
+  Iterable<Device> devices;
 
   NearbyScreenScanningState({
-    @required this.devicesStates,
+    @required this.devices,
   });
 }
 

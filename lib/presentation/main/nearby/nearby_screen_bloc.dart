@@ -1,27 +1,40 @@
+import 'dart:async';
+
 import 'package:droply/data/devices/devices_repository.dart';
-import 'package:droply/presentation/common/device/device_state.dart';
+import 'package:droply/data/devices/models/device.dart';
 import 'package:droply/presentation/main/nearby/nearby_screen_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class NearbyScreenBloc extends Bloc<bool, NearbyScreenBlocState> {
+class NearbyScreenBloc extends Bloc<List<Device>, NearbyScreenBlocState> {
   DevicesRepository devicesRepository;
+  StreamSubscription _subscription;
 
   NearbyScreenBloc({
     this.devicesRepository,
   }) : super(NearbyScreenLoadingState()) {
-    add(false);
+    add(null);
+  }
+
+  void toggleListening(bool toggle) {
+    if (toggle) {
+      add([]);
+
+      _subscription = devicesRepository.getDevices().listen((devices) {
+        add(devices);
+      });
+    } else {
+      _subscription?.cancel();
+      _subscription = null;
+      add(null);
+    }
   }
 
   @override
-  Stream<NearbyScreenBlocState> mapEventToState(bool toggle) {
-    if (toggle) {
-      return devicesRepository
-          .getDevices()
-          .map((devices) =>
-              devices.map((device) => DeviceState.fromDevice(device)))
-          .map((states) => NearbyScreenScanningState(devicesStates: states));
+  Stream<NearbyScreenBlocState> mapEventToState(devices) async* {
+    if (devices != null) {
+      yield NearbyScreenScanningState(devices: devices);
     } else {
-      return Stream.value(NearbyScreenIdleState());
+      yield NearbyScreenIdleState();
     }
   }
 }
