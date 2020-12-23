@@ -35,12 +35,16 @@ class NearbyScreenState extends State<NearbyScreen> {
         listenWhen: (previous, current) {
           if (!(previous is NearbyScreenScanningState) &&
               current is NearbyScreenScanningState) {
-            _listKey.currentState.insertItem(1);
+            _listKey.currentState
+                .insertItem(1, duration: Duration(milliseconds: 400));
           } else if (previous is NearbyScreenScanningState &&
               !(current is NearbyScreenScanningState)) {
             _devices = null;
             _listKey.currentState.removeItem(
-                1, (_, animation) => _buildItem(1, animation, _devicesStates));
+              1,
+              (_, animation) => _buildItem(1, animation, _devicesStates),
+              duration: Duration(milliseconds: 200),
+            );
           }
 
           if (current is NearbyScreenScanningState) {
@@ -74,6 +78,8 @@ class NearbyScreenState extends State<NearbyScreen> {
 
     AnimatedListHelper.changeItems<Device, String>(
       offset: 2,
+      insertDuration: Duration(milliseconds: 400),
+      removeDuration: Duration(milliseconds: 200),
       state: _listKey.currentState,
       oldList: oldStates,
       newList: states,
@@ -106,10 +112,7 @@ class NearbyScreenState extends State<NearbyScreen> {
 
     return FadeTransition(
       opacity: animation,
-      child: ScaleTransition(
-        scale: animation,
-        child: widget,
-      ),
+      child: widget,
     );
   }
 

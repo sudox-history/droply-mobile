@@ -154,7 +154,6 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
     if (_iconKey.currentState.icon != null &&
         _iconKey.currentState.icon == _progressIcon) {
       _cancelIdleIconSettingOperation();
-      _setIdleBackground();
 
       _iconKey.currentState.onAnimationDone = () {
         _idleIconSettingOperation = CancelableOperation.fromFuture(
@@ -168,17 +167,19 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
               widget.idleIcon,
               AppColors.accentColor,
             );
+
+            _setIdleBackground();
           }),
         );
       };
 
-      _iconKey.currentState.changeIcon(widget.doneIcon, AppColors.accentColor);
+      _iconKey.currentState.changeIcon(widget.doneIcon, AppColors.processColor);
     } else {
-      _setIdleBackground();
-
       if (_iconKey.currentState.onAnimationDone == null) {
         _iconKey.currentState
             .changeIcon(widget.idleIcon, AppColors.accentColor);
+
+        _setIdleBackground();
       }
     }
   }
