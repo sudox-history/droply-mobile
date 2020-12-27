@@ -7,12 +7,14 @@ import 'package:flutter/material.dart';
 class Aquarium extends StatefulWidget {
   final IconData idleIcon;
   final IconData doneIcon;
+  final String iconTitle;
 
-  Aquarium({
-    Key key,
-    @required this.idleIcon,
-    @required this.doneIcon,
-  }) : super(key: key);
+  Aquarium(
+      {Key key,
+      @required this.idleIcon,
+      @required this.doneIcon,
+      this.iconTitle})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => AquariumState();
@@ -36,6 +38,8 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
+    _iconTitle = widget.iconTitle;
 
     _waveScaleAnimationController = AnimationController(
       vsync: this,

@@ -36,3 +36,10 @@ class AppNavigation {
   static const mainRouteName = "/main";
   static const settingsRouteName = "/main/settings";
 }
+
+class AppOther {
+  static final int maxInt =
+      (double.infinity is int) ? double.infinity as int : ~minInt;
+  static final int minInt =
+      (double.infinity is int) ? -double.infinity as int : (-1 << 63);
+}
