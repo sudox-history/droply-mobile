@@ -1,5 +1,5 @@
 import 'package:droply/data/entries/models/entry_info.dart';
-import 'package:droply/data/entries/providers/files_provider.dart';
+import 'package:droply/data/entries/providers/entries_provider.dart';
 import 'package:flutter/foundation.dart';
 
 import 'models/file_info.dart';

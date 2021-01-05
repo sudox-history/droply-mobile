@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:droply/data/entries/files_repository.dart';
+import 'package:droply/data/entries/entries_repository.dart';
 import 'package:droply/data/entries/models/folder_info.dart';
 import 'package:droply/presentation/common/folder/folder_state.dart';
 import 'package:flutter/foundation.dart';

@@ -1,10 +1,25 @@
 import 'package:droply/constants.dart';
+import 'package:droply/data/entries/entries_repository.dart';
+import 'package:droply/data/entries/models/entry_info.dart';
+import 'package:droply/data/entries/models/file_info.dart';
+import 'package:droply/data/entries/models/folder_info.dart';
+import 'package:droply/helpers/animated_list_helper.dart';
+import 'package:droply/presentation/common/file/file_widget.dart';
+import 'package:droply/presentation/common/folder/folder_widget.dart';
+import 'package:droply/presentation/statistics/statistics_screen_bloc.dart';
+import 'package:droply/presentation/statistics/statistics_screen_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-class MyPhoneScreen extends StatelessWidget {
+class StatisticsScreen extends StatelessWidget {
+  List<EntryInfo> _entriesInfo;
+  GlobalKey<AnimatedListState> _listKey;
+
   @override
   Widget build(BuildContext context) {
+    var entriesRepository = RepositoryProvider.of<EntriesRepository>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("My phone"),
@@ -23,25 +38,43 @@ class MyPhoneScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildListHeader("Statistics"),
-          _buildProgressBlock(),
-          _buildListHeader("Active loadings"),
-          _buildLoadingFileItem(),
-          _buildLoadingFolderItem(),
-        ],
+      body: BlocProvider(
+        create: (context) => StatisticsScreenBloc(
+          deviceId: "1",
+          entriesRepository: entriesRepository,
+        ),
+        child: BlocConsumer<StatisticsScreenBloc, StatisticsScreenState>(
+          listenWhen: (previous, current) {},
+          listener: (context, state) {},
+          builder: (context, state) {
+            return AnimatedList(
+              key: _listKey,
+              initialItemCount: 3,
+              itemBuilder: (context, position, animation) =>
+                  _buildItem(context, animation, _entriesInfo, position),
+            );
+          },
+        ),
       ),
     );
   }
 
-  Widget _buildLoadingFileItem() {
-    return Text("TEST");
-  }
+  Widget _buildItem(context, animation, items, position) {
+    if (position == 0) {
+      return _buildListHeader("Statistics");
+    } else if (position == 1) {
+      return _buildProgressBlock();
+    } else if (position == 2) {
+      return _buildListHeader("Active loadings");
+    }
 
-  Widget _buildLoadingFolderItem() {
-    return Text("Test");
+    var entry = items[position - 3];
+
+    if (entry is FolderInfo) {
+      return FolderWidget(initialState: entry);
+    } else if (entry is FileInfo) {
+      return FileWidget(initialState: entry);
+    }
   }
 
   Widget _buildListHeader(String text) {

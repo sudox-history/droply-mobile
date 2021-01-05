@@ -9,12 +9,12 @@ class Aquarium extends StatefulWidget {
   final IconData doneIcon;
   final String iconTitle;
 
-  Aquarium(
-      {Key key,
-      @required this.idleIcon,
-      @required this.doneIcon,
-      this.iconTitle})
-      : super(key: key);
+  Aquarium({
+    Key key,
+    @required this.idleIcon,
+    @required this.doneIcon,
+    this.iconTitle,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => AquariumState();

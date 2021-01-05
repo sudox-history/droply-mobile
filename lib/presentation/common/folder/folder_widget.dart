@@ -1,5 +1,5 @@
 import 'package:droply/constants.dart';
-import 'package:droply/data/entries/files_repository.dart';
+import 'package:droply/data/entries/entries_repository.dart';
 import 'package:droply/data/entries/models/entry_info.dart';
 import 'package:droply/data/entries/models/folder_info.dart';
 import 'package:droply/helpers/unit_helper.dart';

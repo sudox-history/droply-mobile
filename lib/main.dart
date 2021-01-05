@@ -1,10 +1,13 @@
 import 'package:droply/data/devices/devices_repository.dart';
 import 'package:droply/data/devices/providers/test_devices_provider.dart';
+import 'package:droply/data/entries/entries_repository.dart';
+import 'package:droply/data/entries/providers/test_entries_provider.dart';
 import 'package:droply/presentation/auth/auth_screen.dart';
 import 'package:droply/constants.dart';
 import 'package:droply/presentation/common/tab_bar.dart';
 import 'package:droply/presentation/main/main_screen.dart';
 import 'package:droply/presentation/settings/settings_screen.dart';
+import 'package:droply/presentation/statistics/statistics_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,10 +36,19 @@ class App extends StatelessWidget {
         statusBarBrightness: Brightness.light,
         statusBarColor: Colors.transparent,
       ),
-      child: RepositoryProvider(
-        create: (BuildContext context) => DevicesRepository(
-          provider: TestDevicesProvider(),
-        ),
+      child: MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider(
+            create: (context) => DevicesRepository(
+              provider: TestDevicesProvider(),
+            ),
+          ),
+          RepositoryProvider(
+            create: (context) => EntriesRepository(
+              provider: TestEntriesProvider(),
+            ),
+          ),
+        ],
         child: MaterialApp(
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
@@ -108,7 +120,7 @@ class App extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity,
             cursorColor: AppColors.accentColor,
           ),
-          home: MainScreen(),
+          home: StatisticsScreen(),
         ),
       ),
     );
