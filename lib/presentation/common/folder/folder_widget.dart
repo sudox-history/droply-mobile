@@ -64,7 +64,7 @@ class FolderWidgetState extends State<FolderWidget> {
                   Widget widget;
                   TextStyle bytesStyle = TextStyle(
                     fontFamily: AppFonts.openSans,
-                    fontWeight: AppFonts.semibold,
+                    fontWeight: AppFonts.regular,
                     fontSize: 15,
                     color: AppColors.secondaryTextColor,
                   );
@@ -90,7 +90,7 @@ class FolderWidgetState extends State<FolderWidget> {
                           " - 3:30 PM, 31 December",
                           style: TextStyle(
                             fontFamily: AppFonts.openSans,
-                            fontWeight: AppFonts.semibold,
+                            fontWeight: AppFonts.regular,
                             fontSize: 15,
                             color: AppColors.hintTextColor,
                           ),
@@ -111,6 +111,7 @@ class FolderWidgetState extends State<FolderWidget> {
                           fontSize: 17,
                         ),
                       ),
+                      SizedBox(height: 4),
                       widget,
                     ],
                   );
@@ -118,13 +119,16 @@ class FolderWidgetState extends State<FolderWidget> {
               ),
             ),
             BlocBuilder<FolderBloc, FolderState>(builder: (context, state) {
-              return Text(
-                "${state.downloadedFiles} / ${state.filesCount}",
-                style: TextStyle(
-                  fontFamily: AppFonts.openSans,
-                  fontWeight: AppFonts.semibold,
-                  fontSize: 15,
-                  color: AppColors.hintTextColor,
+              return Container(
+                alignment: Alignment.topCenter,
+                child: Text(
+                  "${state.downloadedFiles} / ${state.filesCount}",
+                  style: TextStyle(
+                    fontFamily: AppFonts.openSans,
+                    fontWeight: AppFonts.regular,
+                    fontSize: 15,
+                    color: AppColors.hintTextColor,
+                  ),
                 ),
               );
             }),

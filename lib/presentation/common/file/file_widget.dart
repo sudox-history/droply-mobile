@@ -64,7 +64,7 @@ class FileWidgetState extends State<FileWidget> {
                   Widget widget;
                   TextStyle bytesStyle = TextStyle(
                     fontFamily: AppFonts.openSans,
-                    fontWeight: AppFonts.semibold,
+                    fontWeight: AppFonts.regular,
                     fontSize: 15,
                     color: AppColors.secondaryTextColor,
                   );
@@ -90,7 +90,7 @@ class FileWidgetState extends State<FileWidget> {
                           " - 3:30 PM, 31 December",
                           style: TextStyle(
                             fontFamily: AppFonts.openSans,
-                            fontWeight: AppFonts.semibold,
+                            fontWeight: AppFonts.regular,
                             fontSize: 15,
                             color: AppColors.hintTextColor,
                           ),
@@ -110,6 +110,7 @@ class FileWidgetState extends State<FileWidget> {
                           fontSize: 17,
                         ),
                       ),
+                      SizedBox(height: 4),
                       widget,
                     ],
                   );

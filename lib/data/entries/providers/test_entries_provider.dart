@@ -7,7 +7,7 @@ class TestEntriesProvider implements EntriesProvider {
   @override
   Stream<List<EntryInfo>> getActiveEntries(String deviceId) {
     return Stream.fromFuture(Future.delayed(
-      Duration(seconds: 3),
+      Duration(seconds: 1),
       () {
         return [
           FileInfo(
