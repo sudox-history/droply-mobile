@@ -7,5 +7,7 @@ abstract class EntriesProvider {
 
   Stream<FolderInfo> getFolder(String id);
 
-  Stream<List<EntryInfo>> getEntries(String deviceId);
+  Stream<List<EntryInfo>> getActiveEntries(String deviceId);
+
+  Stream<List<EntryInfo>> getHistoryEntries(String deviceId);
 }

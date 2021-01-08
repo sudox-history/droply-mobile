@@ -6,9 +6,11 @@ abstract class StatisticsScreenState {}
 class StatisticsScreenLoadingState implements StatisticsScreenState {}
 
 class StatisticsScreenCompleteState implements StatisticsScreenState {
-  final List<EntryInfo> entries;
+  final List<EntryInfo> activeEntries;
+  final List<EntryInfo> historyEntries;
 
   StatisticsScreenCompleteState({
-    @required this.entries,
+    @required this.activeEntries,
+    @required this.historyEntries,
   });
 }

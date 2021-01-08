@@ -20,7 +20,11 @@ class EntriesRepository {
     return provider.getFolder(id);
   }
 
-  Stream<List<EntryInfo>> getEntries(String deviceId) {
-    return provider.getEntries(deviceId);
+  Stream<List<EntryInfo>> getActiveEntries(String deviceId) {
+    return provider.getActiveEntries(deviceId);
+  }
+
+  Stream<List<EntryInfo>> getHistoryEntries(String deviceId) {
+    return provider.getHistoryEntries(deviceId);
   }
 }
