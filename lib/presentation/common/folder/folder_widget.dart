@@ -31,7 +31,9 @@ class FolderWidgetState extends State<FolderWidget> {
     return Padding(
       child: BlocProvider(
         create: (context) => FolderBloc(
-            initialState: widget.initialState, repository: repository),
+          initialState: widget.initialState,
+          repository: repository,
+        ),
         child: Row(
           children: [
             Container(
@@ -41,11 +43,13 @@ class FolderWidgetState extends State<FolderWidget> {
                   return Aquarium(
                     key: _aquariumKey,
                     doneIcon: Icons.done_rounded,
-                    idleIcon: Icons.folder_rounded,
+                    idleIcon: Icons.folder,
                   );
                 },
                 listener: (context, state) {
                   if (state is LoadingFolderState) {
+                    _aquariumKey.currentState.progressIcon =
+                        Icons.folder_rounded;
                     _aquariumKey.currentState.progress = state.progress;
                   } else if (state is CompletedFolderState) {
                     _aquariumKey.currentState.setIdle();
@@ -59,16 +63,17 @@ class FolderWidgetState extends State<FolderWidget> {
                 builder: (context, state) {
                   Widget widget;
                   TextStyle bytesStyle = TextStyle(
-                      fontFamily: AppFonts.openSans,
-                      fontWeight: AppFonts.semibold,
-                      fontSize: 15,
-                      color: AppColors.secondaryTextColor);
+                    fontFamily: AppFonts.openSans,
+                    fontWeight: AppFonts.semibold,
+                    fontSize: 15,
+                    color: AppColors.secondaryTextColor,
+                  );
 
                   if (state is LoadingFolderState) {
                     widget = Row(
                       children: [
                         Text(
-                          "${shortenBytes(state.downloadedBytes)}/${shortenBytes(state.summaryBytes)}",
+                          "${shortenBytes(state.downloadedBytes)} / ${shortenBytes(state.summaryBytes)}",
                           style: bytesStyle,
                         ),
                       ],
@@ -114,7 +119,7 @@ class FolderWidgetState extends State<FolderWidget> {
             ),
             BlocBuilder<FolderBloc, FolderState>(builder: (context, state) {
               return Text(
-                "${state.downloadedFiles}/${state.filesCount}",
+                "${state.downloadedFiles} / ${state.filesCount}",
                 style: TextStyle(
                   fontFamily: AppFonts.openSans,
                   fontWeight: AppFonts.semibold,
@@ -126,7 +131,7 @@ class FolderWidgetState extends State<FolderWidget> {
           ],
         ),
       ),
-      padding: EdgeInsets.only(top: 7.5, bottom: 7.5, left: 16),
+      padding: EdgeInsets.only(top: 7.5, bottom: 7.5, left: 16, right: 16),
     );
   }
 }

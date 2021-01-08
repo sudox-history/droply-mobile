@@ -155,6 +155,8 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   void setIdle() {
     progress = 1.0;
 
+    // TODO: Fix the bug with icons comparing
+
     if (_iconKey.currentState.icon != null &&
         _iconKey.currentState.icon == _progressIcon) {
       _cancelIdleIconSettingOperation();
@@ -167,6 +169,7 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
               _iconKey.currentState.onAnimationDone = null;
             };
 
+            _iconColor = AppColors.accentColor;
             _iconKey.currentState.changeIcon(
               widget.idleIcon,
               AppColors.accentColor,

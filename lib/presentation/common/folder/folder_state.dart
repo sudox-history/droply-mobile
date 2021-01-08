@@ -9,8 +9,13 @@ abstract class FolderState {
   final int downloadedFiles;
   final int filesCount;
 
-  FolderState(this.id, this.name, this.summaryBytes, this.downloadedFiles,
-      this.filesCount);
+  FolderState(
+    this.id,
+    this.name,
+    this.summaryBytes,
+    this.downloadedFiles,
+    this.filesCount,
+  );
 
   factory FolderState.fromFolderInfo(FolderInfo folderInfo) {
     FolderState state;
@@ -68,5 +73,5 @@ class LoadingFolderState extends FolderState {
     @required this.status,
     @required this.progress,
     @required this.downloadedBytes,
-  }) : super(id, name, summaryBytes, downloadedBytes, filesCount);
+  }) : super(id, name, summaryBytes, downloadedFiles, filesCount);
 }

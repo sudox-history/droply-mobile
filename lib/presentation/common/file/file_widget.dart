@@ -42,12 +42,14 @@ class FileWidgetState extends State<FileWidget> {
                   return Aquarium(
                     key: _aquariumKey,
                     doneIcon: Icons.done_rounded,
-                    idleIcon: Icons.folder_rounded,
+                    idleIcon: Icons.insert_drive_file,
                     iconTitle: state.extension,
                   );
                 },
                 listener: (context, state) {
                   if (state is LoadingFileState) {
+                    _aquariumKey.currentState.progressIcon =
+                        Icons.insert_drive_file_rounded;
                     _aquariumKey.currentState.progress = state.progress;
                   } else if (state is CompletedFileState) {
                     _aquariumKey.currentState.setIdle();
@@ -61,16 +63,17 @@ class FileWidgetState extends State<FileWidget> {
                 builder: (context, state) {
                   Widget widget;
                   TextStyle bytesStyle = TextStyle(
-                      fontFamily: AppFonts.openSans,
-                      fontWeight: AppFonts.semibold,
-                      fontSize: 15,
-                      color: AppColors.secondaryTextColor);
+                    fontFamily: AppFonts.openSans,
+                    fontWeight: AppFonts.semibold,
+                    fontSize: 15,
+                    color: AppColors.secondaryTextColor,
+                  );
 
                   if (state is LoadingFileState) {
                     widget = Row(
                       children: [
                         Text(
-                          "${shortenBytes(state.downloadedBytes)}/${shortenBytes(state.summaryBytes)}",
+                          "${shortenBytes(state.downloadedBytes)} / ${shortenBytes(state.summaryBytes)}",
                           style: bytesStyle,
                         ),
                       ],

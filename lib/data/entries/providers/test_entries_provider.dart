@@ -17,15 +17,15 @@ class TestEntriesProvider implements EntriesProvider {
             downloadedBytes: 210763776,
             summaryBytes: 2151677952,
           ),
-          // FolderInfo(
-          //   id: "2",
-          //   name: "Photos",
-          //   status: EntryStatus.LOADING,
-          //   downloadedBytes: 38797312,
-          //   summaryBytes: 47185920,
-          //   downloadedFiles: 17,
-          //   filesCount: 20,
-          // )
+          FolderInfo(
+            id: "2",
+            name: "Photos",
+            status: EntryStatus.LOADING,
+            downloadedBytes: 38797312,
+            summaryBytes: 47185920,
+            downloadedFiles: 17,
+            filesCount: 20,
+          ),
         ];
       },
     ));
@@ -70,7 +70,7 @@ class TestEntriesProvider implements EntriesProvider {
 
         return Stream.periodic(Duration(milliseconds: 50), (count) {
           EntryStatus status;
-          downloaded += 1000000;
+          downloaded += 10000000;
           double progress = downloaded / 2151677952;
 
           if (progress >= 1.0) {
@@ -81,7 +81,7 @@ class TestEntriesProvider implements EntriesProvider {
 
           return FileInfo(
             id: "1",
-            name: "Contract.png",
+            name: "Contract.txt",
             status: status,
             downloadedBytes: downloaded,
             summaryBytes: 2151677952,
@@ -96,7 +96,35 @@ class TestEntriesProvider implements EntriesProvider {
 
   @override
   Stream<FolderInfo> getFolder(String id) {
-    // TODO: implement getFolder
-    throw UnimplementedError();
+    switch (id) {
+      case "2":
+        int downloaded = 0;
+
+        return Stream.periodic(Duration(milliseconds: 50), (count) {
+          EntryStatus status;
+          downloaded += 100000;
+          double progress = downloaded / 47185920;
+
+          if (progress >= 1.0) {
+            status = EntryStatus.COMPLETED;
+          } else {
+            status = EntryStatus.LOADING;
+          }
+
+          return FolderInfo(
+            id: "2",
+            name: "Photos",
+            status: status,
+            downloadedBytes: downloaded,
+            summaryBytes: 47185920,
+            downloadedFiles: 17,
+            filesCount: 20,
+          );
+        });
+      case "3":
+        break;
+      case "4":
+        break;
+    }
   }
 }
