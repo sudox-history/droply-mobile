@@ -27,140 +27,147 @@ class DeviceWidgetState extends State<DeviceWidget> {
     DevicesRepository repository =
         RepositoryProvider.of<DevicesRepository>(context);
 
-    return Padding(
-      child: BlocProvider(
-        create: (context) => DeviceBloc(
-          initialState: widget.initialState,
-          repository: repository,
-        ),
-        child: Row(
-          children: [
-            Container(
-              child: BlocConsumer<DeviceBloc, DeviceState>(
-                buildWhen: (state, context) => false,
-                builder: (context, state) {
-                  IconData idleIcon;
+    return InkWell(
+      onTap: () => Navigator.pushNamed(
+        context,
+        AppNavigation.statisticsRouteName,
+        arguments: widget.initialState.id,
+      ),
+      child: Padding(
+        child: BlocProvider(
+          create: (context) => DeviceBloc(
+            initialState: widget.initialState,
+            repository: repository,
+          ),
+          child: Row(
+            children: [
+              Container(
+                child: BlocConsumer<DeviceBloc, DeviceState>(
+                  buildWhen: (state, context) => false,
+                  builder: (context, state) {
+                    IconData idleIcon;
 
-                  switch (state.type) {
-                    case DeviceType.DESKTOP:
-                      idleIcon = Icons.desktop_windows_rounded;
-                      break;
-                    case DeviceType.IPHONE:
-                      idleIcon = Icons.phone_iphone_rounded;
-                      break;
-                    case DeviceType.TABLET:
-                      idleIcon = Icons.tablet_rounded;
-                      break;
-                    case DeviceType.UNKNOWN:
-                      idleIcon = Icons.question_answer_rounded;
-                      break;
-                    case DeviceType.PHONE:
-                      idleIcon = Icons.phone_android_rounded;
-                      break;
-                  }
-
-                  return Aquarium(
-                    key: _aquariumKey,
-                    doneIcon: Icons.done_rounded,
-                    idleIcon: idleIcon,
-                  );
-                },
-                listener: (context, state) {
-                  if (state is WorkingDeviceState) {
-                    if (state.status.index == DeviceStatus.RECEIVING.index) {
-                      _aquariumKey.currentState.progressIcon =
-                          Icons.download_rounded;
-                    } else if (state.status.index ==
-                        DeviceStatus.SENDING.index) {
-                      _aquariumKey.currentState.progressIcon =
-                          Icons.publish_rounded;
+                    switch (state.type) {
+                      case DeviceType.DESKTOP:
+                        idleIcon = Icons.desktop_windows_rounded;
+                        break;
+                      case DeviceType.IPHONE:
+                        idleIcon = Icons.phone_iphone_rounded;
+                        break;
+                      case DeviceType.TABLET:
+                        idleIcon = Icons.tablet_rounded;
+                        break;
+                      case DeviceType.UNKNOWN:
+                        idleIcon = Icons.question_answer_rounded;
+                        break;
+                      case DeviceType.PHONE:
+                        idleIcon = Icons.phone_android_rounded;
+                        break;
                     }
 
-                    _aquariumKey.currentState.progress = state.progress;
-                  } else if (state is IdleDeviceState) {
-                    _aquariumKey.currentState.setIdle();
-                  }
-                },
+                    return Aquarium(
+                      key: _aquariumKey,
+                      doneIcon: Icons.done_rounded,
+                      idleIcon: idleIcon,
+                    );
+                  },
+                  listener: (context, state) {
+                    if (state is WorkingDeviceState) {
+                      if (state.status.index == DeviceStatus.RECEIVING.index) {
+                        _aquariumKey.currentState.progressIcon =
+                            Icons.download_rounded;
+                      } else if (state.status.index ==
+                          DeviceStatus.SENDING.index) {
+                        _aquariumKey.currentState.progressIcon =
+                            Icons.publish_rounded;
+                      }
+
+                      _aquariumKey.currentState.progress = state.progress;
+                    } else if (state is IdleDeviceState) {
+                      _aquariumKey.currentState.setIdle();
+                    }
+                  },
+                ),
               ),
-            ),
-            SizedBox(width: 15),
-            Expanded(
-              child: BlocBuilder<DeviceBloc, DeviceState>(
-                builder: (context, state) {
-                  Color color;
+              SizedBox(width: 15),
+              Expanded(
+                child: BlocBuilder<DeviceBloc, DeviceState>(
+                  builder: (context, state) {
+                    Color color;
 
-                  if (state is WorkingDeviceState) {
-                    color = AppColors.processColor;
-                  } else if (state is IdleDeviceState) {
-                    color = AppColors.hintTextColor;
-                  }
-
-                  Widget widget;
-                  TextStyle style = TextStyle(
-                    fontFamily: AppFonts.openSans,
-                    fontWeight: AppFonts.semibold,
-                    fontSize: 15,
-                    color: color,
-                  );
-
-                  if (state is WorkingDeviceState) {
-                    String description;
-
-                    if (state.status == DeviceStatus.RECEIVING) {
-                      description = "Receiving";
-                    } else if (state.status == DeviceStatus.SENDING) {
-                      description = "Sending";
+                    if (state is WorkingDeviceState) {
+                      color = AppColors.processColor;
+                    } else if (state is IdleDeviceState) {
+                      color = AppColors.hintTextColor;
                     }
 
-                    widget = Row(
+                    Widget widget;
+                    TextStyle style = TextStyle(
+                      fontFamily: AppFonts.openSans,
+                      fontWeight: AppFonts.semibold,
+                      fontSize: 15,
+                      color: color,
+                    );
+
+                    if (state is WorkingDeviceState) {
+                      String description;
+
+                      if (state.status == DeviceStatus.RECEIVING) {
+                        description = "Receiving";
+                      } else if (state.status == DeviceStatus.SENDING) {
+                        description = "Sending";
+                      }
+
+                      widget = Row(
+                        children: [
+                          Text(
+                            description,
+                            style: style,
+                          ),
+                          SizedBox(width: 5),
+                          LoadingDots(AppColors.processColor)
+                        ],
+                      );
+                    } else if (state is IdleDeviceState) {
+                      // TODO: Time formatting
+                      widget = Text(
+                        "Sent at 3:30 PM",
+                        style: style,
+                      );
+                    }
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          description,
-                          style: style,
+                          state.name,
+                          style: TextStyle(
+                            color: AppColors.onSurfaceColor,
+                            fontFamily: AppFonts.openSans,
+                            fontWeight: AppFonts.semibold,
+                            fontSize: 17,
+                          ),
                         ),
-                        SizedBox(width: 5),
-                        LoadingDots(AppColors.processColor)
+                        widget,
                       ],
                     );
-                  } else if (state is IdleDeviceState) {
-                    // TODO: Time formatting
-                    widget = Text(
-                      "Sent at 3:30 PM",
-                      style: style,
-                    );
-                  }
-
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        state.name,
-                        style: TextStyle(
-                          color: AppColors.onSurfaceColor,
-                          fontFamily: AppFonts.openSans,
-                          fontWeight: AppFonts.semibold,
-                          fontSize: 17,
-                        ),
-                      ),
-                      widget,
-                    ],
-                  );
-                },
+                  },
+                ),
               ),
-            ),
-            IconButton(
-              padding: EdgeInsets.all(20),
-              color: AppColors.onSurfaceColor,
-              icon: Icon(Icons.more_vert),
-              onPressed: () => {},
-            )
-          ],
+              IconButton(
+                padding: EdgeInsets.all(20),
+                color: AppColors.onSurfaceColor,
+                icon: Icon(Icons.more_vert),
+                onPressed: () => {},
+              )
+            ],
+          ),
         ),
-      ),
-      padding: EdgeInsets.only(
-        top: 7.5,
-        bottom: 7.5,
-        left: 16,
+        padding: EdgeInsets.only(
+          top: 7.5,
+          bottom: 7.5,
+          left: 16,
+        ),
       ),
     );
   }

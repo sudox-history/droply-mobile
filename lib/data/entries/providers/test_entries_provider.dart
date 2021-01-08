@@ -35,29 +35,29 @@ class TestEntriesProvider implements EntriesProvider {
   Stream<List<EntryInfo>> getHistoryEntries(String deviceId) {
     return Stream.fromFuture(Future.delayed(Duration(seconds: 3), () {
       return [
-        // FileInfo(
-        //   id: "3",
-        //   name: "Contract.txt",
-        //   status: EntryStatus.COMPLETED,
-        //   downloadedBytes: 2151677952,
-        //   summaryBytes: 2151677952,
-        // ),
-        // FileInfo(
-        //   id: "4",
-        //   name: "PageComponent.js",
-        //   status: EntryStatus.COMPLETED,
-        //   downloadedBytes: 10700,
-        //   summaryBytes: 10700,
-        // ),
-        // FolderInfo(
-        //   id: "5",
-        //   name: "Photos",
-        //   status: EntryStatus.COMPLETED,
-        //   downloadedBytes: 46137344,
-        //   summaryBytes: 46137344,
-        //   downloadedFiles: 20,
-        //   filesCount: 20,
-        // ),
+        FileInfo(
+          id: "3",
+          name: "Contract.txt",
+          status: EntryStatus.COMPLETED,
+          downloadedBytes: 2151677952,
+          summaryBytes: 2151677952,
+        ),
+        FileInfo(
+          id: "4",
+          name: "PageComponent.js",
+          status: EntryStatus.COMPLETED,
+          downloadedBytes: 10700,
+          summaryBytes: 10700,
+        ),
+        FolderInfo(
+          id: "5",
+          name: "Photos",
+          status: EntryStatus.COMPLETED,
+          downloadedBytes: 46137344,
+          summaryBytes: 46137344,
+          downloadedFiles: 20,
+          filesCount: 20,
+        ),
       ];
     }));
   }
@@ -88,9 +88,25 @@ class TestEntriesProvider implements EntriesProvider {
           );
         });
       case "3":
-        break;
+        return Stream.value(
+          FileInfo(
+            id: "3",
+            name: "Contract.txt",
+            status: EntryStatus.COMPLETED,
+            downloadedBytes: 2151677952,
+            summaryBytes: 2151677952,
+          ),
+        );
       case "4":
-        break;
+        return Stream.value(
+          FileInfo(
+            id: "4",
+            name: "PageComponent.js",
+            status: EntryStatus.COMPLETED,
+            downloadedBytes: 10700,
+            summaryBytes: 10700,
+          ),
+        );
     }
   }
 
@@ -121,10 +137,18 @@ class TestEntriesProvider implements EntriesProvider {
             filesCount: 20,
           );
         });
-      case "3":
-        break;
-      case "4":
-        break;
+      case "5":
+        return Stream.value(
+          FolderInfo(
+            id: "5",
+            name: "Photos",
+            status: EntryStatus.COMPLETED,
+            downloadedBytes: 46137344,
+            summaryBytes: 46137344,
+            downloadedFiles: 20,
+            filesCount: 20,
+          ),
+        );
     }
   }
 }

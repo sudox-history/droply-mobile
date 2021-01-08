@@ -193,7 +193,7 @@ class StatisticsScreen extends StatelessWidget {
       } else if (_isActiveLoadingsHeaderInserted && _isHistoryHeaderInserted) {
         if (2 + _activeLoadingsEntries.length < position) {
           return _buildListEntry(_historyLoadingsEntries[
-              position - _activeLoadingsEntries.length - 2]);
+              position - _activeLoadingsEntries.length - 4]);
         } else {
           return _buildListEntry(_activeLoadingsEntries[position - 3]);
         }

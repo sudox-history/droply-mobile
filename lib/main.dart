@@ -59,6 +59,7 @@ class App extends StatelessWidget {
             AppNavigation.authRouteName: (context) => AuthScreen(),
             AppNavigation.mainRouteName: (context) => MainScreen(),
             AppNavigation.settingsRouteName: (context) => SettingsScreen(),
+            AppNavigation.statisticsRouteName: (context) => StatisticsScreen(),
           },
           theme: ThemeData(
             scaffoldBackgroundColor: AppColors.backgroundColor,
@@ -120,7 +121,7 @@ class App extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity,
             cursorColor: AppColors.accentColor,
           ),
-          home: StatisticsScreen(),
+          home: MainScreen(),
         ),
       ),
     );
