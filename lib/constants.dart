@@ -1,3 +1,5 @@
+import 'package:droply/presentation/auth/auth_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppColors {
@@ -6,6 +8,7 @@ class AppColors {
   static final secondaryTextColor = Color(0xFF808080);
   static final backgroundColor = Colors.white;
   static final hintTextColor = Color(0xFFBDBDBD);
+  static final lightenHintTextColor = Color(0xFFEDEDED);
   static final lightenAccentColor = Color(0xFFF3FAFF);
   static final lightAccentColor = Color(0xFFE8F4FC);
   static final accentColor = Color(0xFF2196F3);
@@ -22,6 +25,7 @@ class AppColors {
 
 class AppFonts {
   static final openSans = "OpenSans";
+  static final circe = "Circe";
   static final regular = FontWeight.w400;
   static final semibold = FontWeight.w600;
   static final bold = FontWeight.w700;

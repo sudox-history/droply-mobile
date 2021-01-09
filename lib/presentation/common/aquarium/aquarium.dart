@@ -34,6 +34,7 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   IconData _progressIcon;
   double _progress = 0;
   String _iconTitle;
+  bool _iconTitleVisibility = true;
 
   @override
   void initState() {
@@ -92,7 +93,7 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
       )
     ];
 
-    if (_iconTitle != null) {
+    if (_iconTitle != null && _iconTitleVisibility) {
       content.add(Text(
         _iconTitle.toUpperCase(),
         style: TextStyle(
@@ -175,10 +176,18 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
               AppColors.accentColor,
             );
 
+            setState(() {
+              _iconTitleVisibility = true;
+            });
+
             _setIdleBackground();
           }),
         );
       };
+
+      setState(() {
+        _iconTitleVisibility = false;
+      });
 
       _iconKey.currentState.changeIcon(widget.doneIcon, AppColors.processColor);
     } else {

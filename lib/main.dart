@@ -7,6 +7,7 @@ import 'package:droply/constants.dart';
 import 'package:droply/presentation/common/tab_bar.dart';
 import 'package:droply/presentation/main/main_screen.dart';
 import 'package:droply/presentation/settings/settings_screen.dart';
+import 'package:droply/presentation/splash_screen.dart';
 import 'package:droply/presentation/statistics/statistics_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -29,9 +30,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        systemNavigationBarColor: Color(0xFF000000),
+        systemNavigationBarColor: Colors.transparent,
         systemNavigationBarDividerColor: null,
-        systemNavigationBarIconBrightness: Brightness.light,
+        systemNavigationBarIconBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.light,
         statusBarColor: Colors.transparent,
@@ -121,7 +122,7 @@ class App extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity,
             cursorColor: AppColors.accentColor,
           ),
-          home: MainScreen(),
+          home: SplashScreen(),
         ),
       ),
     );
