@@ -1,6 +1,7 @@
 import 'package:droply/constants.dart';
 import 'package:droply/presentation/main/nearby/nearby_screen.dart';
 import 'package:droply/presentation/main/network/network_screen.dart';
+import 'package:droply/presentation/recipient_id/recipient_id_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -16,7 +17,12 @@ class MainScreen extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.settings),
               onPressed: () {
-                Navigator.pushNamed(context, AppNavigation.settingsRouteName);
+                // Navigator.pushNamed(context, AppNavigation.settingsRouteName);
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) => RecipientIdWidget(),
+                );
               },
             )
           ],

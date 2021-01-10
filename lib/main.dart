@@ -98,6 +98,11 @@ class App extends StatelessWidget {
                 ),
               ),
             ),
+            bottomSheetTheme: BottomSheetThemeData(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+            ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
                 padding: EdgeInsets.only(
@@ -107,7 +112,7 @@ class App extends StatelessWidget {
                   bottom: 14,
                 ),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 primary: AppColors.onAccentColor,
                 onSurface: AppColors.onAccentColor,

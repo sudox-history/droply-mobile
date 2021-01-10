@@ -18,9 +18,6 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).systemGestureInsets.bottom,
-        ),
         child: AuthScreenLayout(
           children: [
             Column(

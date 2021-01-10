@@ -21,6 +21,8 @@ class AppColors {
   static final processColor = Color(0xFF18BFA5);
   static final lightProcessColor = Color(0xFFD2F4EF);
   static final lightenProcessColor = Color(0xFFF2FCFB);
+
+  static final invariantPrimaryTextColor = Color(0xFF464646);
 }
 
 class AppFonts {
