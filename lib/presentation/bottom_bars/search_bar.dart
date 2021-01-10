@@ -5,19 +5,24 @@ import 'package:droply/presentation/common/formatters/upper_case_formatter.dart'
 import 'package:flutter/services.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
-class RecipientIdWidget extends StatelessWidget {
+class SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: Fields count to const
 
     return BottomSheetContainer(
+      headerBodyMargin: 30,
+      bodyFooterMargin: 38,
       title: "Searching",
       description: "Enter ID of the recipient",
       body: PinPut(
         fieldsCount: 6,
         separatorPositions: [3],
-        eachFieldWidth: 40,
-        eachFieldHeight: 40,
+        eachFieldWidth: 45,
+        eachFieldHeight: 45,
+        pinAnimationType: PinAnimationType.scale,
+        withCursor: true,
+        autofocus: true,
         inputFormatters: [UpperCaseTextFormatter()],
         keyboardType: TextInputType.text,
         followingFieldDecoration: _createFieldDecoration(),

@@ -6,12 +6,16 @@ class BottomSheetContainer extends StatelessWidget {
   final Widget footer;
   final String title;
   final String description;
+  final double headerBodyMargin;
+  final double bodyFooterMargin;
 
   BottomSheetContainer({
     this.body,
     this.footer,
     @required this.title,
     @required this.description,
+    @required this.headerBodyMargin,
+    @required this.bodyFooterMargin,
   });
 
   @override
@@ -36,16 +40,18 @@ class BottomSheetContainer extends StatelessWidget {
             SizedBox(height: 5),
             Text(
               description,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
                 fontFamily: AppFonts.openSans,
                 fontWeight: AppFonts.regular,
                 color: AppColors.secondaryTextColor,
+                
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: headerBodyMargin),
             body,
-            SizedBox(height: 38),
+            SizedBox(height: bodyFooterMargin),
             footer,
           ],
         ),
