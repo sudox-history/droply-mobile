@@ -2,9 +2,9 @@ import 'package:droply/data/devices/devices_repository.dart';
 import 'package:droply/data/devices/providers/test_devices_provider.dart';
 import 'package:droply/data/entries/entries_repository.dart';
 import 'package:droply/data/entries/providers/test_entries_provider.dart';
-import 'package:droply/presentation/auth/auth_screen.dart';
 import 'package:droply/constants.dart';
 import 'package:droply/presentation/common/tab_bar.dart';
+import 'package:droply/presentation/device_name/device_name_screen.dart';
 import 'package:droply/presentation/main/main_screen.dart';
 import 'package:droply/presentation/settings/settings_screen.dart';
 import 'package:droply/presentation/splash_screen.dart';
@@ -57,7 +57,7 @@ class App extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: "Droply",
           routes: {
-            AppNavigation.authRouteName: (context) => AuthScreen(),
+            AppNavigation.deviceNameRouteName: (context) => DeviceNameScreen(),
             AppNavigation.mainRouteName: (context) => MainScreen(),
             AppNavigation.settingsRouteName: (context) => SettingsScreen(),
             AppNavigation.statisticsRouteName: (context) => StatisticsScreen(),

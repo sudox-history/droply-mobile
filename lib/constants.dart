@@ -1,4 +1,3 @@
-import 'package:droply/presentation/auth/auth_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +37,7 @@ class AppRegex {
 }
 
 class AppNavigation {
-  static const authRouteName = "/auth";
+  static const deviceNameRouteName = "/auth";
   static const mainRouteName = "/main";
   static const settingsRouteName = "/main/settings";
   static const statisticsRouteName = "/main/statistics";

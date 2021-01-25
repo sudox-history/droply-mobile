@@ -1,24 +1,24 @@
-import 'package:droply/presentation/auth/auth_screen_layout.dart';
 import 'package:droply/constants.dart';
 import 'package:droply/presentation/common/my_device.dart';
+import 'package:droply/presentation/device_name/device_name_layout.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class AuthScreen extends StatefulWidget {
+class DeviceNameScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _AuthScreenState();
+  State<StatefulWidget> createState() => _DeviceNameScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _DeviceNameScreenState extends State<DeviceNameScreen> {
   var _canStart = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: AuthScreenLayout(
+        child: DeviceNameScreenLayout(
           children: [
             Column(
               children: [

@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-class AuthScreenLayout extends MultiChildRenderObjectWidget {
-  AuthScreenLayout({
+class DeviceNameScreenLayout extends MultiChildRenderObjectWidget {
+  DeviceNameScreenLayout({
     Key key,
     List<Widget> children,
   }) : super(key: key, children: children);
 
   @override
   RenderObject createRenderObject(BuildContext context) {
-    return _AuthScreenLayoutRender(context);
+    return _DeviceNameScreenLayoutRender(context);
   }
 }
 
-class _AuthScreenLayoutRender extends RenderBox
+class _DeviceNameScreenLayoutRender extends RenderBox
     with
-        ContainerRenderObjectMixin<RenderBox, _AuthScreenLayoutParentData>,
+        ContainerRenderObjectMixin<RenderBox, _DeviceNameScreenLayoutParentData>,
         RenderBoxContainerDefaultsMixin<RenderBox,
-            _AuthScreenLayoutParentData> {
+            _DeviceNameScreenLayoutParentData> {
   static const _horizontalMargin = 20;
   static const _bottomMargin = 20.0;
   static const _topMargin = 56.0;
@@ -25,14 +25,14 @@ class _AuthScreenLayoutRender extends RenderBox
 
   BuildContext _context;
 
-  _AuthScreenLayoutRender(this._context, {List<RenderBox> children}) {
+  _DeviceNameScreenLayoutRender(this._context, {List<RenderBox> children}) {
     addAll(children);
   }
 
   @override
   void setupParentData(RenderObject child) {
-    if (child.parentData is! _AuthScreenLayoutParentData) {
-      child.parentData = _AuthScreenLayoutParentData();
+    if (child.parentData is! _DeviceNameScreenLayoutParentData) {
+      child.parentData = _DeviceNameScreenLayoutParentData();
     }
   }
 
@@ -46,7 +46,7 @@ class _AuthScreenLayoutRender extends RenderBox
     var headerSize = Size(maxWidth, double.infinity);
     header.layout(BoxConstraints.loose(headerSize), parentUsesSize: true);
 
-    _AuthScreenLayoutParentData headerParentData = header.parentData;
+    _DeviceNameScreenLayoutParentData headerParentData = header.parentData;
     headerParentData.offset =
         Offset(constraints.maxWidth / 2 - header.size.width / 2, _topMargin);
 
@@ -54,7 +54,7 @@ class _AuthScreenLayoutRender extends RenderBox
     var footerSize = Size(maxWidth, double.infinity);
     footer.layout(BoxConstraints.loose(footerSize), parentUsesSize: true);
 
-    _AuthScreenLayoutParentData footerParentData = footer.parentData;
+    _DeviceNameScreenLayoutParentData footerParentData = footer.parentData;
     footerParentData.offset = Offset(
       constraints.maxWidth / 2 - footerSize.width / 2,
       maxHeight - _bottomMargin - footer.size.height,
@@ -64,7 +64,7 @@ class _AuthScreenLayoutRender extends RenderBox
     var middleSize = Size(maxWidth, double.infinity);
     middle.layout(BoxConstraints.loose(middleSize), parentUsesSize: true);
 
-    _AuthScreenLayoutParentData middleParentData = middle.parentData;
+    _DeviceNameScreenLayoutParentData middleParentData = middle.parentData;
 
     var middleX = constraints.maxWidth / 2 - middle.size.width / 2;
     var freeHeight = maxHeight -
@@ -139,4 +139,4 @@ class _AuthScreenLayoutRender extends RenderBox
   }
 }
 
-class _AuthScreenLayoutParentData extends ContainerBoxParentData<RenderBox> {}
+class _DeviceNameScreenLayoutParentData extends ContainerBoxParentData<RenderBox> {}
