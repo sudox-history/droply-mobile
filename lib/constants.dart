@@ -7,10 +7,15 @@ class AppColors {
   static final secondaryTextColor = Color(0xFF808080);
   static final backgroundColor = Colors.white;
   static final hintTextColor = Color(0xFFBDBDBD);
+  static final rippleEffectColor = Colors.black.withOpacity(0.05);
+  static final highlightButtonColor =
+      Colors.black.withOpacity(0.02); //TODO: Сделать const, изменить цвет
+
   static final lightenHintTextColor = Color(0xFFEDEDED);
   static final lightenAccentColor = Color(0xFFF3FAFF);
   static final lightAccentColor = Color(0xFFE8F4FC);
   static final accentColor = Color(0xFF2196F3);
+  static final lightenBlackColor = Color(0xFFEFEFEF);
 
   static final onAccentColor = Colors.white;
   static final onSurfaceColor = Color(0xFF424242);
@@ -37,7 +42,8 @@ class AppRegex {
 }
 
 class AppNavigation {
-  static const deviceNameRouteName = "/auth";
+  static const authRouteName = "/auth";
+  static const deviceNameRouteName = "/auth/device_name";
   static const mainRouteName = "/main";
   static const settingsRouteName = "/main/settings";
   static const statisticsRouteName = "/main/statistics";

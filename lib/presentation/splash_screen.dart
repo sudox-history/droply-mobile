@@ -27,7 +27,7 @@ class SplashScreenState extends State<SplashScreen>
     controller.forward();
 
     new Future.delayed(const Duration(milliseconds: 700), () {
-      Navigator.pushReplacementNamed(context, AppNavigation.deviceNameRouteName);
+      Navigator.pushReplacementNamed(context, AppNavigation.authRouteName);
     });
   }
 
@@ -46,26 +46,27 @@ class SplashScreenState extends State<SplashScreen>
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                  padding: EdgeInsets.only(bottom: 80),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        "assets/launcher/sudox.jpg",
-                        height: 70,
-                        width: 70,
+                padding: EdgeInsets.only(bottom: 80),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/launcher/sudox.jpg",
+                      height: 70,
+                      width: 70,
+                    ),
+                    Text(
+                      "SUDOX",
+                      style: TextStyle(
+                        color: AppColors.lightenHintTextColor,
+                        fontFamily: AppFonts.openSans,
+                        fontWeight: AppFonts.semibold,
+                        fontSize: 28,
                       ),
-                      Text(
-                        "SUDOX",
-                        style: TextStyle(
-                          color: AppColors.lightenHintTextColor,
-                          fontFamily: AppFonts.openSans,
-                          fontWeight: AppFonts.semibold,
-                          fontSize: 28,
-                        ),
-                      ),
-                    ],
-                  )),
+                    ),
+                  ],
+                ),
+              ),
             )
           ],
         ),

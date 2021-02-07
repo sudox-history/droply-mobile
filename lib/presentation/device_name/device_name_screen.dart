@@ -43,7 +43,6 @@ class _DeviceNameScreenState extends State<DeviceNameScreen> {
             ),
             Column(
               children: [
-                _buildLicenseText(),
                 _buildStartSharingButton(),
               ],
             ),
@@ -80,41 +79,7 @@ class _DeviceNameScreenState extends State<DeviceNameScreen> {
       ),
     );
   }
-
-  Widget _buildLicenseText() {
-    return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20),
-      child: RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(
-          style: TextStyle(
-            color: AppColors.secondaryTextColor,
-            fontFamily: AppFonts.openSans,
-            fontWeight: AppFonts.regular,
-            fontSize: 15,
-          ),
-          children: [
-            TextSpan(text: "agreement1".tr()),
-            TextSpan(
-              text: "agreement2".tr(),
-              style: TextStyle(
-                color: AppColors.accentColor,
-                fontWeight: AppFonts.semibold,
-              ),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () async {
-                  const url = "https://flutter.io";
-                  if (await canLaunch(url)) {
-                    launch(url);
-                  }
-                },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
+  
   Widget _buildStartSharingButton() {
     return Container(
       margin: EdgeInsets.only(top: 16.0),
