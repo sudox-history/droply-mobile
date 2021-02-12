@@ -1,8 +1,9 @@
 import 'package:droply/presentation/bottom_bars/new_request_bar.dart';
+import 'package:droply/presentation/common/toolbar/toolbar.dart';
 import 'package:droply/presentation/main/nearby/nearby_screen.dart';
 import 'package:droply/presentation/main/network/network_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -10,8 +11,8 @@ class MainScreen extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("app_name".tr()),
+        appBar: Toolbar(
+          title: "app_name".tr(),
           actions: [
             IconButton(
               icon: Icon(Icons.settings),

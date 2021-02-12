@@ -1,7 +1,9 @@
+import 'package:droply/data/api/droply_api.dart';
 import 'package:droply/data/devices/devices_repository.dart';
 import 'package:droply/data/devices/providers/test_devices_provider.dart';
 import 'package:droply/data/entries/entries_repository.dart';
 import 'package:droply/data/entries/providers/test_entries_provider.dart';
+import 'package:droply/data/managers/connection_manager.dart';
 import 'package:droply/presentation/auth/auth_screen.dart';
 import 'package:droply/presentation/common/tab_bar.dart';
 import 'package:droply/presentation/device_name/device_name_screen.dart';
@@ -13,21 +15,26 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'constants.dart';
 
 void main() {
   runApp(
     EasyLocalization(
+      fallbackLocale: Locale('en', 'US'),
       supportedLocales: [Locale('en', 'US'), Locale('ru', 'RU')],
       path: 'assets/translations',
-      fallbackLocale: Locale('en', 'US'),
       child: App(),
     ),
   );
 }
 
 class App extends StatelessWidget {
+  final ConnectionManager _connectionManager = ConnectionManager(DroplyApi());
+
+  App() {
+    _connectionManager.start();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -41,6 +48,9 @@ class App extends StatelessWidget {
       ),
       child: MultiRepositoryProvider(
         providers: [
+          RepositoryProvider(
+            create: (context) => _connectionManager,
+          ),
           RepositoryProvider(
             create: (context) => DevicesRepository(
               provider: TestDevicesProvider(),
@@ -140,7 +150,7 @@ class App extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity,
             cursorColor: AppColors.accentColor,
           ),
-          home: SplashScreen(),
+          home: MainScreen(),
         ),
       ),
     );
