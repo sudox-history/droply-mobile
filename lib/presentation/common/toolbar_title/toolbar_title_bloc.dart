@@ -3,18 +3,18 @@ import 'dart:async';
 import 'package:droply/data/managers/connection_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ToolbarBloc extends Bloc<ConnectionStatus, ToolbarState> {
+class ToolbarTitleBloc extends Bloc<ConnectionStatus, ToolbarTitleState> {
   StreamSubscription<ConnectionStatus> _subscription;
 
-  ToolbarBloc(
+  ToolbarTitleBloc(
     ConnectionManager manager,
-  ) : super(ToolbarState(manager.isConnected)) {
+  ) : super(ToolbarTitleState(manager.isConnected)) {
     _subscription = manager.statusStream.listen(add);
   }
 
   @override
-  Stream<ToolbarState> mapEventToState(event) =>
-      Stream.value(ToolbarState(event == ConnectionStatus.CONNECTED));
+  Stream<ToolbarTitleState> mapEventToState(event) =>
+      Stream.value(ToolbarTitleState(event == ConnectionStatus.CONNECTED));
 
   @override
   Future<void> close() async {
@@ -23,10 +23,10 @@ class ToolbarBloc extends Bloc<ConnectionStatus, ToolbarState> {
   }
 }
 
-class ToolbarState {
+class ToolbarTitleState {
   final bool isConnected;
 
-  ToolbarState(
+  ToolbarTitleState(
     this.isConnected,
   );
 }

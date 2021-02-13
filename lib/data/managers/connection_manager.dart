@@ -15,7 +15,7 @@ class ConnectionManager {
 
   ConnectionManager(this._api);
 
-  void start() {
+  void start() async {
     _api.stream.listen((data) {
       if (data is DroplyApiConnectedEvent) {
         _isConnected = true;
