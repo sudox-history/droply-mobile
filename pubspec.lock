@@ -62,7 +62,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: a1e23fe141e88d097f55236dd48686776530d373
+      resolved-ref: "2104eb89557f4598b2807432ad7451ad0b620c0d"
       url: "git://github.com/sudox-team/cobra-flutter.git"
     source: git
     version: "0.0.1"
