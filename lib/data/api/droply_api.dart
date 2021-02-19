@@ -28,7 +28,7 @@ class DroplyApi {
         }
       }, onDone: () {
         _streamController.sink.add(DroplyApiNetworkErrorEvent());
-      }, cancelOnError: false);
+      }, onError: (error) {});
 
       _streamController.sink.add(DroplyApiConnectedEvent());
     } catch (ex) {
