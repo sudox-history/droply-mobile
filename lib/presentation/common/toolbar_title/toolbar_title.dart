@@ -24,8 +24,6 @@ class _ToolbarTitleState extends State<ToolbarTitle> {
       child: BlocBuilder<ToolbarTitleBloc, ToolbarTitleState>(
         builder: (context, state) => AnimatedSwitcher(
           duration: Duration(milliseconds: 300),
-          transitionBuilder: (Widget child, Animation<double> animation) =>
-              ScaleTransition(scale: animation, child: child),
           child: Text(
             state.isConnected ? widget.title : "Connecting ...",
             key: ValueKey(state.isConnected),

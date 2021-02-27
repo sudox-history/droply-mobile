@@ -21,6 +21,7 @@ dependencies:
   flutter_svg: ^0.18.0+1
   google_sign_in: ^4.5.9
   sign_in_with_apple: ^2.5.4
+  msgpack_dart: ^0.0.7
   cobra_flutter:
     git:
       url: git://github.com/sudox-team/cobra-flutter.git

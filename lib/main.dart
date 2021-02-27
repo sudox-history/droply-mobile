@@ -9,7 +9,6 @@ import 'package:droply/presentation/common/tab_bar.dart';
 import 'package:droply/presentation/device_name/device_name_screen.dart';
 import 'package:droply/presentation/main/main_screen.dart';
 import 'package:droply/presentation/settings/settings_screen.dart';
-import 'package:droply/presentation/splash_screen.dart';
 import 'package:droply/presentation/statistics/statistics_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'constants.dart';
 
-void main() {
+void main() async {
   runApp(
     EasyLocalization(
       fallbackLocale: Locale('en', 'US'),
@@ -28,11 +27,24 @@ void main() {
   );
 }
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
   final ConnectionManager _connectionManager = ConnectionManager(DroplyApi());
 
-  App() {
+  @override
+  void initState() {
     _connectionManager.start();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _connectionManager.stop();
+    super.dispose();
   }
 
   @override
