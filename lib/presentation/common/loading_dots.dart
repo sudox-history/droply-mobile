@@ -29,9 +29,6 @@ class _LoadingDotsState extends State<LoadingDots>
 
     _dotSizeAnimation =
         Tween(begin: 2.5, end: 1.5).animate(_dotSizeAnimationController)
-          ..addListener(() {
-            setState(() {});
-          })
           ..addStatusListener((status) {
             if (status == AnimationStatus.completed) {
               _dotSizeAnimationController.reverse();
@@ -45,32 +42,28 @@ class _LoadingDotsState extends State<LoadingDots>
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        AnimatedBuilder(
-          animation: _dotSizeAnimation,
-          builder: (context, snapshot) => CustomPaint(
-            size: Size.square(5),
-            painter: _LoadingDotPainter(_dotColor, _dotSizeAnimation.value),
-          ),
-        ),
-        SizedBox(width: 2),
-        AnimatedBuilder(
-          animation: _dotSizeAnimation,
-          builder: (context, snapshot) => CustomPaint(
-            size: Size.square(5),
-            painter: _LoadingDotPainter(_dotColor, _dotSizeAnimation.value),
-          ),
-        ),
-        SizedBox(width: 2),
-        AnimatedBuilder(
-          animation: _dotSizeAnimation,
-          builder: (context, snapshot) => CustomPaint(
-            size: Size.square(5),
-            painter: _LoadingDotPainter(_dotColor, _dotSizeAnimation.value),
-          ),
-        )
-      ],
+    return AnimatedBuilder(
+      animation: _dotSizeAnimation,
+      builder: (context, widget) {
+        return Row(
+          children: [
+            CustomPaint(
+              size: const Size.square(5),
+              painter: _LoadingDotPainter(_dotColor, _dotSizeAnimation.value),
+            ),
+            const SizedBox(width: 2),
+            CustomPaint(
+              size: const Size.square(5),
+              painter: _LoadingDotPainter(_dotColor, _dotSizeAnimation.value),
+            ),
+            const SizedBox(width: 2),
+            CustomPaint(
+              size: const Size.square(5),
+              painter: _LoadingDotPainter(_dotColor, _dotSizeAnimation.value),
+            ),
+          ],
+        );
+      },
     );
   }
 
