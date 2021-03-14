@@ -2,39 +2,38 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static final primaryIconsColor = Colors.black;
-  static final primaryTextColor = Colors.black;
-  static final secondaryTextColor = Color(0xFF808080);
-  static final backgroundColor = Colors.white;
-  static final hintTextColor = Color(0xFFBDBDBD);
-  static final rippleEffectColor = Colors.black.withOpacity(0.05);
-  static final highlightButtonColor =
-      Colors.black.withOpacity(0.02); //TODO: Сделать const, изменить цвет
+  static const primaryIconsColor = Colors.black;
+  static const primaryTextColor = Colors.black;
+  static const secondaryTextColor = Color(0xFF808080);
+  static const backgroundColor = Colors.white;
+  static const hintTextColor = Color(0xFFBDBDBD);
+  static const rippleEffectColor = Color(0x0D000000);
+  static const highlightButtonColor = Color(0x05000000);
 
-  static final lightenHintTextColor = Color(0xFFEDEDED);
-  static final lightenAccentColor = Color(0xFFF3FAFF);
-  static final lightAccentColor = Color(0xFFE8F4FC);
-  static final accentColor = Color(0xFF2196F3);
-  static final lightenBlackColor = Color(0xFFEFEFEF);
+  static const lightenHintTextColor = Color(0xFFEDEDED);
+  static const lightenAccentColor = Color(0xFFF3FAFF);
+  static const lightAccentColor = Color(0xFFE8F4FC);
+  static const accentColor = Color(0xFF2196F3);
+  static const lightenBlackColor = Color(0xFFEFEFEF);
 
-  static final onAccentColor = Colors.white;
-  static final onSurfaceColor = Color(0xFF424242);
-  static final onBackgroundColor = Color(0xFFF7F7F7);
+  static const onAccentColor = Colors.white;
+  static const onSurfaceColor = Color(0xFF424242);
+  static const onBackgroundColor = Color(0xFFF7F7F7);
 
-  static final dividerColor = Color(0xFFE0E0E0);
-  static final processColor = Color(0xFF18BFA5);
-  static final lightProcessColor = Color(0xFFD2F4EF);
-  static final lightenProcessColor = Color(0xFFF2FCFB);
+  static const dividerColor = Color(0xFFE0E0E0);
+  static const processColor = Color(0xFF18BFA5);
+  static const lightProcessColor = Color(0xFFD2F4EF);
+  static const lightenProcessColor = Color(0xFFF2FCFB);
 
-  static final invariantPrimaryTextColor = Color(0xFF464646);
+  static const invariantPrimaryTextColor = Color(0xFF464646);
 }
 
 class AppFonts {
-  static final openSans = "OpenSans";
-  static final circe = "Circe";
-  static final regular = FontWeight.w400;
-  static final semibold = FontWeight.w600;
-  static final bold = FontWeight.w700;
+  static const openSans = "OpenSans";
+  static const circe = "Circe";
+  static const regular = FontWeight.w400;
+  static const semibold = FontWeight.w600;
+  static const bold = FontWeight.w700;
 }
 
 class AppRegex {
@@ -50,8 +49,8 @@ class AppNavigation {
 }
 
 class AppOther {
-  static final int maxInt =
+  static const int maxInt =
       (double.infinity is int) ? double.infinity as int : ~minInt;
-  static final int minInt =
+  static const int minInt =
       (double.infinity is int) ? -double.infinity as int : (-1 << 63);
 }

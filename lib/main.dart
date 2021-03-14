@@ -1,3 +1,4 @@
+import 'package:droply/constants.dart';
 import 'package:droply/data/api/droply_api.dart';
 import 'package:droply/data/devices/devices_repository.dart';
 import 'package:droply/data/devices/providers/test_devices_provider.dart';
@@ -15,15 +16,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'constants.dart';
 
 void main() async {
   runApp(
     EasyLocalization(
-      fallbackLocale: Locale('en', 'US'),
-      supportedLocales: [Locale('en', 'US'), Locale('ru', 'RU')],
-      path: 'assets/translations',
       child: App(),
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en', 'US'),
+      supportedLocales: [
+        const Locale('en', 'US'),
+        const Locale('ru', 'RU'),
+      ],
     ),
   );
 }
@@ -51,7 +54,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
+      value: const SystemUiOverlayStyle(
         systemNavigationBarDividerColor: null,
         systemNavigationBarColor: Colors.transparent,
         systemNavigationBarIconBrightness: Brightness.dark,
@@ -89,33 +92,35 @@ class _AppState extends State<App> {
             splashColor: AppColors.rippleEffectColor,
             highlightColor: AppColors.highlightButtonColor,
             scaffoldBackgroundColor: AppColors.backgroundColor,
-            primaryIconTheme: IconThemeData(color: AppColors.primaryIconsColor),
-            tabBarTheme: TabBarTheme(
-              indicator: TabBarIndicator(),
-              labelPadding: EdgeInsets.symmetric(
+            primaryIconTheme: const IconThemeData(
+              color: AppColors.primaryIconsColor,
+            ),
+            tabBarTheme: const TabBarTheme(
+              indicator: const TabBarIndicator(),
+              labelPadding: const EdgeInsets.symmetric(
                 horizontal: TabBarStyles.tabHorizontalPadding,
               ),
               labelColor: AppColors.accentColor,
-              labelStyle: TextStyle(
+              labelStyle: const TextStyle(
                 fontSize: 15,
                 fontWeight: AppFonts.semibold,
                 fontFamily: AppFonts.openSans,
               ),
               unselectedLabelColor: AppColors.secondaryTextColor,
-              unselectedLabelStyle: TextStyle(
+              unselectedLabelStyle: const TextStyle(
                 fontSize: 15,
                 fontWeight: AppFonts.semibold,
                 fontFamily: AppFonts.openSans,
               ),
             ),
-            appBarTheme: AppBarTheme(
+            appBarTheme: const AppBarTheme(
               brightness: Brightness.light,
               color: AppColors.backgroundColor,
               centerTitle: true,
               elevation: AppBarStyles.elevation,
               shadowColor: AppColors.dividerColor,
-              textTheme: TextTheme(
-                headline6: TextStyle(
+              textTheme: const TextTheme(
+                headline6: const TextStyle(
                   color: AppColors.primaryTextColor,
                   fontSize: 18,
                   fontFamily: AppFonts.openSans,
@@ -123,31 +128,35 @@ class _AppState extends State<App> {
                 ),
               ),
             ),
-            buttonTheme: ButtonThemeData(
+            buttonTheme: const ButtonThemeData(
               splashColor: AppColors.rippleEffectColor,
               highlightColor: AppColors.highlightButtonColor,
-              padding: EdgeInsets.only(top: 16, bottom: 16),
+              padding: const EdgeInsets.only(top: 16, bottom: 16),
             ),
-            bottomSheetTheme: BottomSheetThemeData(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            bottomSheetTheme: const BottomSheetThemeData(
+              shape: const RoundedRectangleBorder(
+                borderRadius: const BorderRadius.vertical(
+                  top: const Radius.circular(20),
+                ),
               ),
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   left: 14,
                   right: 14,
                   top: 14,
                   bottom: 14,
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: const BorderRadius.all(
+                    const Radius.circular(10),
+                  ),
                 ),
                 primary: AppColors.onAccentColor,
                 onSurface: AppColors.onAccentColor,
                 backgroundColor: AppColors.accentColor,
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontFamily: AppFonts.openSans,
                   fontWeight: AppFonts.semibold,
                   fontSize: 16,
@@ -155,11 +164,11 @@ class _AppState extends State<App> {
               ),
             ),
             visualDensity: VisualDensity.adaptivePlatformDensity,
-            textSelectionTheme: TextSelectionThemeData(
+            textSelectionTheme: const TextSelectionThemeData(
               cursorColor: AppColors.accentColor,
             ),
           ),
-          home: MainScreen(),
+          home: AuthScreen(),
         ),
       ),
     );

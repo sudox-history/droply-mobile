@@ -1,4 +1,5 @@
 import 'package:droply/constants.dart';
+import 'package:droply/presentation/auth/auth_screen_layout.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -17,13 +18,16 @@ class AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(left: 16, right: 16, bottom: 30, top: 60),
-        child: Column(
+      body: SingleChildScrollView(
+        child: AuthScreenLayout(
           children: [
-            _buildWelcomeTitle(),
-            _buildWelcomeHint(),
-            Expanded(child: Container()),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildWelcomeTitle(),
+                _buildWelcomeHint(),
+              ],
+            ),
             _buildAuthButtons(),
           ],
         ),
@@ -34,7 +38,7 @@ class AuthScreenState extends State<AuthScreen> {
   Widget _buildWelcomeTitle() {
     return Text(
       "welcome_title".tr(),
-      style: TextStyle(
+      style: const TextStyle(
         color: AppColors.primaryTextColor,
         fontFamily: AppFonts.openSans,
         fontWeight: AppFonts.bold,
@@ -45,11 +49,11 @@ class AuthScreenState extends State<AuthScreen> {
 
   Widget _buildWelcomeHint() {
     return Container(
-      padding: EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.only(top: 16),
       child: Text(
         "welcome_hint".tr(),
         textAlign: TextAlign.center,
-        style: TextStyle(
+        style: const TextStyle(
           color: AppColors.secondaryTextColor,
           fontFamily: AppFonts.openSans,
           fontWeight: AppFonts.regular,
@@ -61,11 +65,12 @@ class AuthScreenState extends State<AuthScreen> {
 
   Widget _buildAuthButtons() {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         _buildGoogleSignIn(),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         _buildAppleSignIn(),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         _buildLicenseText(),
       ],
     );
@@ -74,23 +79,23 @@ class AuthScreenState extends State<AuthScreen> {
   Widget _buildGoogleSignIn() {
     return InkWell(
       onTap: () => _handleSignIn(),
-      customBorder: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+      customBorder: const RoundedRectangleBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child: Ink(
-        padding: EdgeInsets.only(top: 14, bottom: 14),
-        decoration: BoxDecoration(
+        padding: const EdgeInsets.only(top: 14, bottom: 14),
+        decoration: const BoxDecoration(
           color: AppColors.lightAccentColor,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset("assets/images/google-icon.svg", width: 20),
-            SizedBox(width: 15),
-            Text(
+            const SizedBox(width: 15),
+            const Text(
               "Sign in by Google",
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.accentColor,
                 fontFamily: AppFonts.openSans,
                 fontWeight: AppFonts.semibold,
@@ -114,23 +119,23 @@ class AuthScreenState extends State<AuthScreen> {
   Widget _buildAppleSignIn() {
     return InkWell(
       onTap: () {},
-      customBorder: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+      customBorder: const RoundedRectangleBorder(
+        borderRadius: const BorderRadius.all(const Radius.circular(10)),
       ),
       child: Ink(
-        padding: EdgeInsets.only(top: 14, bottom: 14),
-        decoration: BoxDecoration(
+        padding: const EdgeInsets.only(top: 14, bottom: 14),
+        decoration: const BoxDecoration(
           color: AppColors.lightenBlackColor,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: const BorderRadius.all(const Radius.circular(10)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset("assets/images/apple-icon.svg", width: 20),
-            SizedBox(width: 15),
-            Text(
+            const SizedBox(width: 15),
+            const Text(
               "Sign in by Apple",
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontFamily: AppFonts.openSans,
                 fontWeight: AppFonts.semibold,
@@ -145,11 +150,11 @@ class AuthScreenState extends State<AuthScreen> {
 
   Widget _buildLicenseText() {
     return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20),
+      padding: const EdgeInsets.only(left: 20, right: 20),
       child: RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
-          style: TextStyle(
+          style: const TextStyle(
             color: AppColors.secondaryTextColor,
             fontFamily: AppFonts.openSans,
             fontWeight: AppFonts.regular,
@@ -159,13 +164,14 @@ class AuthScreenState extends State<AuthScreen> {
             TextSpan(text: "agreement1".tr()),
             TextSpan(
               text: "agreement2".tr(),
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.accentColor,
                 fontWeight: AppFonts.semibold,
               ),
               recognizer: TapGestureRecognizer()
                 ..onTap = () async {
                   const url = "https://flutter.io";
+
                   if (await canLaunch(url)) {
                     launch(url);
                   }

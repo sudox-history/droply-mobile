@@ -6,6 +6,8 @@ class TabBarStyles {
 }
 
 class TabBarIndicator extends Decoration {
+  const TabBarIndicator();
+
   @override
   BoxPainter createBoxPainter([onChanged]) => _TabBarIndicatorPainter();
 }
