@@ -20,8 +20,8 @@ class _AuthScreenLayoutRender extends RenderBox
             _AuthScreenLayoutParentData> {
   static const _horizontalMargin = 20;
   static const _bottomMargin = 20.0;
-  static const _topMargin = 56.0;
-  static const _middleMargin = 40.0;
+  static const _topMargin = 20.0;
+  static const _middleMargin = 25.0;
 
   BuildContext _context;
 
@@ -38,17 +38,19 @@ class _AuthScreenLayoutRender extends RenderBox
 
   @override
   void performLayout() {
-    var maxHeight = MediaQuery.of(_context).size.height;
+    var query = MediaQuery.of(_context);
+    var maxHeight = query.size.height;
     var maxWidth = constraints.maxWidth - 2 * _horizontalMargin;
     var children = getChildrenAsList();
 
     var header = children.first;
     var headerSize = Size(maxWidth, double.infinity);
+    var topPadding = query.viewPadding.top + _topMargin;
     header.layout(BoxConstraints.loose(headerSize), parentUsesSize: true);
 
     _AuthScreenLayoutParentData headerParentData = header.parentData;
     headerParentData.offset =
-        Offset(constraints.maxWidth / 2 - header.size.width / 2, _topMargin);
+        Offset(constraints.maxWidth / 2 - header.size.width / 2, topPadding);
 
     var footer = children.last;
     var footerSize = Size(maxWidth, double.infinity);
@@ -61,7 +63,7 @@ class _AuthScreenLayoutRender extends RenderBox
     );
 
     var freeHeight = maxHeight -
-        _topMargin -
+        topPadding -
         header.size.height -
         footer.size.height -
         _bottomMargin;
@@ -71,7 +73,7 @@ class _AuthScreenLayoutRender extends RenderBox
     } else {
       size = Size(
         constraints.maxWidth,
-        _topMargin +
+        topPadding +
             header.size.height +
             _middleMargin * 2 +
             footer.size.height +

@@ -80,13 +80,13 @@ class AuthScreenState extends State<AuthScreen> {
     return InkWell(
       onTap: () => _handleSignIn(),
       customBorder: const RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        borderRadius: const BorderRadius.all(const Radius.circular(10)),
       ),
       child: Ink(
         padding: const EdgeInsets.only(top: 14, bottom: 14),
         decoration: const BoxDecoration(
           color: AppColors.lightAccentColor,
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          borderRadius: const BorderRadius.all(const Radius.circular(10)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
