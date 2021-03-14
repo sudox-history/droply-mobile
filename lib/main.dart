@@ -38,13 +38,13 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
-    _connectionManager.start();
+    // _connectionManager.start();
     super.initState();
   }
 
   @override
   void dispose() {
-    _connectionManager.stop();
+    // _connectionManager.stop();
     super.dispose();
   }
 

@@ -33,8 +33,7 @@ class TransitionIconState extends State<TransitionIcon>
       duration: Duration(milliseconds: widget.animationDuration),
       lowerBound: 0.0,
       upperBound: 1.0,
-    )
-      ..addStatusListener((status) {
+    )..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           onAnimationDone?.call();
 
@@ -43,9 +42,6 @@ class TransitionIconState extends State<TransitionIcon>
             _oldColor = null;
           });
         }
-      })
-      ..addListener(() {
-        setState(() {});
       });
   }
 
@@ -59,28 +55,33 @@ class TransitionIconState extends State<TransitionIcon>
       );
     }
 
-    double progress = _controller.value;
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, _) {
+        double progress = _controller.value;
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Transform.rotate(
-          angle: -progress * math.pi,
-          child: Icon(
-            _oldIcon,
-            size: widget.size,
-            color: _oldColor.withOpacity(1 - progress),
-          ),
-        ),
-        Transform.rotate(
-          angle: math.pi - math.pi * progress,
-          child: Icon(
-            _icon,
-            size: widget.size,
-            color: _color.withOpacity(progress),
-          ),
-        )
-      ],
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            Transform.rotate(
+              angle: -progress * math.pi,
+              child: Icon(
+                _oldIcon,
+                size: widget.size,
+                color: _oldColor.withOpacity(1 - progress),
+              ),
+            ),
+            Transform.rotate(
+              angle: math.pi - math.pi * progress,
+              child: Icon(
+                _icon,
+                size: widget.size,
+                color: _color.withOpacity(progress),
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 
@@ -89,8 +90,10 @@ class TransitionIconState extends State<TransitionIcon>
     _oldColor = _color;
 
     if (_icon != null && _icon != icon) {
-      _icon = icon;
-      _color = color;
+      setState(() {
+        _icon = icon;
+        _color = color;
+      });
 
       _controller.reset();
       _controller.forward();
