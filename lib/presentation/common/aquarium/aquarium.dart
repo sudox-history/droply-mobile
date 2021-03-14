@@ -41,15 +41,14 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
     super.initState();
 
     _iconTitle = widget.iconTitle;
-
     _waveScaleAnimationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 5),
+      duration: const Duration(seconds: 5),
     );
 
     _wavePositionAnimationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
     );
 
     _wavePositionAnimation = Tween(
@@ -133,8 +132,12 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
     if (progress > 0 && progress < 1) {
       if (!_isWaveEnabled) {
         _isWaveEnabled = true;
-        _iconColor = AppColors.processColor;
-        _backgroundColor = AppColors.lightenProcessColor;
+
+        setState(() {
+          _iconColor = AppColors.processColor;
+          _backgroundColor = AppColors.lightenProcessColor;
+        });
+
         _waveScaleAnimationController.forward();
         _wavePositionAnimationController.forward();
         _cancelIdleIconSettingOperation();
@@ -149,7 +152,6 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
       _waveScaleAnimationController.reset();
       _wavePositionAnimationController.stop();
       _wavePositionAnimationController.reset();
-      setState(() {});
     }
   }
 
