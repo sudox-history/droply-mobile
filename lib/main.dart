@@ -5,6 +5,7 @@ import 'package:droply/data/entries/entries_repository.dart';
 import 'package:droply/data/entries/providers/test_entries_provider.dart';
 import 'package:droply/data/managers/connection_manager.dart';
 import 'package:droply/presentation/auth/auth_screen.dart';
+import 'package:droply/presentation/common/app_bar.dart';
 import 'package:droply/presentation/common/tab_bar.dart';
 import 'package:droply/presentation/device_name/device_name_screen.dart';
 import 'package:droply/presentation/main/main_screen.dart';
@@ -51,8 +52,8 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.transparent,
         systemNavigationBarDividerColor: null,
+        systemNavigationBarColor: Colors.transparent,
         systemNavigationBarIconBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.light,
@@ -60,9 +61,7 @@ class _AppState extends State<App> {
       ),
       child: MultiRepositoryProvider(
         providers: [
-          RepositoryProvider(
-            create: (context) => _connectionManager,
-          ),
+          RepositoryProvider(create: (context) => _connectionManager),
           RepositoryProvider(
             create: (context) => DevicesRepository(
               provider: TestDevicesProvider(),
@@ -75,10 +74,9 @@ class _AppState extends State<App> {
           ),
         ],
         child: MaterialApp(
+          locale: context.locale,
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          debugShowCheckedModeBanner: false,
           title: "Droply",
           routes: {
             AppNavigation.authRouteName: (context) => AuthScreen(),
@@ -93,10 +91,10 @@ class _AppState extends State<App> {
             scaffoldBackgroundColor: AppColors.backgroundColor,
             primaryIconTheme: IconThemeData(color: AppColors.primaryIconsColor),
             tabBarTheme: TabBarTheme(
+              indicator: TabBarIndicator(),
               labelPadding: EdgeInsets.symmetric(
                 horizontal: TabBarStyles.tabHorizontalPadding,
               ),
-              indicator: TabBarIndicator(),
               labelColor: AppColors.accentColor,
               labelStyle: TextStyle(
                 fontSize: 15,
@@ -114,7 +112,7 @@ class _AppState extends State<App> {
               brightness: Brightness.light,
               color: AppColors.backgroundColor,
               centerTitle: true,
-              elevation: 0.5,
+              elevation: AppBarStyles.elevation,
               shadowColor: AppColors.dividerColor,
               textTheme: TextTheme(
                 headline6: TextStyle(
@@ -128,10 +126,7 @@ class _AppState extends State<App> {
             buttonTheme: ButtonThemeData(
               splashColor: AppColors.rippleEffectColor,
               highlightColor: AppColors.highlightButtonColor,
-              padding: EdgeInsets.only(
-                top: 16,
-                bottom: 16,
-              ),
+              padding: EdgeInsets.only(top: 16, bottom: 16),
             ),
             bottomSheetTheme: BottomSheetThemeData(
               shape: RoundedRectangleBorder(
@@ -160,7 +155,9 @@ class _AppState extends State<App> {
               ),
             ),
             visualDensity: VisualDensity.adaptivePlatformDensity,
-            cursorColor: AppColors.accentColor,
+            textSelectionTheme: TextSelectionThemeData(
+              cursorColor: AppColors.accentColor,
+            ),
           ),
           home: MainScreen(),
         ),
