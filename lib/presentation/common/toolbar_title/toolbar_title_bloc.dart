@@ -9,7 +9,7 @@ class ToolbarTitleBloc extends Bloc<ConnectionStatus, ToolbarTitleState> {
   ToolbarTitleBloc(
     ConnectionManager manager,
   ) : super(ToolbarTitleState(manager.isConnected)) {
-    _subscription = manager.statusStream.listen(add);
+    // _subscription = manager.statusStream.listen(add);
   }
 
   @override
