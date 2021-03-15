@@ -14,7 +14,7 @@ Widget buildSwitchSetting(String header, String hint,
           children: [
             Text(
               header,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.onSurfaceColor,
                 fontFamily: AppFonts.openSans,
                 fontWeight: AppFonts.regular,
@@ -23,7 +23,7 @@ Widget buildSwitchSetting(String header, String hint,
             ),
             Text(
               hint,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.hintTextColor,
                 fontFamily: AppFonts.openSans,
                 fontWeight: AppFonts.regular,
@@ -47,11 +47,11 @@ Widget buildSwitchSetting(String header, String hint,
 }
 
 Widget buildScreenLoader() {
-  return Center(
-    child: SizedBox(
+  return const Center(
+    child: const SizedBox(
       width: 40,
       height: 40,
-      child: CircularProgressIndicator(),
+      child: const CircularProgressIndicator(),
     ),
   );
 }

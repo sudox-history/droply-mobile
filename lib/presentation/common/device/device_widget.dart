@@ -47,6 +47,7 @@ class DeviceWidgetState extends State<DeviceWidget> {
                   builder: (context, state) {
                     IconData idleIcon;
 
+                    // TODO: To icons
                     switch (state.type) {
                       case DeviceType.DESKTOP:
                         idleIcon = Icons.desktop_windows_rounded;

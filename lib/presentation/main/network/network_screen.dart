@@ -4,12 +4,11 @@ import 'package:droply/data/devices/models/device.dart';
 import 'package:droply/helpers/animated_list_helper.dart';
 import 'package:droply/presentation/common/device/device_widget.dart';
 import 'package:droply/presentation/common/other_widgets.dart';
+import 'package:droply/presentation/main/network/network_screen_bloc.dart';
+import 'package:droply/presentation/main/network/network_screen_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'network_screen_bloc.dart';
-import 'network_screen_state.dart';
 
 class NetworkScreen extends StatefulWidget {
   @override
@@ -17,7 +16,7 @@ class NetworkScreen extends StatefulWidget {
 }
 
 class NetworkScreenState extends State<NetworkScreen> {
-  GlobalKey<AnimatedListState> _listKey = GlobalKey();
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey();
   Iterable<Device> _devicesStates;
 
   @override
@@ -28,8 +27,12 @@ class NetworkScreenState extends State<NetworkScreen> {
     return BlocProvider(
       create: (context) => NetworkScreenBloc(devicesRepository: repository),
       child: BlocConsumer<NetworkScreenBloc, NetworkScreenBlocState>(
-        buildWhen: (previous, current) => previous is NetworkScreenLoadingState && current is NetworkScreenCompleteState,
-        listenWhen: (previous, current) => !(previous is NetworkScreenLoadingState) && !(current is NetworkScreenCompleteState),
+        buildWhen: (previous, current) =>
+            previous is NetworkScreenLoadingState &&
+            current is NetworkScreenCompleteState,
+        listenWhen: (previous, current) =>
+            !(previous is NetworkScreenLoadingState) &&
+            !(current is NetworkScreenCompleteState),
         listener: (context, current) {
           if (current is NetworkScreenCompleteState) {
             _devices = current.devices;
@@ -45,7 +48,7 @@ class NetworkScreenState extends State<NetworkScreen> {
 
             return AnimatedList(
               key: _listKey,
-              padding: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
               initialItemCount: 1 + state.devices.length,
               itemBuilder: (context, position, animation) {
                 return _buildItem(position, animation, _devicesStates);
@@ -104,13 +107,10 @@ class NetworkScreenState extends State<NetworkScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-          ),
+          margin: const EdgeInsets.only(left: 20, right: 20),
           child: Text(
             "Your ID",
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: AppFonts.openSans,
               fontWeight: AppFonts.semibold,
               color: AppColors.secondaryTextColor,
@@ -119,34 +119,31 @@ class NetworkScreenState extends State<NetworkScreen> {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(
-            top: 10,
-            left: 20,
-          ),
+          margin: const EdgeInsets.only(top: 10, left: 20),
           child: Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.content_copy,
                 color: AppColors.accentColor,
               ),
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(left: 13),
+                  margin: const EdgeInsets.only(left: 13),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "034-213-533",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: AppColors.accentColor,
                           fontFamily: AppFonts.openSans,
                           fontWeight: AppFonts.regular,
                           fontSize: 24,
                         ),
                       ),
-                      Text(
+                      const Text(
                         "(Click to copy)",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: AppColors.hintTextColor,
                           fontFamily: AppFonts.openSans,
                           fontWeight: AppFonts.regular,
@@ -158,11 +155,11 @@ class NetworkScreenState extends State<NetworkScreen> {
                 ),
               ),
               IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.refresh,
                   color: AppColors.accentColor,
                 ),
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 onPressed: () {},
               ),
             ],

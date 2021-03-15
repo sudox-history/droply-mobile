@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 class MyDevice extends StatefulWidget {
+  const MyDevice();
+
   @override
   State<StatefulWidget> createState() => _MyDeviceState();
 }
@@ -21,6 +23,8 @@ class _MyDeviceState extends State<MyDevice> {
   }
 
   void _getDeviceInfo() async {
+    // TODO: Desktop support
+
     var info = DeviceInfoPlugin();
     var model;
 
@@ -42,9 +46,9 @@ class _MyDeviceState extends State<MyDevice> {
     return Container(
       width: 75,
       height: 75,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.lightAccentColor,
-        borderRadius: BorderRadius.all(Radius.circular(15)),
+        borderRadius: const BorderRadius.all(const Radius.circular(15)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -59,13 +63,13 @@ class _MyDeviceState extends State<MyDevice> {
           color: AppColors.accentColor,
         ),
         Padding(
-          padding: EdgeInsets.only(top: 5, left: 5, right: 5),
+          padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
           child: Text(
             _deviceModel,
             maxLines: 1,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.accentColor,
               fontFamily: AppFonts.openSans,
               fontWeight: AppFonts.semibold,
@@ -75,15 +79,13 @@ class _MyDeviceState extends State<MyDevice> {
         )
       ];
 
-  List<Widget> _buildProgress() => [
-        SizedBox(
-          height: 20,
-          width: 20,
-          child: CircularProgressIndicator(
-            strokeWidth: 2,
-          ),
-        ),
-      ];
+  Widget _buildProgress() {
+    return const SizedBox(
+      height: 20,
+      width: 20,
+      child: const CircularProgressIndicator(strokeWidth: 2),
+    );
+  }
 }
 
 class MyDeviceAdditions {
@@ -91,7 +93,7 @@ class MyDeviceAdditions {
     return Text(
       "device_name_hint".tr(),
       textAlign: TextAlign.center,
-      style: TextStyle(
+      style: const TextStyle(
         color: AppColors.secondaryTextColor,
         fontFamily: AppFonts.openSans,
         fontWeight: AppFonts.semibold,
@@ -100,10 +102,13 @@ class MyDeviceAdditions {
     );
   }
 
-  static Widget buildNameField(
-      [Function onChanged, bool hintAtStart = false, bool initialText]) {
+  static Widget buildNameField([
+    Function onChanged(bool isValid),
+    bool hintAtStart = false,
+    bool initialText,
+  ]) {
     return TextField(
-      style: TextStyle(
+      style: const TextStyle(
         color: AppColors.onSurfaceColor,
         fontFamily: AppFonts.openSans,
         fontWeight: AppFonts.bold,
@@ -111,14 +116,14 @@ class MyDeviceAdditions {
       ),
       inputFormatters: [LengthLimitingTextInputFormatter(25)],
       onChanged: (text) {
-        onChanged(AppRegex.deviceNameAllow.hasMatch(text));
+        onChanged?.call(AppRegex.deviceNameAllow.hasMatch(text));
       },
       textAlign: hintAtStart ? TextAlign.start : TextAlign.center,
       decoration: InputDecoration(
         border: InputBorder.none,
-        contentPadding: EdgeInsets.symmetric(vertical: 5),
+        contentPadding: const EdgeInsets.symmetric(vertical: 5),
         hintText: "enter_device_name_hint".tr(),
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: AppColors.hintTextColor,
           fontFamily: AppFonts.openSans,
           fontWeight: AppFonts.regular,

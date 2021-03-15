@@ -16,7 +16,7 @@ class NearbyScreen extends StatefulWidget {
 }
 
 class NearbyScreenState extends State<NearbyScreen> {
-  GlobalKey<AnimatedListState> _listKey = GlobalKey();
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey();
   Iterable<Device> _devicesStates;
 
   @override
@@ -36,14 +36,14 @@ class NearbyScreenState extends State<NearbyScreen> {
           if (!(previous is NearbyScreenScanningState) &&
               current is NearbyScreenScanningState) {
             _listKey.currentState
-                .insertItem(1, duration: Duration(milliseconds: 400));
+                .insertItem(1, duration: const Duration(milliseconds: 400));
           } else if (previous is NearbyScreenScanningState &&
               !(current is NearbyScreenScanningState)) {
             _devices = null;
             _listKey.currentState.removeItem(
               1,
               (_, animation) => _buildItem(1, animation, _devicesStates),
-              duration: Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 200),
             );
           }
 
@@ -60,7 +60,7 @@ class NearbyScreenState extends State<NearbyScreen> {
           } else {
             return AnimatedList(
               key: _listKey,
-              padding: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
               initialItemCount: 1,
               itemBuilder: (context, position, animation) {
                 return _buildItem(position, animation, _devicesStates);
@@ -78,8 +78,8 @@ class NearbyScreenState extends State<NearbyScreen> {
 
     AnimatedListHelper.changeItems<Device, String>(
       offset: 2,
-      insertDuration: Duration(milliseconds: 400),
-      removeDuration: Duration(milliseconds: 200),
+      insertDuration: const Duration(milliseconds: 400),
+      removeDuration: const Duration(milliseconds: 200),
       state: _listKey.currentState,
       oldList: oldStates,
       newList: states,
@@ -120,7 +120,7 @@ class NearbyScreenState extends State<NearbyScreen> {
     return BlocBuilder<NearbyScreenBloc, NearbyScreenBlocState>(
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: buildSwitchSetting(
             "Scan devices nearby",
             "We'll show you devices that also use EasyShare",
@@ -136,12 +136,13 @@ class NearbyScreenState extends State<NearbyScreen> {
   }
 
   Widget _buildScanningHint() {
-    return Padding(
-      padding: EdgeInsets.only(top: 20, bottom: 12.5, left: 16, right: 16),
-      child: Text(
+    return const Padding(
+      padding:
+          const EdgeInsets.only(top: 20, bottom: 12.5, left: 16, right: 16),
+      child: const Text(
         "Scanning for more devices ...",
         textAlign: TextAlign.center,
-        style: TextStyle(
+        style: const TextStyle(
           color: AppColors.hintTextColor,
           fontFamily: AppFonts.openSans,
           fontWeight: AppFonts.regular,

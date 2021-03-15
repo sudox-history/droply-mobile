@@ -14,33 +14,34 @@ class SettingsScreen extends StatelessWidget {
           children: [
             Row(
               children: [
-                MyDevice(),
-                SizedBox(width: 20),
+                const MyDevice(),
+                const SizedBox(width: 20),
                 Expanded(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(height: 5),
-                    MyDeviceAdditions.buildNameHint(),
-                    MyDeviceAdditions.buildNameField(null, true),
-                  ],
-                ))
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const SizedBox(height: 5),
+                      MyDeviceAdditions.buildNameHint(),
+                      MyDeviceAdditions.buildNameField(null, true),
+                    ],
+                  ),
+                )
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             buildSwitchSetting("Calm mode",
                 "Other users can see your profile via Internet or LAN"),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             buildSwitchSetting(
                 "Ping me", "Other users can notify me to open the EasyShare"),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               children: [
                 Expanded(
-                  child: Text(
+                  child: const Text(
                     "Black list",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: AppColors.onSurfaceColor,
                       fontFamily: AppFonts.openSans,
                       fontWeight: AppFonts.regular,
@@ -48,9 +49,9 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
+                const Text(
                   "8 users",
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: AppColors.accentColor,
                     fontFamily: AppFonts.openSans,
                     fontWeight: AppFonts.regular,

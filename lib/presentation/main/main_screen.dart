@@ -13,7 +13,7 @@ class MainScreen extends StatelessWidget {
       body: DefaultTabController(
         length: 2,
         child: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool _) {
+          headerSliverBuilder: (context, _) {
             return <Widget>[
               SliverOverlapAbsorber(
                 handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
@@ -29,7 +29,7 @@ class MainScreen extends StatelessWidget {
                     snap: false,
                     elevation: AppBarStyles.elevation,
                     forceElevated: true,
-                    bottom: TabBar(
+                    bottom: const TabBar(
                       isScrollable: true,
                       tabs: [
                         const Tab(text: "Nearby"),

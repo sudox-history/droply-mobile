@@ -168,7 +168,7 @@ class _AppState extends State<App> {
               cursorColor: AppColors.accentColor,
             ),
           ),
-          home: AuthScreen(),
+          home: MainScreen(),
         ),
       ),
     );
