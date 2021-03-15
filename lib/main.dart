@@ -8,7 +8,6 @@ import 'package:droply/data/managers/connection_manager.dart';
 import 'package:droply/presentation/auth/auth_screen.dart';
 import 'package:droply/presentation/common/app_bar.dart';
 import 'package:droply/presentation/common/tab_bar.dart';
-import 'package:droply/presentation/device_name/device_name_screen.dart';
 import 'package:droply/presentation/main/main_screen.dart';
 import 'package:droply/presentation/settings/settings_screen.dart';
 import 'package:droply/presentation/statistics/statistics_screen.dart';
@@ -83,7 +82,6 @@ class _AppState extends State<App> {
           title: "Droply",
           routes: {
             AppNavigation.authRouteName: (context) => AuthScreen(),
-            AppNavigation.deviceNameRouteName: (context) => DeviceNameScreen(),
             AppNavigation.mainRouteName: (context) => MainScreen(),
             AppNavigation.settingsRouteName: (context) => SettingsScreen(),
             AppNavigation.statisticsRouteName: (context) => StatisticsScreen(),
@@ -168,7 +166,7 @@ class _AppState extends State<App> {
               cursorColor: AppColors.accentColor,
             ),
           ),
-          home: MainScreen(),
+          home: AuthScreen(),
         ),
       ),
     );

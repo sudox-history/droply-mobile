@@ -3,6 +3,7 @@ import 'package:droply/data/devices/devices_repository.dart';
 import 'package:droply/data/devices/models/device.dart';
 import 'package:droply/presentation/common/aquarium/aquarium.dart';
 import 'package:droply/presentation/common/device/device_bloc.dart';
+import 'package:droply/presentation/common/device/device_helper.dart';
 import 'package:droply/presentation/common/device/device_state.dart';
 import 'package:droply/presentation/common/loading_dots.dart';
 import 'package:flutter/material.dart';
@@ -45,31 +46,10 @@ class DeviceWidgetState extends State<DeviceWidget> {
                 child: BlocConsumer<DeviceBloc, DeviceState>(
                   buildWhen: (state, context) => false,
                   builder: (context, state) {
-                    IconData idleIcon;
-
-                    // TODO: To icons
-                    switch (state.type) {
-                      case DeviceType.DESKTOP:
-                        idleIcon = Icons.desktop_windows_rounded;
-                        break;
-                      case DeviceType.IPHONE:
-                        idleIcon = Icons.phone_iphone_rounded;
-                        break;
-                      case DeviceType.TABLET:
-                        idleIcon = Icons.tablet_rounded;
-                        break;
-                      case DeviceType.UNKNOWN:
-                        idleIcon = Icons.question_answer_rounded;
-                        break;
-                      case DeviceType.PHONE:
-                        idleIcon = Icons.phone_android_rounded;
-                        break;
-                    }
-
                     return Aquarium(
                       key: _aquariumKey,
                       doneIcon: Icons.done_rounded,
-                      idleIcon: idleIcon,
+                      idleIcon: DeviceHelper.getIcon(state.type),
                     );
                   },
                   listener: (context, state) {

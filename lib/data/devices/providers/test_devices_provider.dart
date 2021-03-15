@@ -5,7 +5,7 @@ class TestDevicesProvider implements DevicesProvider {
   Stream<Device> _secondDevice = Stream.value(Device(
     id: "2",
     name: "Max's tablet",
-    type: DeviceType.TABLET,
+    type: DeviceType.ANDROID,
     status: DeviceStatus.IDLE,
     sentTime: 1607107316000,
   ));
@@ -21,7 +21,7 @@ class TestDevicesProvider implements DevicesProvider {
   Stream<Device> _fourthDevice = Stream.value(Device(
     id: "4",
     name: "Uno",
-    type: DeviceType.UNKNOWN,
+    type: DeviceType.UNDEFINED,
     status: DeviceStatus.IDLE,
     sentTime: 1607107862000,
   ));
@@ -29,7 +29,7 @@ class TestDevicesProvider implements DevicesProvider {
   Stream<Device> _fifthDevice = Stream.value(Device(
     id: "5",
     name: "Alexey's phone",
-    type: DeviceType.PHONE,
+    type: DeviceType.ANDROID,
     status: DeviceStatus.IDLE,
     sentTime: 1607108002000,
   ));
@@ -51,7 +51,7 @@ class TestDevicesProvider implements DevicesProvider {
           return Device(
             name: "Anton's iPhone",
             progress: progress,
-            type: DeviceType.IPHONE,
+            type: DeviceType.IOS,
             status: status,
             sentTime: 100,
           );
@@ -77,7 +77,7 @@ class TestDevicesProvider implements DevicesProvider {
           id: "1",
           name: "Anton's iPhone",
           progress: 0,
-          type: DeviceType.IPHONE,
+          type: DeviceType.IOS,
           status: DeviceStatus.IDLE,
           sentTime: 100,
         )

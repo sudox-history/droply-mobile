@@ -42,7 +42,6 @@ class AppRegex {
 
 class AppNavigation {
   static const authRouteName = "/auth";
-  static const deviceNameRouteName = "/auth/device_name";
   static const mainRouteName = "/main";
   static const settingsRouteName = "/main/settings";
   static const statisticsRouteName = "/main/statistics";

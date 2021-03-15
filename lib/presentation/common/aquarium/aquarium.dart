@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:async/async.dart';
 import 'package:droply/constants.dart';
-import 'package:droply/presentation/common/icon/transition_icon.dart';
+import 'package:droply/presentation/common/transition_icon/transition_icon.dart';
 import 'package:flutter/material.dart';
 
 class Aquarium extends StatefulWidget {
