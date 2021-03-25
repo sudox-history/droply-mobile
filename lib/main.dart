@@ -1,10 +1,8 @@
 import 'package:droply/constants.dart';
-import 'package:droply/data/api/droply_api.dart';
 import 'package:droply/data/devices/devices_repository.dart';
 import 'package:droply/data/devices/providers/test_devices_provider.dart';
 import 'package:droply/data/entries/entries_repository.dart';
 import 'package:droply/data/entries/providers/test_entries_provider.dart';
-import 'package:droply/data/managers/connection_manager.dart';
 import 'package:droply/presentation/auth/auth_screen.dart';
 import 'package:droply/presentation/common/app_bar.dart';
 import 'package:droply/presentation/common/tab_bar.dart';
@@ -36,20 +34,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final ConnectionManager _connectionManager = ConnectionManager(DroplyApi());
-
-  @override
-  void initState() {
-    // _connectionManager.start();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    // _connectionManager.stop();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -63,17 +47,8 @@ class _AppState extends State<App> {
       ),
       child: MultiRepositoryProvider(
         providers: [
-          RepositoryProvider(create: (context) => _connectionManager),
-          RepositoryProvider(
-            create: (context) => DevicesRepository(
-              provider: TestDevicesProvider(),
-            ),
-          ),
-          RepositoryProvider(
-            create: (context) => EntriesRepository(
-              provider: TestEntriesProvider(),
-            ),
-          ),
+          RepositoryProvider(create: (context) => DevicesRepository(provider: TestDevicesProvider())),
+          RepositoryProvider(create: (context) => EntriesRepository(provider: TestEntriesProvider())),
         ],
         child: MaterialApp(
           locale: context.locale,
@@ -140,16 +115,9 @@ class _AppState extends State<App> {
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                padding: const EdgeInsets.only(
-                  left: 14,
-                  right: 14,
-                  top: 14,
-                  bottom: 14,
-                ),
+                padding: const EdgeInsets.only(left: 14, right: 14, top: 14, bottom: 14),
                 shape: const RoundedRectangleBorder(
-                  borderRadius: const BorderRadius.all(
-                    const Radius.circular(10),
-                  ),
+                  borderRadius: const BorderRadius.all(const Radius.circular(10)),
                 ),
                 primary: AppColors.onAccentColor,
                 onSurface: AppColors.onAccentColor,
@@ -162,9 +130,7 @@ class _AppState extends State<App> {
               ),
             ),
             visualDensity: VisualDensity.adaptivePlatformDensity,
-            textSelectionTheme: const TextSelectionThemeData(
-              cursorColor: AppColors.accentColor,
-            ),
+            textSelectionTheme: const TextSelectionThemeData(cursorColor: AppColors.accentColor),
           ),
           home: MainScreen(),
         ),
