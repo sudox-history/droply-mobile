@@ -32,7 +32,7 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   Color _iconColor = AppColors.accentColor;
   bool _iconTitleVisibility = true;
   bool _isWaveEnabled = false;
-  IconData _progressIcon;
+  IconData progressIcon;
   double _progress = 0;
   String _iconTitle;
 
@@ -122,7 +122,7 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
     );
   }
 
-  set progress(double progress) {
+  void setProgress(double progress) {
     if (_progress == progress) {
       return;
     }
@@ -142,7 +142,7 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
         _wavePositionAnimationController.forward();
         _cancelIdleIconSettingOperation();
         _iconKey.currentState.changeIcon(
-          _progressIcon,
+          progressIcon,
           AppColors.processColor,
         );
       }
@@ -156,11 +156,11 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   }
 
   void setIdle() {
-    progress = 1.0;
+    setProgress(1.0);
 
     // TODO: Fix the bug with icons comparing
 
-    if (_iconKey.currentState.icon != null && _iconKey.currentState.icon == _progressIcon) {
+    if (_iconKey.currentState.icon != null && _iconKey.currentState.icon == progressIcon) {
       _cancelIdleIconSettingOperation();
 
       _iconKey.currentState.onAnimationDone = () {
@@ -213,10 +213,6 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   void _cancelIdleIconSettingOperation() {
     _idleIconSettingOperation?.cancel();
     _idleIconSettingOperation = null;
-  }
-
-  set progressIcon(IconData data) {
-    _progressIcon = data;
   }
 
   @override

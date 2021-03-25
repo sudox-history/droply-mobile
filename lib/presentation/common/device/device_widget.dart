@@ -46,30 +46,28 @@ class DeviceWidgetState extends State<DeviceWidget> {
           ),
           child: Row(
             children: [
-              Container(
-                child: BlocConsumer<DeviceBloc, DeviceState>(
-                  buildWhen: (state, context) => false,
-                  builder: (context, state) {
-                    return Aquarium(
-                      key: _aquariumKey,
-                      doneIcon: Icons.done_rounded,
-                      idleIcon: DeviceHelper.getIcon(state.type),
-                    );
-                  },
-                  listener: (context, state) {
-                    if (state is WorkingDeviceState) {
-                      if (state.status.index == DeviceStatus.RECEIVING.index) {
-                        _aquariumKey.currentState.progressIcon = Icons.download_rounded;
-                      } else if (state.status.index == DeviceStatus.SENDING.index) {
-                        _aquariumKey.currentState.progressIcon = Icons.publish_rounded;
-                      }
-
-                      _aquariumKey.currentState.progress = state.progress;
-                    } else if (state is IdleDeviceState) {
-                      _aquariumKey.currentState.setIdle();
+              BlocConsumer<DeviceBloc, DeviceState>(
+                buildWhen: (state, context) => false,
+                builder: (context, state) {
+                  return Aquarium(
+                    key: _aquariumKey,
+                    doneIcon: Icons.done_rounded,
+                    idleIcon: DeviceHelper.getIcon(state.type),
+                  );
+                },
+                listener: (context, state) {
+                  if (state is WorkingDeviceState) {
+                    if (state.status.index == DeviceStatus.receiving.index) {
+                      _aquariumKey.currentState.progressIcon = Icons.download_rounded;
+                    } else if (state.status.index == DeviceStatus.sending.index) {
+                      _aquariumKey.currentState.progressIcon = Icons.publish_rounded;
                     }
-                  },
-                ),
+
+                    _aquariumKey.currentState.setProgress(state.progress);
+                  } else if (state is IdleDeviceState) {
+                    _aquariumKey.currentState.setIdle();
+                  }
+                },
               ),
               const SizedBox(width: 15),
               Expanded(
@@ -94,9 +92,9 @@ class DeviceWidgetState extends State<DeviceWidget> {
                     if (state is WorkingDeviceState) {
                       String description;
 
-                      if (state.status == DeviceStatus.RECEIVING) {
+                      if (state.status == DeviceStatus.receiving) {
                         description = "Receiving";
-                      } else if (state.status == DeviceStatus.SENDING) {
+                      } else if (state.status == DeviceStatus.sending) {
                         description = "Sending";
                       }
 

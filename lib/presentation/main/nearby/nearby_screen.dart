@@ -33,7 +33,7 @@ class NearbyScreenState extends State<NearbyScreen> {
           if (previous is! NearbyScreenScanningState && current is NearbyScreenScanningState) {
             _listKey.currentState.insertItem(1, duration: const Duration(milliseconds: 400));
           } else if (previous is NearbyScreenScanningState && current is! NearbyScreenScanningState) {
-            _devices = null;
+            setDevices(null);
             _listKey.currentState.removeItem(
               1,
               (_, animation) => _buildItem(1, animation, _devicesStates),
@@ -42,7 +42,7 @@ class NearbyScreenState extends State<NearbyScreen> {
           }
 
           if (current is NearbyScreenScanningState) {
-            _devices = current.devices;
+            setDevices(current.devices);
           }
 
           return false;
@@ -66,7 +66,7 @@ class NearbyScreenState extends State<NearbyScreen> {
     );
   }
 
-  set _devices(List<Device> states) {
+  void setDevices(List<Device> states) {
     final oldStates = _devicesStates;
     _devicesStates = states;
 
@@ -113,11 +113,11 @@ class NearbyScreenState extends State<NearbyScreen> {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: buildSwitchSetting(
-            "Scan devices nearby",
-            "We'll show you devices that also use EasyShare",
-            state is NearbyScreenScanningState,
-            (checked) {
-              BlocProvider.of<NearbyScreenBloc>(context).toggleListening(checked);
+            header: "Scan devices nearby",
+            hint: "We'll show you devices that also use EasyShare",
+            isChecked: state is NearbyScreenScanningState,
+            callback: (checked) {
+              BlocProvider.of<NearbyScreenBloc>(context).toggleListening(toggle: checked);
             },
           ),
         );

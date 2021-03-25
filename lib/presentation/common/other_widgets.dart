@@ -2,12 +2,12 @@ import 'package:droply/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget buildSwitchSetting(
+Widget buildSwitchSetting({
   String header,
-  String hint, [
+  String hint,
   bool isChecked = false,
   void Function(bool) callback,
-]) {
+}) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisAlignment: MainAxisAlignment.end,

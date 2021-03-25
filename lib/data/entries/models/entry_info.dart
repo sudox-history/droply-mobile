@@ -20,4 +20,4 @@ abstract class EntryInfo {
   double get progress => downloadedBytes / summaryBytes;
 }
 
-enum EntryStatus { COMPLETED, LOADING }
+enum EntryStatus { completed, loading }

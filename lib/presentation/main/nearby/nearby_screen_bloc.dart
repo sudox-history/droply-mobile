@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:droply/data/devices/devices_repository.dart';
 import 'package:droply/data/devices/models/device.dart';
 import 'package:droply/presentation/main/nearby/nearby_screen_state.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NearbyScreenBloc extends Bloc<List<Device>, NearbyScreenBlocState> {
@@ -15,7 +16,7 @@ class NearbyScreenBloc extends Bloc<List<Device>, NearbyScreenBlocState> {
     add(null);
   }
 
-  void toggleListening(bool toggle) {
+  void toggleListening({@required bool toggle}) {
     if (toggle) {
       add([]);
 

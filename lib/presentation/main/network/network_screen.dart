@@ -32,9 +32,9 @@ class NetworkScreenState extends State<NetworkScreen> {
             previous is! NetworkScreenLoadingState && current is! NetworkScreenCompleteState,
         listener: (context, current) {
           if (current is NetworkScreenCompleteState) {
-            _devices = current.devices;
+            setDevices(current.devices);
           } else {
-            _devices = null;
+            setDevices(null);
           }
         },
         builder: (context, state) {
@@ -59,7 +59,7 @@ class NetworkScreenState extends State<NetworkScreen> {
     );
   }
 
-  set _devices(List<Device> states) {
+  void setDevices(List<Device> states) {
     final oldStates = _devicesStates;
     _devicesStates = states;
 

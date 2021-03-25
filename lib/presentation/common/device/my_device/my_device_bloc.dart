@@ -13,7 +13,7 @@ class MyDeviceBloc extends Bloc<MyDeviceEvent, MyDeviceState> {
     _load();
   }
 
-  void _load() async {
+  Future<void> _load() async {
     String name = "Undefined";
 
     if (Platform.isAndroid) {

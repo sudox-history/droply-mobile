@@ -200,6 +200,8 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     } else {
       return _buildListEntry(items[position]);
     }
+
+    throw UnsupportedError("Unsupported case");
   }
 
   Widget _buildListEntry(EntryInfo entry) {

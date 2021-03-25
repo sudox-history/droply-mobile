@@ -19,13 +19,13 @@ class DeviceHelper {
   }
 
   static IconData getIcon(DeviceType type) {
-    if (type == DeviceType.ANDROID) {
+    if (type == DeviceType.android) {
       return Icons.phone_android_rounded;
-    } else if (type == DeviceType.IOS) {
+    } else if (type == DeviceType.ios) {
       return Icons.phone_iphone_rounded;
-    } else if (type == DeviceType.DESKTOP) {
+    } else if (type == DeviceType.desktop) {
       return Icons.desktop_windows_rounded;
-    } else if (type == DeviceType.MAC) {
+    } else if (type == DeviceType.mac) {
       return Icons.desktop_mac_rounded;
     } else {
       return Icons.contact_support_rounded;

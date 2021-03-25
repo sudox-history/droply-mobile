@@ -11,14 +11,14 @@ class TestEntriesProvider implements EntriesProvider {
         FileInfo(
           id: "1",
           name: "Contract.txt",
-          status: EntryStatus.LOADING,
+          status: EntryStatus.loading,
           downloadedBytes: 210763776,
           summaryBytes: 2151677952,
         ),
         FolderInfo(
           id: "2",
           name: "Photos",
-          status: EntryStatus.LOADING,
+          status: EntryStatus.loading,
           downloadedBytes: 38797312,
           summaryBytes: 47185920,
           downloadedFiles: 17,
@@ -35,21 +35,21 @@ class TestEntriesProvider implements EntriesProvider {
         FileInfo(
           id: "3",
           name: "Contract.txt",
-          status: EntryStatus.COMPLETED,
+          status: EntryStatus.completed,
           downloadedBytes: 2151677952,
           summaryBytes: 2151677952,
         ),
         FileInfo(
           id: "4",
           name: "PageComponent.js",
-          status: EntryStatus.COMPLETED,
+          status: EntryStatus.completed,
           downloadedBytes: 10700,
           summaryBytes: 10700,
         ),
         FolderInfo(
           id: "5",
           name: "Photos",
-          status: EntryStatus.COMPLETED,
+          status: EntryStatus.completed,
           downloadedBytes: 46137344,
           summaryBytes: 46137344,
           downloadedFiles: 20,
@@ -71,9 +71,9 @@ class TestEntriesProvider implements EntriesProvider {
           final double progress = downloaded / 2151677952;
 
           if (progress >= 1.0) {
-            status = EntryStatus.COMPLETED;
+            status = EntryStatus.completed;
           } else {
-            status = EntryStatus.LOADING;
+            status = EntryStatus.loading;
           }
 
           return FileInfo(
@@ -89,7 +89,7 @@ class TestEntriesProvider implements EntriesProvider {
           FileInfo(
             id: "3",
             name: "Contract.txt",
-            status: EntryStatus.COMPLETED,
+            status: EntryStatus.completed,
             downloadedBytes: 2151677952,
             summaryBytes: 2151677952,
           ),
@@ -99,12 +99,14 @@ class TestEntriesProvider implements EntriesProvider {
           FileInfo(
             id: "4",
             name: "PageComponent.js",
-            status: EntryStatus.COMPLETED,
+            status: EntryStatus.completed,
             downloadedBytes: 10700,
             summaryBytes: 10700,
           ),
         );
     }
+
+    throw UnsupportedError("File not found: $id");
   }
 
   @override
@@ -119,9 +121,9 @@ class TestEntriesProvider implements EntriesProvider {
           final double progress = downloaded / 47185920;
 
           if (progress >= 1.0) {
-            status = EntryStatus.COMPLETED;
+            status = EntryStatus.completed;
           } else {
-            status = EntryStatus.LOADING;
+            status = EntryStatus.loading;
           }
 
           return FolderInfo(
@@ -139,7 +141,7 @@ class TestEntriesProvider implements EntriesProvider {
           FolderInfo(
             id: "5",
             name: "Photos",
-            status: EntryStatus.COMPLETED,
+            status: EntryStatus.completed,
             downloadedBytes: 46137344,
             summaryBytes: 46137344,
             downloadedFiles: 20,
@@ -147,5 +149,7 @@ class TestEntriesProvider implements EntriesProvider {
           ),
         );
     }
+
+    throw UnsupportedError("Folder not found: $id");
   }
 }

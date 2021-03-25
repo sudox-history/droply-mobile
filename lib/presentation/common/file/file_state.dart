@@ -13,7 +13,7 @@ abstract class FileState {
   factory FileState.fromFileInfo(FileInfo fileInfo) {
     FileState state;
 
-    if (fileInfo.status == EntryStatus.COMPLETED) {
+    if (fileInfo.status == EntryStatus.completed) {
       state = CompletedFileState(
         id: fileInfo.id,
         name: fileInfo.name,

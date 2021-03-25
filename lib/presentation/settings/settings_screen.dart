@@ -25,16 +25,16 @@ class SettingsScreen extends StatelessWidget {
                     children: [
                       const SizedBox(height: 5),
                       buildNameHint(),
-                      buildNameField(null, true),
+                      buildNameField(hintAtStart: true),
                     ],
                   ),
                 )
               ],
             ),
             const SizedBox(height: 20),
-            buildSwitchSetting("Calm mode", "Other users can see your profile via Internet or LAN"),
+            buildSwitchSetting(header: "Calm mode", hint: "Other users can see your profile via Internet or LAN"),
             const SizedBox(height: 20),
-            buildSwitchSetting("Ping me", "Other users can notify me to open the EasyShare"),
+            buildSwitchSetting(header: "Ping me", hint: "Other users can notify me to open the EasyShare"),
             const SizedBox(height: 20),
             Row(
               children: const [
@@ -79,11 +79,11 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  static Widget buildNameField([
+  static Widget buildNameField({
     Function(bool isValid) onChanged,
     bool hintAtStart = false,
     bool initialText,
-  ]) {
+  }) {
     return TextField(
       style: const TextStyle(
         color: AppColors.onSurfaceColor,

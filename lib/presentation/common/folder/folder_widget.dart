@@ -35,25 +35,23 @@ class FolderWidgetState extends State<FolderWidget> {
         ),
         child: Row(
           children: [
-            Container(
-              child: BlocConsumer<FolderBloc, FolderState>(
-                buildWhen: (state, context) => false,
-                builder: (context, state) {
-                  return Aquarium(
-                    key: _aquariumKey,
-                    doneIcon: Icons.done_rounded,
-                    idleIcon: Icons.folder,
-                  );
-                },
-                listener: (context, state) {
-                  if (state is LoadingFolderState) {
-                    _aquariumKey.currentState.progressIcon = Icons.folder_rounded;
-                    _aquariumKey.currentState.progress = state.progress;
-                  } else if (state is CompletedFolderState) {
-                    _aquariumKey.currentState.setIdle();
-                  }
-                },
-              ),
+            BlocConsumer<FolderBloc, FolderState>(
+              buildWhen: (state, context) => false,
+              builder: (context, state) {
+                return Aquarium(
+                  key: _aquariumKey,
+                  doneIcon: Icons.done_rounded,
+                  idleIcon: Icons.folder,
+                );
+              },
+              listener: (context, state) {
+                if (state is LoadingFolderState) {
+                  _aquariumKey.currentState.progressIcon = Icons.folder_rounded;
+                  _aquariumKey.currentState.setProgress(state.progress);
+                } else if (state is CompletedFolderState) {
+                  _aquariumKey.currentState.setIdle();
+                }
+              },
             ),
             const SizedBox(width: 15),
             Expanded(

@@ -20,7 +20,7 @@ abstract class FolderState {
   factory FolderState.fromFolderInfo(FolderInfo folderInfo) {
     FolderState state;
 
-    if (folderInfo.status == EntryStatus.COMPLETED) {
+    if (folderInfo.status == EntryStatus.completed) {
       state = CompletedFolderState(
         id: folderInfo.id,
         name: folderInfo.name,

@@ -11,15 +11,15 @@ abstract class DeviceState {
   factory DeviceState.fromDevice(Device device) {
     DeviceState state;
 
-    if (device.status.index == DeviceStatus.IDLE.index) {
+    if (device.status.index == DeviceStatus.idle.index) {
       state = IdleDeviceState(
         id: device.id,
         name: device.name,
         type: device.type,
         sentTime: device.sentTime,
       );
-    } else if (device.status.index == DeviceStatus.RECEIVING.index ||
-        device.status.index == DeviceStatus.SENDING.index) {
+    } else if (device.status.index == DeviceStatus.receiving.index ||
+        device.status.index == DeviceStatus.sending.index) {
       state = WorkingDeviceState(
         id: device.id,
         name: device.name,

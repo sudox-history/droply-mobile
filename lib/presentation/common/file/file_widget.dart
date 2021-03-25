@@ -34,26 +34,24 @@ class FileWidgetState extends State<FileWidget> {
         create: (context) => FileBloc(initialState: widget.initialState, repository: repository),
         child: Row(
           children: [
-            Container(
-              child: BlocConsumer<FileBloc, FileState>(
-                buildWhen: (state, context) => false,
-                builder: (context, state) {
-                  return Aquarium(
-                    key: _aquariumKey,
-                    doneIcon: Icons.done_rounded,
-                    idleIcon: Icons.insert_drive_file,
-                    iconTitle: state.extension,
-                  );
-                },
-                listener: (context, state) {
-                  if (state is LoadingFileState) {
-                    _aquariumKey.currentState.progressIcon = Icons.insert_drive_file_rounded;
-                    _aquariumKey.currentState.progress = state.progress;
-                  } else if (state is CompletedFileState) {
-                    _aquariumKey.currentState.setIdle();
-                  }
-                },
-              ),
+            BlocConsumer<FileBloc, FileState>(
+              buildWhen: (state, context) => false,
+              builder: (context, state) {
+                return Aquarium(
+                  key: _aquariumKey,
+                  doneIcon: Icons.done_rounded,
+                  idleIcon: Icons.insert_drive_file,
+                  iconTitle: state.extension,
+                );
+              },
+              listener: (context, state) {
+                if (state is LoadingFileState) {
+                  _aquariumKey.currentState.progressIcon = Icons.insert_drive_file_rounded;
+                  _aquariumKey.currentState.setProgress(state.progress);
+                } else if (state is CompletedFileState) {
+                  _aquariumKey.currentState.setIdle();
+                }
+              },
             ),
             const SizedBox(width: 15),
             Expanded(

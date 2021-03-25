@@ -16,5 +16,5 @@ class Device {
   });
 }
 
-enum DeviceType { ANDROID, IOS, DESKTOP, MAC, UNDEFINED }
-enum DeviceStatus { IDLE, RECEIVING, SENDING }
+enum DeviceType { android, ios, desktop, mac, undefined }
+enum DeviceStatus { idle, receiving, sending }
