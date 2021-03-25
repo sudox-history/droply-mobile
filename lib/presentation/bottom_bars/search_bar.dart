@@ -17,7 +17,7 @@ class SearchWidget extends StatelessWidget {
       description: "Enter ID of the recipient",
       body: PinPut(
         fieldsCount: 6,
-        separatorPositions: [3],
+        separatorPositions: const [3],
         eachFieldWidth: 45,
         eachFieldHeight: 45,
         pinAnimationType: PinAnimationType.scale,
@@ -28,7 +28,7 @@ class SearchWidget extends StatelessWidget {
         followingFieldDecoration: _createFieldDecoration(),
         selectedFieldDecoration: _createFieldDecoration(),
         submittedFieldDecoration: _createFieldDecoration(),
-        textStyle: TextStyle(
+        textStyle: const TextStyle(
           fontFamily: AppFonts.openSans,
           fontWeight: AppFonts.semibold,
           fontSize: 16,
@@ -44,7 +44,7 @@ class SearchWidget extends StatelessWidget {
         Expanded(
           child: TextButton(
             onPressed: () {},
-            child: Text("Search"),
+            child: const Text("Search"),
           ),
         ),
       ]),
@@ -54,10 +54,9 @@ class SearchWidget extends StatelessWidget {
   BoxDecoration _createFieldDecoration() {
     return BoxDecoration(
       color: Colors.transparent,
-      borderRadius: BorderRadius.all(Radius.circular(5)),
+      borderRadius: const BorderRadius.all(Radius.circular(5)),
       border: Border.all(
         color: AppColors.dividerColor,
-        width: 1,
       ),
     );
   }

@@ -80,13 +80,13 @@ class AuthScreenState extends State<AuthScreen> {
     return InkWell(
       onTap: () => _handleSignIn(),
       customBorder: const RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(const Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Ink(
         padding: const EdgeInsets.only(top: 14, bottom: 14),
         decoration: const BoxDecoration(
           color: AppColors.lightAccentColor,
-          borderRadius: const BorderRadius.all(const Radius.circular(10)),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -95,7 +95,7 @@ class AuthScreenState extends State<AuthScreen> {
             const SizedBox(width: 15),
             const Text(
               "Sign in by Google",
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.accentColor,
                 fontFamily: AppFonts.openSans,
                 fontWeight: AppFonts.semibold,
@@ -112,7 +112,7 @@ class AuthScreenState extends State<AuthScreen> {
     try {
       await _googleSignIn.signIn();
     } catch (error) {
-      print(error);
+      // TODO: Handle
     }
   }
 
@@ -120,13 +120,13 @@ class AuthScreenState extends State<AuthScreen> {
     return InkWell(
       onTap: () {},
       customBorder: const RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(const Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Ink(
         padding: const EdgeInsets.only(top: 14, bottom: 14),
         decoration: const BoxDecoration(
           color: AppColors.lightenBlackColor,
-          borderRadius: const BorderRadius.all(const Radius.circular(10)),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -135,7 +135,7 @@ class AuthScreenState extends State<AuthScreen> {
             const SizedBox(width: 15),
             const Text(
               "Sign in by Apple",
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.black,
                 fontFamily: AppFonts.openSans,
                 fontWeight: AppFonts.semibold,

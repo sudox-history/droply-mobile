@@ -13,7 +13,7 @@ import 'file_state.dart';
 class FileWidget extends StatefulWidget {
   final FileInfo initialState;
 
-  FileWidget({
+  const FileWidget({
     this.initialState,
   });
 
@@ -26,13 +26,12 @@ class FileWidgetState extends State<FileWidget> {
 
   @override
   Widget build(BuildContext context) {
-    EntriesRepository repository =
-        RepositoryProvider.of<EntriesRepository>(context);
+    final EntriesRepository repository = RepositoryProvider.of<EntriesRepository>(context);
 
     return Padding(
+      padding: const EdgeInsets.only(top: 7.5, bottom: 7.5, left: 16),
       child: BlocProvider(
-        create: (context) =>
-            FileBloc(initialState: widget.initialState, repository: repository),
+        create: (context) => FileBloc(initialState: widget.initialState, repository: repository),
         child: Row(
           children: [
             Container(
@@ -48,8 +47,7 @@ class FileWidgetState extends State<FileWidget> {
                 },
                 listener: (context, state) {
                   if (state is LoadingFileState) {
-                    _aquariumKey.currentState.progressIcon =
-                        Icons.insert_drive_file_rounded;
+                    _aquariumKey.currentState.progressIcon = Icons.insert_drive_file_rounded;
                     _aquariumKey.currentState.progress = state.progress;
                   } else if (state is CompletedFileState) {
                     _aquariumKey.currentState.setIdle();
@@ -57,12 +55,12 @@ class FileWidgetState extends State<FileWidget> {
                 },
               ),
             ),
-            SizedBox(width: 15),
+            const SizedBox(width: 15),
             Expanded(
               child: BlocBuilder<FileBloc, FileState>(
                 builder: (context, state) {
                   Widget widget;
-                  TextStyle bytesStyle = TextStyle(
+                  const TextStyle bytesStyle = TextStyle(
                     fontFamily: AppFonts.openSans,
                     fontWeight: AppFonts.regular,
                     fontSize: 15,
@@ -82,11 +80,11 @@ class FileWidgetState extends State<FileWidget> {
                     widget = Row(
                       children: [
                         Text(
-                          "${shortenBytes(state.summaryBytes)}",
+                          shortenBytes(state.summaryBytes),
                           style: bytesStyle,
                         ),
                         // TODO: Time formatting
-                        Text(
+                        const Text(
                           " - 3:30 PM, 31 December",
                           style: TextStyle(
                             fontFamily: AppFonts.openSans,
@@ -103,14 +101,14 @@ class FileWidgetState extends State<FileWidget> {
                     children: [
                       Text(
                         state.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: AppColors.onSurfaceColor,
                           fontFamily: AppFonts.openSans,
                           fontWeight: AppFonts.semibold,
                           fontSize: 17,
                         ),
                       ),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       widget,
                     ],
                   );
@@ -120,7 +118,6 @@ class FileWidgetState extends State<FileWidget> {
           ],
         ),
       ),
-      padding: EdgeInsets.only(top: 7.5, bottom: 7.5, left: 16),
     );
   }
 }

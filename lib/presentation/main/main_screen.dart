@@ -25,15 +25,13 @@ class MainScreen extends StatelessWidget {
                     title: ToolbarTitle("app_name".tr()),
                     floating: true,
                     pinned: true,
-                    primary: true,
-                    snap: false,
                     elevation: AppBarStyles.elevation,
                     forceElevated: true,
                     bottom: const TabBar(
                       isScrollable: true,
                       tabs: [
-                        const Tab(text: "Nearby"),
-                        const Tab(text: "Network"),
+                        Tab(text: "Nearby"),
+                        Tab(text: "Network"),
                       ],
                     ),
                     actions: [

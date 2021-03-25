@@ -24,8 +24,7 @@ class DeviceBloc extends Bloc<Device, DeviceState> {
   }
 
   @override
-  Stream<DeviceState> mapEventToState(device) =>
-      Stream.value(DeviceState.fromDevice(device));
+  Stream<DeviceState> mapEventToState(Device device) => Stream.value(DeviceState.fromDevice(device));
 
   @override
   Future<void> close() {

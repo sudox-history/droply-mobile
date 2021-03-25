@@ -3,20 +3,17 @@ import 'package:flutter/material.dart';
 class LoadingDots extends StatefulWidget {
   final Color _dotColor;
 
-  LoadingDots(this._dotColor);
+  const LoadingDots(
+    this._dotColor,
+  );
 
   @override
-  State<StatefulWidget> createState() => _LoadingDotsState(_dotColor);
+  State<StatefulWidget> createState() => _LoadingDotsState();
 }
 
-class _LoadingDotsState extends State<LoadingDots>
-    with TickerProviderStateMixin {
-  final Color _dotColor;
-
-  Animation _dotSizeAnimation;
+class _LoadingDotsState extends State<LoadingDots> with TickerProviderStateMixin {
+  Animation<double> _dotSizeAnimation;
   AnimationController _dotSizeAnimationController;
-
-  _LoadingDotsState(this._dotColor);
 
   @override
   void initState() {
@@ -24,18 +21,17 @@ class _LoadingDotsState extends State<LoadingDots>
 
     _dotSizeAnimationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
     );
 
-    _dotSizeAnimation =
-        Tween(begin: 2.5, end: 1.5).animate(_dotSizeAnimationController)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              _dotSizeAnimationController.reverse();
-            } else if (status == AnimationStatus.dismissed) {
-              _dotSizeAnimationController.forward();
-            }
-          });
+    _dotSizeAnimation = Tween(begin: 2.5, end: 1.5).animate(_dotSizeAnimationController)
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          _dotSizeAnimationController.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          _dotSizeAnimationController.forward();
+        }
+      });
 
     _dotSizeAnimationController.forward();
   }
@@ -44,22 +40,22 @@ class _LoadingDotsState extends State<LoadingDots>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _dotSizeAnimation,
-      builder: (context, widget) {
+      builder: (context, _) {
         return Row(
           children: [
             CustomPaint(
               size: const Size.square(5),
-              painter: _LoadingDotPainter(_dotColor, _dotSizeAnimation.value),
+              painter: _LoadingDotPainter(widget._dotColor, _dotSizeAnimation.value),
             ),
             const SizedBox(width: 2),
             CustomPaint(
               size: const Size.square(5),
-              painter: _LoadingDotPainter(_dotColor, _dotSizeAnimation.value),
+              painter: _LoadingDotPainter(widget._dotColor, _dotSizeAnimation.value),
             ),
             const SizedBox(width: 2),
             CustomPaint(
               size: const Size.square(5),
-              painter: _LoadingDotPainter(_dotColor, _dotSizeAnimation.value),
+              painter: _LoadingDotPainter(widget._dotColor, _dotSizeAnimation.value),
             ),
           ],
         );
@@ -84,13 +80,13 @@ class _LoadingDotPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Offset centerPoint = Offset(size.width / 2, size.height / 2);
+    final Offset centerPoint = Offset(size.width / 2, size.height / 2);
     canvas.drawCircle(centerPoint, _radius, _paint);
   }
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    _LoadingDotPainter old = oldDelegate;
+    final _LoadingDotPainter old = oldDelegate as _LoadingDotPainter;
     return old._radius != _radius;
   }
 }

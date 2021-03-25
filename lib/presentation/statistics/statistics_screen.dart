@@ -13,7 +13,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-class StatisticsScreen extends StatelessWidget {
+class StatisticsScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _StatisticsScreenState();
+}
+
+class _StatisticsScreenState extends State<StatisticsScreen> {
   List<EntryInfo> _activeLoadingsEntries;
   List<EntryInfo> _historyLoadingsEntries;
   GlobalKey<AnimatedListState> _listKey;
@@ -22,16 +27,14 @@ class StatisticsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var entriesRepository = RepositoryProvider.of<EntriesRepository>(context);
+    final entriesRepository = RepositoryProvider.of<EntriesRepository>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("My phone"),
-      ),
+      appBar: AppBar(title: const Text("My phone")),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
-        icon: Icon(Icons.publish),
-        label: Text(
+        icon: const Icon(Icons.publish),
+        label: const Text(
           "Send",
           style: TextStyle(
             color: AppColors.onAccentColor,
@@ -50,8 +53,8 @@ class StatisticsScreen extends StatelessWidget {
         child: BlocConsumer<StatisticsScreenBloc, StatisticsScreenState>(
           listenWhen: (previous, current) {
             if (current is StatisticsScreenCompleteState) {
-              var oldActiveLoadingsEntries = _activeLoadingsEntries;
-              var oldHistoryLoadingsEntries = _historyLoadingsEntries;
+              final oldActiveLoadingsEntries = _activeLoadingsEntries;
+              final oldHistoryLoadingsEntries = _historyLoadingsEntries;
 
               _activeLoadingsEntries = current.activeEntries;
               _historyLoadingsEntries = current.historyEntries;
@@ -60,12 +63,10 @@ class StatisticsScreen extends StatelessWidget {
                 return false;
               }
 
-              if (current.activeEntries.isNotEmpty &&
-                  !_isActiveLoadingsHeaderInserted) {
+              if (current.activeEntries.isNotEmpty && !_isActiveLoadingsHeaderInserted) {
                 _isActiveLoadingsHeaderInserted = true;
                 _listKey.currentState.insertItem(2); // TODO: Change duration
-              } else if (current.activeEntries.isEmpty &&
-                  _isActiveLoadingsHeaderInserted) {
+              } else if (current.activeEntries.isEmpty && _isActiveLoadingsHeaderInserted) {
                 _listKey.currentState.removeItem(
                   2,
                   (context, animation) => _buildItem(
@@ -100,12 +101,10 @@ class StatisticsScreen extends StatelessWidget {
                 historyHeaderPosition += 1 + current.activeEntries.length;
               }
 
-              if (current.historyEntries.isNotEmpty &&
-                  !_isHistoryHeaderInserted) {
+              if (current.historyEntries.isNotEmpty && !_isHistoryHeaderInserted) {
                 _isHistoryHeaderInserted = true;
                 _listKey.currentState.insertItem(historyHeaderPosition);
-              } else if (current.historyEntries.isEmpty &&
-                  _isHistoryHeaderInserted) {
+              } else if (current.historyEntries.isEmpty && _isHistoryHeaderInserted) {
                 _listKey.currentState.removeItem(
                   historyHeaderPosition,
                   (context, animation) => _buildItem(
@@ -139,8 +138,7 @@ class StatisticsScreen extends StatelessWidget {
           },
           listener: (context, state) {},
           buildWhen: (previous, current) =>
-              previous is StatisticsScreenLoadingState &&
-              current is StatisticsScreenCompleteState,
+              previous is StatisticsScreenLoadingState && current is StatisticsScreenCompleteState,
           builder: (context, state) {
             if (state is StatisticsScreenCompleteState) {
               int initialCount = 2;
@@ -161,8 +159,7 @@ class StatisticsScreen extends StatelessWidget {
               return AnimatedList(
                 key: _listKey,
                 initialItemCount: initialCount,
-                itemBuilder: (context, position, animation) =>
-                    _buildItem(context, animation, null, position),
+                itemBuilder: (context, position, animation) => _buildItem(context, animation, null, position),
               );
             } else {
               return buildScreenLoader();
@@ -173,7 +170,7 @@ class StatisticsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildItem(context, animation, items, position) {
+  Widget _buildItem(context, animation, List<EntryInfo> items, int position) {
     if (position == 0) {
       return _buildListHeader("Statistics");
     } else if (position == 1) {
@@ -187,13 +184,11 @@ class StatisticsScreen extends StatelessWidget {
         } else if (_isHistoryHeaderInserted) {
           return _buildListHeader("History");
         }
-      } else if (_isActiveLoadingsHeaderInserted &&
-          position == 3 + _activeLoadingsEntries.length) {
+      } else if (_isActiveLoadingsHeaderInserted && position == 3 + _activeLoadingsEntries.length) {
         return _buildListHeader("History");
       } else if (_isActiveLoadingsHeaderInserted && _isHistoryHeaderInserted) {
         if (2 + _activeLoadingsEntries.length < position) {
-          return _buildListEntry(_historyLoadingsEntries[
-              position - _activeLoadingsEntries.length - 4]);
+          return _buildListEntry(_historyLoadingsEntries[position - _activeLoadingsEntries.length - 4]);
         } else {
           return _buildListEntry(_activeLoadingsEntries[position - 3]);
         }
@@ -219,10 +214,10 @@ class StatisticsScreen extends StatelessWidget {
 
   Widget _buildListHeader(String text) {
     return Container(
-      margin: EdgeInsets.only(top: 20, left: 16, right: 16),
+      margin: const EdgeInsets.only(top: 20, left: 16, right: 16),
       child: Text(
         text,
-        style: TextStyle(
+        style: const TextStyle(
           color: AppColors.primaryTextColor,
           fontFamily: AppFonts.openSans,
           fontWeight: AppFonts.bold,
@@ -234,11 +229,11 @@ class StatisticsScreen extends StatelessWidget {
 
   Widget _buildProgressBlock() {
     return Container(
-      margin: EdgeInsets.only(left: 16, right: 16, top: 15),
+      margin: const EdgeInsets.only(left: 16, right: 16, top: 15),
       child: Row(
         children: [
           _buildProgressContainer(),
-          SizedBox(width: 28),
+          const SizedBox(width: 28),
           _buildProgressTimeBlock(),
         ],
       ),
@@ -257,12 +252,8 @@ class StatisticsScreen extends StatelessWidget {
           circularStrokeCap: CircularStrokeCap.round,
           center: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.file_download,
-                color: AppColors.accentColor,
-              ),
+            children: const [
+              Icon(Icons.file_download, color: AppColors.accentColor),
               SizedBox(height: 1),
               Text(
                 "0 Mb",
@@ -296,7 +287,7 @@ class StatisticsScreen extends StatelessWidget {
       child: Column(
         children: [
           _buildProgressInfoBlock("0 Mb/s", "Download speed"),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           _buildProgressInfoBlock("0 minutes", "Estimated time"),
         ],
       ),
@@ -306,8 +297,8 @@ class StatisticsScreen extends StatelessWidget {
   Widget _buildProgressInfoBlock(String info, String name) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.only(left: 20, top: 14, bottom: 14, right: 30),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.only(left: 20, top: 14, bottom: 14, right: 30),
+      decoration: const BoxDecoration(
         color: AppColors.lightenAccentColor,
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
@@ -317,18 +308,18 @@ class StatisticsScreen extends StatelessWidget {
           Text(
             info,
             maxLines: 1,
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.accentColor,
               fontWeight: AppFonts.bold,
               fontFamily: AppFonts.openSans,
               fontSize: 16,
             ),
           ),
-          SizedBox(height: 1),
+          const SizedBox(height: 1),
           Text(
             name,
             maxLines: 1,
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.accentColor,
               fontWeight: AppFonts.regular,
               fontFamily: AppFonts.openSans,

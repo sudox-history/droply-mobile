@@ -6,7 +6,7 @@ class ToolbarTitleBloc extends Bloc<dynamic, ToolbarTitleState> {
   ToolbarTitleBloc() : super(ToolbarTitleState(true));
 
   @override
-  Stream<ToolbarTitleState> mapEventToState(event) => Stream.value(ToolbarTitleState(true));
+  Stream<ToolbarTitleState> mapEventToState(dynamic event) => Stream.value(ToolbarTitleState(true));
 }
 
 class ToolbarTitleState {

@@ -16,14 +16,13 @@ class AuthScreenLayout extends MultiChildRenderObjectWidget {
 class _AuthScreenLayoutRender extends RenderBox
     with
         ContainerRenderObjectMixin<RenderBox, _AuthScreenLayoutParentData>,
-        RenderBoxContainerDefaultsMixin<RenderBox,
-            _AuthScreenLayoutParentData> {
+        RenderBoxContainerDefaultsMixin<RenderBox, _AuthScreenLayoutParentData> {
   static const _horizontalMargin = 20;
   static const _bottomMargin = 20.0;
   static const _topMargin = 20.0;
   static const _middleMargin = 25.0;
 
-  BuildContext _context;
+  final BuildContext _context;
 
   _AuthScreenLayoutRender(this._context, {List<RenderBox> children}) {
     addAll(children);
@@ -38,46 +37,37 @@ class _AuthScreenLayoutRender extends RenderBox
 
   @override
   void performLayout() {
-    var query = MediaQuery.of(_context);
-    var maxHeight = query.size.height;
-    var maxWidth = constraints.maxWidth - 2 * _horizontalMargin;
-    var children = getChildrenAsList();
+    final query = MediaQuery.of(_context);
+    final maxHeight = query.size.height;
+    final maxWidth = constraints.maxWidth - 2 * _horizontalMargin;
+    final children = getChildrenAsList();
 
-    var header = children.first;
-    var headerSize = Size(maxWidth, double.infinity);
-    var topPadding = query.viewPadding.top + _topMargin;
+    final header = children.first;
+    final headerSize = Size(maxWidth, double.infinity);
+    final topPadding = query.viewPadding.top + _topMargin;
     header.layout(BoxConstraints.loose(headerSize), parentUsesSize: true);
 
-    _AuthScreenLayoutParentData headerParentData = header.parentData;
-    headerParentData.offset =
-        Offset(constraints.maxWidth / 2 - header.size.width / 2, topPadding);
+    final _AuthScreenLayoutParentData headerParentData = header.parentData as _AuthScreenLayoutParentData;
+    headerParentData.offset = Offset(constraints.maxWidth / 2 - header.size.width / 2, topPadding);
 
-    var footer = children.last;
-    var footerSize = Size(maxWidth, double.infinity);
+    final footer = children.last;
+    final footerSize = Size(maxWidth, double.infinity);
     footer.layout(BoxConstraints.loose(footerSize), parentUsesSize: true);
 
-    _AuthScreenLayoutParentData footerParentData = footer.parentData;
+    final _AuthScreenLayoutParentData footerParentData = footer.parentData as _AuthScreenLayoutParentData;
     footerParentData.offset = Offset(
       constraints.maxWidth / 2 - footerSize.width / 2,
       maxHeight - _bottomMargin - footer.size.height,
     );
 
-    var freeHeight = maxHeight -
-        topPadding -
-        header.size.height -
-        footer.size.height -
-        _bottomMargin;
+    final freeHeight = maxHeight - topPadding - header.size.height - footer.size.height - _bottomMargin;
 
     if (freeHeight >= _middleMargin * 2) {
       size = Size(constraints.maxWidth, maxHeight);
     } else {
       size = Size(
         constraints.maxWidth,
-        topPadding +
-            header.size.height +
-            _middleMargin * 2 +
-            footer.size.height +
-            _bottomMargin,
+        topPadding + header.size.height + _middleMargin * 2 + footer.size.height + _bottomMargin,
       );
 
       footerParentData.offset = Offset(
@@ -93,7 +83,7 @@ class _AuthScreenLayoutRender extends RenderBox
   }
 
   @override
-  bool hitTestChildren(HitTestResult result, {Offset position}) {
+  bool hitTestChildren(BoxHitTestResult result, {Offset position}) {
     return defaultHitTestChildren(result, position: position);
   }
 

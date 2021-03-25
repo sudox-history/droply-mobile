@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 abstract class NearbyScreenBlocState {}
 
 class NearbyScreenScanningState implements NearbyScreenBlocState {
-  Iterable<Device> devices;
+  List<Device> devices;
 
   NearbyScreenScanningState({
     @required this.devices,

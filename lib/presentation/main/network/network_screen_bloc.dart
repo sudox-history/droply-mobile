@@ -9,8 +9,7 @@ class NetworkScreenBloc extends Bloc<List<Device>, NetworkScreenBlocState> {
   DevicesRepository devicesRepository;
   StreamSubscription _subscription;
 
-  NetworkScreenBloc({DevicesRepository devicesRepository})
-      : super(NetworkScreenLoadingState()) {
+  NetworkScreenBloc({DevicesRepository devicesRepository}) : super(NetworkScreenLoadingState()) {
     add(null);
 
     _subscription = devicesRepository.getDevices().listen((devices) {
@@ -19,7 +18,7 @@ class NetworkScreenBloc extends Bloc<List<Device>, NetworkScreenBlocState> {
   }
 
   @override
-  Stream<NetworkScreenBlocState> mapEventToState(devices) async* {
+  Stream<NetworkScreenBlocState> mapEventToState(List<Device> devices) async* {
     if (devices != null) {
       yield NetworkScreenCompleteState(devices: devices);
     }

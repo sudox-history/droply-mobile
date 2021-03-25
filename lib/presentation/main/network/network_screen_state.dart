@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 abstract class NetworkScreenBlocState {}
 
 class NetworkScreenCompleteState implements NetworkScreenBlocState {
-  Iterable<Device> devices;
+  List<Device> devices;
 
   NetworkScreenCompleteState({
     @required this.devices,

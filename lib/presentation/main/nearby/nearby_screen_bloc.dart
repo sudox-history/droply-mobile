@@ -30,7 +30,7 @@ class NearbyScreenBloc extends Bloc<List<Device>, NearbyScreenBlocState> {
   }
 
   @override
-  Stream<NearbyScreenBlocState> mapEventToState(devices) async* {
+  Stream<NearbyScreenBlocState> mapEventToState(List<Device> devices) async* {
     if (devices != null) {
       yield NearbyScreenScanningState(devices: devices);
     } else {

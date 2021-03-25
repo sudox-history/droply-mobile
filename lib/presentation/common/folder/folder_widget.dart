@@ -1,6 +1,5 @@
 import 'package:droply/constants.dart';
 import 'package:droply/data/entries/entries_repository.dart';
-import 'package:droply/data/entries/models/entry_info.dart';
 import 'package:droply/data/entries/models/folder_info.dart';
 import 'package:droply/helpers/unit_helper.dart';
 import 'package:droply/presentation/common/aquarium/aquarium.dart';
@@ -12,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class FolderWidget extends StatefulWidget {
   final FolderInfo initialState;
 
-  FolderWidget({
+  const FolderWidget({
     this.initialState,
   });
 
@@ -25,10 +24,10 @@ class FolderWidgetState extends State<FolderWidget> {
 
   @override
   Widget build(BuildContext context) {
-    EntriesRepository repository =
-        RepositoryProvider.of<EntriesRepository>(context);
+    final EntriesRepository repository = RepositoryProvider.of<EntriesRepository>(context);
 
     return Padding(
+      padding: const EdgeInsets.only(top: 7.5, bottom: 7.5, left: 16, right: 16),
       child: BlocProvider(
         create: (context) => FolderBloc(
           initialState: widget.initialState,
@@ -48,8 +47,7 @@ class FolderWidgetState extends State<FolderWidget> {
                 },
                 listener: (context, state) {
                   if (state is LoadingFolderState) {
-                    _aquariumKey.currentState.progressIcon =
-                        Icons.folder_rounded;
+                    _aquariumKey.currentState.progressIcon = Icons.folder_rounded;
                     _aquariumKey.currentState.progress = state.progress;
                   } else if (state is CompletedFolderState) {
                     _aquariumKey.currentState.setIdle();
@@ -57,12 +55,12 @@ class FolderWidgetState extends State<FolderWidget> {
                 },
               ),
             ),
-            SizedBox(width: 15),
+            const SizedBox(width: 15),
             Expanded(
               child: BlocBuilder<FolderBloc, FolderState>(
                 builder: (context, state) {
                   Widget widget;
-                  TextStyle bytesStyle = TextStyle(
+                  const TextStyle bytesStyle = TextStyle(
                     fontFamily: AppFonts.openSans,
                     fontWeight: AppFonts.regular,
                     fontSize: 15,
@@ -81,12 +79,9 @@ class FolderWidgetState extends State<FolderWidget> {
                   } else if (state is CompletedFolderState) {
                     widget = Row(
                       children: [
-                        Text(
-                          "${shortenBytes(state.summaryBytes)}",
-                          style: bytesStyle,
-                        ),
+                        Text(shortenBytes(state.summaryBytes), style: bytesStyle),
                         // TODO: Time formatting
-                        Text(
+                        const Text(
                           " - 3:30 PM, 31 December",
                           style: TextStyle(
                             fontFamily: AppFonts.openSans,
@@ -104,14 +99,14 @@ class FolderWidgetState extends State<FolderWidget> {
                     children: [
                       Text(
                         state.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: AppColors.onSurfaceColor,
                           fontFamily: AppFonts.openSans,
                           fontWeight: AppFonts.semibold,
                           fontSize: 17,
                         ),
                       ),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       widget,
                     ],
                   );
@@ -123,7 +118,7 @@ class FolderWidgetState extends State<FolderWidget> {
                 alignment: Alignment.topCenter,
                 child: Text(
                   "${state.downloadedFiles} / ${state.filesCount}",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: AppFonts.openSans,
                     fontWeight: AppFonts.regular,
                     fontSize: 15,
@@ -135,7 +130,6 @@ class FolderWidgetState extends State<FolderWidget> {
           ],
         ),
       ),
-      padding: EdgeInsets.only(top: 7.5, bottom: 7.5, left: 16, right: 16),
     );
   }
 }

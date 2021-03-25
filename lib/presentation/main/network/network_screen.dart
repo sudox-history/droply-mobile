@@ -17,22 +17,19 @@ class NetworkScreen extends StatefulWidget {
 
 class NetworkScreenState extends State<NetworkScreen> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
-  Iterable<Device> _devicesStates;
+  List<Device> _devicesStates;
 
   @override
   Widget build(BuildContext context) {
-    DevicesRepository repository =
-        RepositoryProvider.of<DevicesRepository>(context);
+    final DevicesRepository repository = RepositoryProvider.of<DevicesRepository>(context);
 
     return BlocProvider(
       create: (context) => NetworkScreenBloc(devicesRepository: repository),
       child: BlocConsumer<NetworkScreenBloc, NetworkScreenBlocState>(
         buildWhen: (previous, current) =>
-            previous is NetworkScreenLoadingState &&
-            current is NetworkScreenCompleteState,
+            previous is NetworkScreenLoadingState && current is NetworkScreenCompleteState,
         listenWhen: (previous, current) =>
-            !(previous is NetworkScreenLoadingState) &&
-            !(current is NetworkScreenCompleteState),
+            previous is! NetworkScreenLoadingState && current is! NetworkScreenCompleteState,
         listener: (context, current) {
           if (current is NetworkScreenCompleteState) {
             _devices = current.devices;
@@ -62,8 +59,8 @@ class NetworkScreenState extends State<NetworkScreen> {
     );
   }
 
-  set _devices(Iterable<Device> states) {
-    var oldStates = _devicesStates;
+  set _devices(List<Device> states) {
+    final oldStates = _devicesStates;
     _devicesStates = states;
 
     AnimatedListHelper.changeItems<Device, String>(
@@ -71,13 +68,12 @@ class NetworkScreenState extends State<NetworkScreen> {
       state: _listKey.currentState,
       oldList: oldStates,
       newList: states,
-      buildRemovedWidget: (context, animation, items, position) =>
-          _buildItem(position, animation, items),
+      buildRemovedWidget: (context, animation, items, position) => _buildItem(position, animation, items),
       getId: (state) => state.id,
     );
   }
 
-  Widget _buildItem(position, animation, items) {
+  Widget _buildItem(int position, Animation<double> animation, List<Device> items) {
     Widget widget;
 
     if (position == 0) {
@@ -108,9 +104,9 @@ class NetworkScreenState extends State<NetworkScreen> {
       children: [
         Container(
           margin: const EdgeInsets.only(left: 20, right: 20),
-          child: Text(
+          child: const Text(
             "Your ID",
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: AppFonts.openSans,
               fontWeight: AppFonts.semibold,
               color: AppColors.secondaryTextColor,
@@ -131,19 +127,19 @@ class NetworkScreenState extends State<NetworkScreen> {
                   margin: const EdgeInsets.only(left: 13),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
+                    children: const [
+                      Text(
                         "034-213-533",
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppColors.accentColor,
                           fontFamily: AppFonts.openSans,
                           fontWeight: AppFonts.regular,
                           fontSize: 24,
                         ),
                       ),
-                      const Text(
+                      Text(
                         "(Click to copy)",
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppColors.hintTextColor,
                           fontFamily: AppFonts.openSans,
                           fontWeight: AppFonts.regular,
@@ -165,7 +161,7 @@ class NetworkScreenState extends State<NetworkScreen> {
             ],
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
       ],
     );
   }

@@ -11,12 +11,12 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("Settings")),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             Row(
               children: [
-                const SizedBox(width: 75, height: 75, child: const MyDevice()),
+                const SizedBox(width: 75, height: 75, child: MyDevice()),
                 const SizedBox(width: 20),
                 Expanded(
                   child: Column(
@@ -32,18 +32,16 @@ class SettingsScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            buildSwitchSetting("Calm mode",
-                "Other users can see your profile via Internet or LAN"),
+            buildSwitchSetting("Calm mode", "Other users can see your profile via Internet or LAN"),
             const SizedBox(height: 20),
-            buildSwitchSetting(
-                "Ping me", "Other users can notify me to open the EasyShare"),
+            buildSwitchSetting("Ping me", "Other users can notify me to open the EasyShare"),
             const SizedBox(height: 20),
             Row(
-              children: [
+              children: const [
                 Expanded(
-                  child: const Text(
+                  child: Text(
                     "Black list",
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: AppColors.onSurfaceColor,
                       fontFamily: AppFonts.openSans,
                       fontWeight: AppFonts.regular,
@@ -51,9 +49,9 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Text(
+                Text(
                   "8 users",
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppColors.accentColor,
                     fontFamily: AppFonts.openSans,
                     fontWeight: AppFonts.regular,
@@ -82,7 +80,7 @@ class SettingsScreen extends StatelessWidget {
   }
 
   static Widget buildNameField([
-    Function onChanged(bool isValid),
+    Function(bool isValid) onChanged,
     bool hintAtStart = false,
     bool initialText,
   ]) {

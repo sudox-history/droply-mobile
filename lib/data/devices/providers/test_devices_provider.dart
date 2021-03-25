@@ -2,7 +2,7 @@ import 'package:droply/data/devices/models/device.dart';
 import 'package:droply/data/devices/providers/devices_provider.dart';
 
 class TestDevicesProvider implements DevicesProvider {
-  Stream<Device> _secondDevice = Stream.value(Device(
+  final Stream<Device> _secondDevice = Stream.value(Device(
     id: "2",
     name: "Max's tablet",
     type: DeviceType.ANDROID,
@@ -10,7 +10,7 @@ class TestDevicesProvider implements DevicesProvider {
     sentTime: 1607107316000,
   ));
 
-  Stream<Device> _thirdDevice = Stream.value(Device(
+  final Stream<Device> _thirdDevice = Stream.value(Device(
     id: "3",
     name: "Yaroslav's desktop",
     type: DeviceType.DESKTOP,
@@ -18,7 +18,7 @@ class TestDevicesProvider implements DevicesProvider {
     sentTime: 1607107826000,
   ));
 
-  Stream<Device> _fourthDevice = Stream.value(Device(
+  final Stream<Device> _fourthDevice = Stream.value(Device(
     id: "4",
     name: "Uno",
     type: DeviceType.UNDEFINED,
@@ -26,7 +26,7 @@ class TestDevicesProvider implements DevicesProvider {
     sentTime: 1607107862000,
   ));
 
-  Stream<Device> _fifthDevice = Stream.value(Device(
+  final Stream<Device> _fifthDevice = Stream.value(Device(
     id: "5",
     name: "Alexey's phone",
     type: DeviceType.ANDROID,
@@ -38,9 +38,9 @@ class TestDevicesProvider implements DevicesProvider {
   Stream<Device> getDevice(String id) {
     switch (id) {
       case "1":
-        return Stream.periodic(Duration(milliseconds: 50), (count) {
+        return Stream.periodic(const Duration(milliseconds: 50), (count) {
           DeviceStatus status;
-          double progress = (count + 1) / 100;
+          final double progress = (count + 1) / 100;
 
           if (progress >= 1.0) {
             status = DeviceStatus.IDLE;
@@ -71,7 +71,7 @@ class TestDevicesProvider implements DevicesProvider {
 
   @override
   Stream<List<Device>> getDevices() {
-    return Stream.fromFuture(Future.delayed(Duration(seconds: 1), () {
+    return Stream.fromFuture(Future.delayed(const Duration(seconds: 1), () {
       return [
         Device(
           id: "1",

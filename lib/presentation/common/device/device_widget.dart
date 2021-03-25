@@ -12,7 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class DeviceWidget extends StatefulWidget {
   final Device initialState;
 
-  DeviceWidget({
+  const DeviceWidget({
     this.initialState,
   });
 
@@ -25,8 +25,7 @@ class DeviceWidgetState extends State<DeviceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    DevicesRepository repository =
-        RepositoryProvider.of<DevicesRepository>(context);
+    final DevicesRepository repository = RepositoryProvider.of<DevicesRepository>(context);
 
     return InkWell(
       onTap: () => Navigator.pushNamed(
@@ -35,6 +34,11 @@ class DeviceWidgetState extends State<DeviceWidget> {
         arguments: widget.initialState.id,
       ),
       child: Padding(
+        padding: const EdgeInsets.only(
+          top: 7.5,
+          bottom: 7.5,
+          left: 16,
+        ),
         child: BlocProvider(
           create: (context) => DeviceBloc(
             initialState: widget.initialState,
@@ -55,12 +59,9 @@ class DeviceWidgetState extends State<DeviceWidget> {
                   listener: (context, state) {
                     if (state is WorkingDeviceState) {
                       if (state.status.index == DeviceStatus.RECEIVING.index) {
-                        _aquariumKey.currentState.progressIcon =
-                            Icons.download_rounded;
-                      } else if (state.status.index ==
-                          DeviceStatus.SENDING.index) {
-                        _aquariumKey.currentState.progressIcon =
-                            Icons.publish_rounded;
+                        _aquariumKey.currentState.progressIcon = Icons.download_rounded;
+                      } else if (state.status.index == DeviceStatus.SENDING.index) {
+                        _aquariumKey.currentState.progressIcon = Icons.publish_rounded;
                       }
 
                       _aquariumKey.currentState.progress = state.progress;
@@ -70,7 +71,7 @@ class DeviceWidgetState extends State<DeviceWidget> {
                   },
                 ),
               ),
-              SizedBox(width: 15),
+              const SizedBox(width: 15),
               Expanded(
                 child: BlocBuilder<DeviceBloc, DeviceState>(
                   builder: (context, state) {
@@ -83,7 +84,7 @@ class DeviceWidgetState extends State<DeviceWidget> {
                     }
 
                     Widget widget;
-                    TextStyle style = TextStyle(
+                    final TextStyle style = TextStyle(
                       fontFamily: AppFonts.openSans,
                       fontWeight: AppFonts.semibold,
                       fontSize: 15,
@@ -105,8 +106,8 @@ class DeviceWidgetState extends State<DeviceWidget> {
                             description,
                             style: style,
                           ),
-                          SizedBox(width: 5),
-                          LoadingDots(AppColors.processColor)
+                          const SizedBox(width: 5),
+                          const LoadingDots(AppColors.processColor)
                         ],
                       );
                     } else if (state is IdleDeviceState) {
@@ -122,7 +123,7 @@ class DeviceWidgetState extends State<DeviceWidget> {
                       children: [
                         Text(
                           state.name,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppColors.onSurfaceColor,
                             fontFamily: AppFonts.openSans,
                             fontWeight: AppFonts.semibold,
@@ -136,18 +137,13 @@ class DeviceWidgetState extends State<DeviceWidget> {
                 ),
               ),
               IconButton(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 color: AppColors.onSurfaceColor,
-                icon: Icon(Icons.more_vert),
+                icon: const Icon(Icons.more_vert),
                 onPressed: () => {},
               )
             ],
           ),
-        ),
-        padding: EdgeInsets.only(
-          top: 7.5,
-          bottom: 7.5,
-          left: 16,
         ),
       ),
     );

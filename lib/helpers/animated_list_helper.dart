@@ -7,27 +7,17 @@ class AnimatedListHelper {
     int offset = 0,
     Duration removeDuration,
     Duration insertDuration,
-    @required
-        AnimatedListState state,
-    @required
-        List<T> oldList,
-    @required
-        List<T> newList,
-    @required
-        Widget buildRemovedWidget(
-      BuildContext context,
-      Animation<double> animation,
-      List<T> items,
-      int position,
-    ),
-    @required
-        ID getId(T item),
+    @required AnimatedListState state,
+    @required List<T> oldList,
+    @required List<T> newList,
+    Widget Function(BuildContext context, Animation<double> animation, List<T> items, int position) buildRemovedWidget,
+    ID Function(T item) getId,
   }) {
     if (oldList == null && newList != null) {
       for (int i = offset; i < newList.length + offset; i++) {
         state.insertItem(
           i,
-          duration: insertDuration ?? Duration(milliseconds: 300),
+          duration: insertDuration ?? const Duration(milliseconds: 300),
         );
       }
 
@@ -42,7 +32,7 @@ class AnimatedListHelper {
             oldList,
             i,
           ),
-          duration: removeDuration ?? Duration(milliseconds: 300),
+          duration: removeDuration ?? const Duration(milliseconds: 300),
         );
       }
 
@@ -52,12 +42,12 @@ class AnimatedListHelper {
     calculateListDiff(
       oldList,
       newList,
-      equalityChecker: (first, second) => getId(first) == getId(second),
+      equalityChecker: (T first, T second) => getId(first) == getId(second),
     ).getUpdates(batch: false).forEach((element) {
       element.when(
         insert: (position, count) => state.insertItem(
           offset + position,
-          duration: insertDuration ?? Duration(milliseconds: 300),
+          duration: insertDuration ?? const Duration(milliseconds: 300),
         ),
         remove: (position, count) => state.removeItem(
           offset + position,
@@ -67,7 +57,7 @@ class AnimatedListHelper {
             oldList,
             position,
           ),
-          duration: removeDuration ?? Duration(milliseconds: 300),
+          duration: removeDuration ?? const Duration(milliseconds: 300),
         ),
       );
     });

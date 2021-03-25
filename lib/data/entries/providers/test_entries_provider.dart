@@ -6,34 +6,31 @@ import 'package:droply/data/entries/providers/entries_provider.dart';
 class TestEntriesProvider implements EntriesProvider {
   @override
   Stream<List<EntryInfo>> getActiveEntries(String deviceId) {
-    return Stream.fromFuture(Future.delayed(
-      Duration(seconds: 1),
-      () {
-        return [
-          FileInfo(
-            id: "1",
-            name: "Contract.txt",
-            status: EntryStatus.LOADING,
-            downloadedBytes: 210763776,
-            summaryBytes: 2151677952,
-          ),
-          FolderInfo(
-            id: "2",
-            name: "Photos",
-            status: EntryStatus.LOADING,
-            downloadedBytes: 38797312,
-            summaryBytes: 47185920,
-            downloadedFiles: 17,
-            filesCount: 20,
-          ),
-        ];
-      },
-    ));
+    return Stream.fromFuture(Future.delayed(const Duration(seconds: 1), () {
+      return [
+        FileInfo(
+          id: "1",
+          name: "Contract.txt",
+          status: EntryStatus.LOADING,
+          downloadedBytes: 210763776,
+          summaryBytes: 2151677952,
+        ),
+        FolderInfo(
+          id: "2",
+          name: "Photos",
+          status: EntryStatus.LOADING,
+          downloadedBytes: 38797312,
+          summaryBytes: 47185920,
+          downloadedFiles: 17,
+          filesCount: 20,
+        ),
+      ];
+    }));
   }
 
   @override
   Stream<List<EntryInfo>> getHistoryEntries(String deviceId) {
-    return Stream.fromFuture(Future.delayed(Duration(seconds: 3), () {
+    return Stream.fromFuture(Future.delayed(const Duration(seconds: 3), () {
       return [
         FileInfo(
           id: "3",
@@ -68,10 +65,10 @@ class TestEntriesProvider implements EntriesProvider {
       case "1":
         int downloaded = 0;
 
-        return Stream.periodic(Duration(milliseconds: 50), (count) {
+        return Stream.periodic(const Duration(milliseconds: 50), (count) {
           EntryStatus status;
           downloaded += 10000000;
-          double progress = downloaded / 2151677952;
+          final double progress = downloaded / 2151677952;
 
           if (progress >= 1.0) {
             status = EntryStatus.COMPLETED;
@@ -116,10 +113,10 @@ class TestEntriesProvider implements EntriesProvider {
       case "2":
         int downloaded = 0;
 
-        return Stream.periodic(Duration(milliseconds: 50), (count) {
+        return Stream.periodic(const Duration(milliseconds: 50), (count) {
           EntryStatus status;
           downloaded += 100000;
-          double progress = downloaded / 47185920;
+          final double progress = downloaded / 47185920;
 
           if (progress >= 1.0) {
             status = EntryStatus.COMPLETED;

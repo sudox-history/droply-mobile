@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ToolbarTitle extends StatefulWidget {
   final String title;
 
-  ToolbarTitle(
+  const ToolbarTitle(
     this.title,
   );
 
@@ -20,7 +20,7 @@ class _ToolbarTitleState extends State<ToolbarTitle> {
       create: (context) => ToolbarTitleBloc(),
       child: BlocBuilder<ToolbarTitleBloc, ToolbarTitleState>(
         builder: (context, state) => AnimatedSwitcher(
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           child: Text(
             state.isConnected ? widget.title : "Connecting ...",
             key: ValueKey(state.isConnected),

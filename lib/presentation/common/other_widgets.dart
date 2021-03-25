@@ -2,8 +2,12 @@ import 'package:droply/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget buildSwitchSetting(String header, String hint,
-    [bool isChecked = false, callback]) {
+Widget buildSwitchSetting(
+  String header,
+  String hint, [
+  bool isChecked = false,
+  void Function(bool) callback,
+]) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisAlignment: MainAxisAlignment.end,
@@ -48,10 +52,10 @@ Widget buildSwitchSetting(String header, String hint,
 
 Widget buildScreenLoader() {
   return const Center(
-    child: const SizedBox(
+    child: SizedBox(
       width: 40,
       height: 40,
-      child: const CircularProgressIndicator(),
+      child: CircularProgressIndicator(),
     ),
   );
 }

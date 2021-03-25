@@ -16,7 +16,7 @@ class FileInfo extends EntryInfo {
         );
 
   String get extension {
-    var extension = name.split('.');
+    final extension = name.split('.');
     extension.removeAt(0);
     return extension.join();
   }

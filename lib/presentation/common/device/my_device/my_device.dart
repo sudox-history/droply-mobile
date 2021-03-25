@@ -19,7 +19,7 @@ class _MyDeviceState extends State<MyDevice> {
       child: Container(
         decoration: const BoxDecoration(
           color: AppColors.lightAccentColor,
-          borderRadius: const BorderRadius.all(const Radius.circular(15)),
+          borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
         child: BlocBuilder<MyDeviceBloc, MyDeviceState>(
           builder: (context, state) {
@@ -50,7 +50,7 @@ class _MyDeviceState extends State<MyDevice> {
             return const FractionallySizedBox(
               heightFactor: 0.25,
               widthFactor: 0.25,
-              child: const CircularProgressIndicator(strokeWidth: 2),
+              child: CircularProgressIndicator(strokeWidth: 2),
             );
           },
         ),

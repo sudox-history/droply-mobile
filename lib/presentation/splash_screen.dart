@@ -9,8 +9,7 @@ class SplashScreen extends StatefulWidget {
   }
 }
 
-class SplashScreenState extends State<SplashScreen>
-    with TickerProviderStateMixin {
+class SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
 
@@ -18,15 +17,11 @@ class SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
-    controller = AnimationController(
-      duration: const Duration(milliseconds: 00),
-      vsync: this,
-    );
+    controller = AnimationController(duration: const Duration(), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.easeOut);
-
     controller.forward();
 
-    new Future.delayed(const Duration(milliseconds: 700), () {
+    Future.delayed(const Duration(milliseconds: 700), () {
       Navigator.pushReplacementNamed(context, AppNavigation.authRouteName);
     });
   }
@@ -46,7 +41,7 @@ class SplashScreenState extends State<SplashScreen>
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                padding: EdgeInsets.only(bottom: 80),
+                padding: const EdgeInsets.only(bottom: 80),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -55,7 +50,7 @@ class SplashScreenState extends State<SplashScreen>
                       height: 70,
                       width: 70,
                     ),
-                    Text(
+                    const Text(
                       "SUDOX",
                       style: TextStyle(
                         color: AppColors.lightenHintTextColor,

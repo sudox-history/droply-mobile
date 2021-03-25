@@ -14,16 +14,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() async {
+void main() {
   runApp(
     EasyLocalization(
-      child: App(),
       path: 'assets/translations',
       fallbackLocale: const Locale('en', 'US'),
-      supportedLocales: [
-        const Locale('en', 'US'),
-        const Locale('ru', 'RU'),
+      supportedLocales: const [
+        Locale('en', 'US'),
+        Locale('ru', 'RU'),
       ],
+      child: App(),
     ),
   );
 }
@@ -38,7 +38,6 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
-        systemNavigationBarDividerColor: null,
         systemNavigationBarColor: Colors.transparent,
         systemNavigationBarIconBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
@@ -69,18 +68,18 @@ class _AppState extends State<App> {
               color: AppColors.primaryIconsColor,
             ),
             tabBarTheme: const TabBarTheme(
-              indicator: const TabBarIndicator(),
-              labelPadding: const EdgeInsets.symmetric(
+              indicator: TabBarIndicator(),
+              labelPadding: EdgeInsets.symmetric(
                 horizontal: TabBarStyles.tabHorizontalPadding,
               ),
               labelColor: AppColors.accentColor,
-              labelStyle: const TextStyle(
+              labelStyle: TextStyle(
                 fontSize: 15,
                 fontWeight: AppFonts.semibold,
                 fontFamily: AppFonts.openSans,
               ),
               unselectedLabelColor: AppColors.secondaryTextColor,
-              unselectedLabelStyle: const TextStyle(
+              unselectedLabelStyle: TextStyle(
                 fontSize: 15,
                 fontWeight: AppFonts.semibold,
                 fontFamily: AppFonts.openSans,
@@ -92,8 +91,8 @@ class _AppState extends State<App> {
               centerTitle: true,
               elevation: AppBarStyles.elevation,
               shadowColor: AppColors.dividerColor,
-              textTheme: const TextTheme(
-                headline6: const TextStyle(
+              textTheme: TextTheme(
+                headline6: TextStyle(
                   color: AppColors.primaryTextColor,
                   fontSize: 18,
                   fontFamily: AppFonts.openSans,
@@ -104,12 +103,12 @@ class _AppState extends State<App> {
             buttonTheme: const ButtonThemeData(
               splashColor: AppColors.rippleEffectColor,
               highlightColor: AppColors.highlightButtonColor,
-              padding: const EdgeInsets.only(top: 16, bottom: 16),
+              padding: EdgeInsets.only(top: 16, bottom: 16),
             ),
             bottomSheetTheme: const BottomSheetThemeData(
-              shape: const RoundedRectangleBorder(
-                borderRadius: const BorderRadius.vertical(
-                  top: const Radius.circular(20),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(20),
                 ),
               ),
             ),
@@ -117,7 +116,7 @@ class _AppState extends State<App> {
               style: TextButton.styleFrom(
                 padding: const EdgeInsets.only(left: 14, right: 14, top: 14, bottom: 14),
                 shape: const RoundedRectangleBorder(
-                  borderRadius: const BorderRadius.all(const Radius.circular(10)),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 primary: AppColors.onAccentColor,
                 onSurface: AppColors.onAccentColor,

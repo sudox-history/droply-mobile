@@ -9,7 +9,7 @@ class TabBarIndicator extends Decoration {
   const TabBarIndicator();
 
   @override
-  BoxPainter createBoxPainter([onChanged]) => _TabBarIndicatorPainter();
+  BoxPainter createBoxPainter([void Function() onChanged]) => _TabBarIndicatorPainter();
 }
 
 class _TabBarIndicatorPainter extends BoxPainter {
@@ -25,25 +25,16 @@ class _TabBarIndicatorPainter extends BoxPainter {
 
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    var y = offset.dy + configuration.size.height;
-    var rect = Rect.fromPoints(
-      Offset(
-        offset.dx + TabBarStyles.tabHorizontalPadding - _horizontalPadding,
-        y - _height,
-      ),
-      Offset(
-        offset.dx +
-            configuration.size.width -
-            TabBarStyles.tabHorizontalPadding +
-            _horizontalPadding,
-        y,
-      ),
+    final y = offset.dy + configuration.size.height;
+    final rect = Rect.fromPoints(
+      Offset(offset.dx + TabBarStyles.tabHorizontalPadding - _horizontalPadding, y - _height),
+      Offset(offset.dx + configuration.size.width - TabBarStyles.tabHorizontalPadding + _horizontalPadding, y),
     );
 
-    var rrect = RRect.fromRectAndCorners(
+    final rrect = RRect.fromRectAndCorners(
       rect,
-      topLeft: Radius.circular(_borderRadius),
-      topRight: Radius.circular(_borderRadius),
+      topLeft: const Radius.circular(_borderRadius),
+      topRight: const Radius.circular(_borderRadius),
     );
 
     canvas.drawRRect(rrect, _paint);

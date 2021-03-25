@@ -31,7 +31,7 @@ class MyDeviceBloc extends Bloc<MyDeviceEvent, MyDeviceState> {
   }
 
   @override
-  Stream<MyDeviceState> mapEventToState(event) async* {
+  Stream<MyDeviceState> mapEventToState(MyDeviceEvent event) async* {
     if (event is MyDeviceLoadedEvent) {
       yield MyDeviceLoadedState(
         name: event.name,

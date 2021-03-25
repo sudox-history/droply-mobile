@@ -17,28 +17,22 @@ class NearbyScreen extends StatefulWidget {
 
 class NearbyScreenState extends State<NearbyScreen> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
-  Iterable<Device> _devicesStates;
+  List<Device> _devicesStates;
 
   @override
   Widget build(BuildContext context) {
-    DevicesRepository repository =
-        RepositoryProvider.of<DevicesRepository>(context);
+    final DevicesRepository repository = RepositoryProvider.of<DevicesRepository>(context);
 
     return BlocProvider(
       create: (context) => NearbyScreenBloc(devicesRepository: repository),
       child: BlocConsumer<NearbyScreenBloc, NearbyScreenBlocState>(
         buildWhen: (previous, current) =>
-            (previous is NearbyScreenLoadingState &&
-                !(current is NearbyScreenScanningState)) ||
-            !(previous is NearbyScreenLoadingState) &&
-                current is NearbyScreenScanningState,
+            (previous is NearbyScreenLoadingState && current is! NearbyScreenScanningState) ||
+            previous is! NearbyScreenLoadingState && current is NearbyScreenScanningState,
         listenWhen: (previous, current) {
-          if (!(previous is NearbyScreenScanningState) &&
-              current is NearbyScreenScanningState) {
-            _listKey.currentState
-                .insertItem(1, duration: const Duration(milliseconds: 400));
-          } else if (previous is NearbyScreenScanningState &&
-              !(current is NearbyScreenScanningState)) {
+          if (previous is! NearbyScreenScanningState && current is NearbyScreenScanningState) {
+            _listKey.currentState.insertItem(1, duration: const Duration(milliseconds: 400));
+          } else if (previous is NearbyScreenScanningState && current is! NearbyScreenScanningState) {
             _devices = null;
             _listKey.currentState.removeItem(
               1,
@@ -72,8 +66,8 @@ class NearbyScreenState extends State<NearbyScreen> {
     );
   }
 
-  set _devices(Iterable<Device> states) {
-    var oldStates = _devicesStates;
+  set _devices(List<Device> states) {
+    final oldStates = _devicesStates;
     _devicesStates = states;
 
     AnimatedListHelper.changeItems<Device, String>(
@@ -83,13 +77,12 @@ class NearbyScreenState extends State<NearbyScreen> {
       state: _listKey.currentState,
       oldList: oldStates,
       newList: states,
-      buildRemovedWidget: (context, animation, items, position) =>
-          _buildItem(position, animation, items),
+      buildRemovedWidget: (context, animation, items, position) => _buildItem(position, animation, items),
       getId: (state) => state.id,
     );
   }
 
-  Widget _buildItem(position, animation, items) {
+  Widget _buildItem(int position, Animation<double> animation, List<Device> items) {
     Widget widget;
 
     if (position == 0) {
@@ -105,9 +98,7 @@ class NearbyScreenState extends State<NearbyScreen> {
         device = _devicesStates.elementAt(position - 2);
       }
 
-      widget = DeviceWidget(
-        initialState: device,
-      );
+      widget = DeviceWidget(initialState: device);
     }
 
     return FadeTransition(
@@ -126,8 +117,7 @@ class NearbyScreenState extends State<NearbyScreen> {
             "We'll show you devices that also use EasyShare",
             state is NearbyScreenScanningState,
             (checked) {
-              BlocProvider.of<NearbyScreenBloc>(context)
-                  .toggleListening(checked);
+              BlocProvider.of<NearbyScreenBloc>(context).toggleListening(checked);
             },
           ),
         );
@@ -137,12 +127,11 @@ class NearbyScreenState extends State<NearbyScreen> {
 
   Widget _buildScanningHint() {
     return const Padding(
-      padding:
-          const EdgeInsets.only(top: 20, bottom: 12.5, left: 16, right: 16),
-      child: const Text(
+      padding: EdgeInsets.only(top: 20, bottom: 12.5, left: 16, right: 16),
+      child: Text(
         "Scanning for more devices ...",
         textAlign: TextAlign.center,
-        style: const TextStyle(
+        style: TextStyle(
           color: AppColors.hintTextColor,
           fontFamily: AppFonts.openSans,
           fontWeight: AppFonts.regular,

@@ -9,7 +9,7 @@ class Aquarium extends StatefulWidget {
   final IconData doneIcon;
   final String iconTitle;
 
-  Aquarium({
+  const Aquarium({
     Key key,
     @required this.idleIcon,
     @required this.doneIcon,
@@ -27,7 +27,7 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   Animation<double> _wavePositionAnimation;
   Animation<double> _waveScaleAnimation;
 
-  GlobalKey<TransitionIconState> _iconKey = GlobalKey();
+  final GlobalKey<TransitionIconState> _iconKey = GlobalKey();
   Color _backgroundColor = AppColors.lightenAccentColor;
   Color _iconColor = AppColors.accentColor;
   bool _iconTitleVisibility = true;
@@ -78,7 +78,7 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    var content = <Widget>[
+    final content = <Widget>[
       TransitionIcon(
         key: _iconKey,
         animationDuration: 250,
@@ -107,7 +107,7 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
             _waveScaleAnimation,
           ]),
           builder: (context, snapshot) => CustomPaint(
-            size: Size.square(60),
+            size: const Size.square(60),
             painter: _Aquarium(
               AppColors.lightProcessColor,
               _backgroundColor,
@@ -160,13 +160,12 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
 
     // TODO: Fix the bug with icons comparing
 
-    if (_iconKey.currentState.icon != null &&
-        _iconKey.currentState.icon == _progressIcon) {
+    if (_iconKey.currentState.icon != null && _iconKey.currentState.icon == _progressIcon) {
       _cancelIdleIconSettingOperation();
 
       _iconKey.currentState.onAnimationDone = () {
         _idleIconSettingOperation = CancelableOperation.fromFuture(
-          Future.delayed(Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 2), () {
             _iconKey.currentState.onAnimationDone = () {
               _idleIconSettingOperation = null;
               _iconKey.currentState.onAnimationDone = null;
@@ -194,8 +193,7 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
       _iconKey.currentState.changeIcon(widget.doneIcon, AppColors.processColor);
     } else {
       if (_iconKey.currentState.onAnimationDone == null) {
-        _iconKey.currentState
-            .changeIcon(widget.idleIcon, AppColors.accentColor);
+        _iconKey.currentState.changeIcon(widget.idleIcon, AppColors.accentColor);
 
         _setIdleBackground();
       }
@@ -203,7 +201,7 @@ class AquariumState extends State<Aquarium> with TickerProviderStateMixin {
   }
 
   void _setIdleBackground() {
-    Color color = AppColors.lightenAccentColor;
+    final Color color = AppColors.lightenAccentColor;
 
     if (_backgroundColor != color) {
       setState(() {
@@ -252,19 +250,18 @@ class _Aquarium extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    bool isProcess = _progress > 0 && _progress < 1.0;
+    final bool isProcess = _progress > 0 && _progress < 1.0;
     Path path;
 
     if (isProcess) {
       if (_points == null || size.width > _points.length - 3) {
-        _points = List.filled(size.width.toInt() + 3, null, growable: false);
+        _points = List.filled(size.width.toInt() + 3, null);
       }
 
       for (double x = 0; x <= size.width; x++) {
         _points[x.toInt()] = Offset(
           x,
-          1.5 * sin((x) / (8 + _scale) + _position) +
-              size.height * (1 - _progress),
+          1.5 * sin(x / (8 + _scale) + _position) + size.height * (1 - _progress),
         );
       }
 
@@ -276,8 +273,8 @@ class _Aquarium extends CustomPainter {
       path.close();
     }
 
-    var rect = Rect.fromPoints(Offset.zero, Offset(size.width, size.height));
-    var clipRect = RRect.fromRectAndCorners(
+    final rect = Rect.fromPoints(Offset.zero, Offset(size.width, size.height));
+    final clipRect = RRect.fromRectAndCorners(
       rect,
       topRight: _borderRadius,
       topLeft: _borderRadius,
@@ -295,10 +292,8 @@ class _Aquarium extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    _Aquarium old = oldDelegate;
+    final _Aquarium old = oldDelegate as _Aquarium;
 
-    return old._progress != _progress ||
-        old._position != _position ||
-        old._scale != _scale;
+    return old._progress != _progress || old._position != _position || old._scale != _scale;
   }
 }

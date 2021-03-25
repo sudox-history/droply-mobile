@@ -9,7 +9,7 @@ class BottomSheetContainer extends StatelessWidget {
   final double headerBodyMargin;
   final double bodyFooterMargin;
 
-  BottomSheetContainer({
+  const BottomSheetContainer({
     this.body,
     this.footer,
     @required this.title,
@@ -25,28 +25,31 @@ class BottomSheetContainer extends StatelessWidget {
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
       child: Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: 20,
+          horizontal: 16,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 fontFamily: AppFonts.openSans,
                 fontWeight: AppFonts.semibold,
                 color: AppColors.invariantPrimaryTextColor,
               ),
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Text(
               description,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontFamily: AppFonts.openSans,
                 fontWeight: AppFonts.regular,
                 color: AppColors.secondaryTextColor,
-                
               ),
             ),
             SizedBox(height: headerBodyMargin),
@@ -54,10 +57,6 @@ class BottomSheetContainer extends StatelessWidget {
             SizedBox(height: bodyFooterMargin),
             footer,
           ],
-        ),
-        padding: EdgeInsets.symmetric(
-          vertical: 20,
-          horizontal: 16,
         ),
       ),
     );

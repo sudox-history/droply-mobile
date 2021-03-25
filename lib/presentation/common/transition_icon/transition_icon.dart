@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'package:flutter/material.dart';
 
 class TransitionIcon extends StatefulWidget {
   final int animationDuration;
   final double size;
 
-  TransitionIcon({
+  const TransitionIcon({
     Key key,
     @required this.animationDuration,
     @required this.size,
@@ -15,8 +15,7 @@ class TransitionIcon extends StatefulWidget {
   TransitionIconState createState() => TransitionIconState();
 }
 
-class TransitionIconState extends State<TransitionIcon>
-    with SingleTickerProviderStateMixin {
+class TransitionIconState extends State<TransitionIcon> with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Function onAnimationDone;
   IconData _oldIcon;
@@ -28,11 +27,9 @@ class TransitionIconState extends State<TransitionIcon>
   void initState() {
     super.initState();
 
-    _controller = new AnimationController(
+    _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: widget.animationDuration),
-      lowerBound: 0.0,
-      upperBound: 1.0,
     )..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           onAnimationDone?.call();
@@ -58,7 +55,7 @@ class TransitionIconState extends State<TransitionIcon>
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, _) {
-        double progress = _controller.value;
+        final double progress = _controller.value;
 
         return Stack(
           alignment: Alignment.center,
@@ -105,7 +102,7 @@ class TransitionIconState extends State<TransitionIcon>
     }
   }
 
-  get icon => _icon;
+  IconData get icon => _icon;
 
   @override
   void dispose() {

@@ -11,7 +11,7 @@ class NewRequestWidget extends StatelessWidget {
       bodyFooterMargin: 30,
       title: "A new request",
       description: "Check if these numbers match on another device",
-      body: Text(
+      body: const Text(
         "019-517",
         style: TextStyle(
           color: AppColors.accentColor,
@@ -24,7 +24,12 @@ class NewRequestWidget extends StatelessWidget {
         Expanded(
           child: TextButton(
             onPressed: () {},
-            child: Text(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(
+                AppColors.lightAccentColor,
+              ),
+            ),
+            child: const Text(
               "Forbid",
               style: TextStyle(
                 color: AppColors.accentColor,
@@ -33,18 +38,13 @@ class NewRequestWidget extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
-                AppColors.lightAccentColor,
-              ),
-            ),
           ),
         ),
-        SizedBox(width: 20),
+        const SizedBox(width: 20),
         Expanded(
           child: TextButton(
             onPressed: () {},
-            child: Text("Accept"),
+            child: const Text("Accept"),
           ),
         ),
       ]),
