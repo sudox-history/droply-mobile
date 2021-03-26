@@ -45,6 +45,8 @@ class AnimatedListHelper {
       equalityChecker: (T first, T second) => getId(first) == getId(second),
     ).getUpdates(batch: false).forEach((element) {
       element.when(
+        move: (from, to) {},
+        change: (position, payload) {},
         insert: (position, count) => state.insertItem(
           offset + position,
           duration: insertDuration ?? const Duration(milliseconds: 300),
